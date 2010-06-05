@@ -18,10 +18,6 @@
 #include "SDL.h"
 #endif
 
-#ifdef __DJGPP__
-#include <ctime>
-#endif
-
 #include "felibdef.h"
 
 #define GET_KEY globalwindowhandler::GetKey
@@ -44,11 +40,6 @@ class globalwindowhandler
   static void SetQuitMessageHandler(truth (*What)())
   { QuitMessageHandler = What; }
   static void UpdateTick() { Tick = SDL_GetTicks() / 40; }
-#endif
-#ifdef __DJGPP__
-  static void Init() { }
-  static void SetQuitMessageHandler(truth (*)()) { }
-  static void UpdateTick() { Tick = uclock() * 25 / UCLOCKS_PER_SEC; }
 #endif
  private:
 #ifdef USE_SDL

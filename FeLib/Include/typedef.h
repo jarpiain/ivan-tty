@@ -13,8 +13,6 @@
 #ifndef __TYPEDEF_H__
 #define __TYPEDEF_H__
 
-#include "pragmas.h"
-
 typedef int truth;
 typedef unsigned char uchar;
 typedef unsigned short ushort;

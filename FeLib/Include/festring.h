@@ -14,6 +14,7 @@
 #define __FESTRING_H__
 
 #include <vector>
+#include <cstring>
 
 #include "felibdef.h"
 

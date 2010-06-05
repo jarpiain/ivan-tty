@@ -46,60 +46,6 @@ void globalwindowhandler::DeInstallControlLoop(truth (*What)())
   }
 }
 
-#ifdef __DJGPP__
-
-#include <pc.h>
-#include <keys.h>
-
-int globalwindowhandler::GetKey(truth EmptyBuffer)
-{
-  if(EmptyBuffer)
-    while(kbhit())
-      getkey();
-
-  int Key = 0;
-
-  while(!Key)
-  {
-    while(!kbhit())
-      if(Controls && ControlLoopsEnabled)
-      {
-	static ulong LastTick = 0;
-	UpdateTick();
-
-	if(LastTick != Tick)
-	{
-	  LastTick = Tick;
-	  truth Draw = false;
-
-	  for(int c = 0; c < Controls; ++c)
-	    if(ControlLoop[c]())
-	      Draw = true;
-
-	  if(Draw)
-	    graphics::BlitDBToScreen();
-	}
-      }
-
-    Key = getkey();
-
-    if(Key == K_Control_Print)
-    {
-      DOUBLE_BUFFER->Save("Scrshot.bmp");
-      Key = 0;
-    }
-  }
-
-  return Key;
-}
-
-int globalwindowhandler::ReadKey()
-{
-  return kbhit() ? getkey() : 0;
-}
-
-#endif
-
 #ifdef USE_SDL
 
 #include <algorithm>
@@ -256,11 +202,7 @@ void globalwindowhandler::ProcessMessage(SDL_Event* Event)
       break;
      case SDLK_SYSREQ:
      case SDLK_PRINT:
-#ifdef WIN32
-      DOUBLE_BUFFER->Save("Scrshot.bmp");
-#else
       DOUBLE_BUFFER->Save(festring(getenv("HOME")) + "/Scrshot.bmp");
-#endif
       return;
      case SDLK_e:
       if(Event->key.keysym.mod & KMOD_ALT

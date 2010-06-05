@@ -156,7 +156,7 @@ inline void bitmap::SafeSetPriority(int x, int y, priority What)
 
 inline void bitmap::FastBlit(bitmap* Bitmap) const
 {
-  memcpy(Bitmap->Image[0], Image[0], XSizeTimesYSize * sizeof(packcol16));
+  //memcpy(Bitmap->Image[0], Image[0], XSizeTimesYSize * sizeof(packcol16));
 }
 
 inline void bitmap::FastBlit(bitmap* Bitmap, v2 Pos) const
@@ -166,8 +166,8 @@ inline void bitmap::FastBlit(bitmap* Bitmap, v2 Pos) const
   const int Bytes = Size.X * sizeof(packcol16);
   const int Height = Size.Y;
 
-  for(int y = 0; y < Height; ++y)
-    memcpy(&DestImage[Pos.Y + y][Pos.X], SrcImage[y], Bytes);
+  //for(int y = 0; y < Height; ++y)
+  //  memcpy(&DestImage[Pos.Y + y][Pos.X], SrcImage[y], Bytes);
 }
 
 inline void bitmap::NormalBlit(bitmap* Bitmap, int Flags) const

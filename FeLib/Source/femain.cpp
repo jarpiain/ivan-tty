@@ -10,20 +10,7 @@
  *
  */
 
-#ifdef __DJGPP__
-#include <conio.h>
-#include "graphics.h"
-#endif
-
-#ifdef WIN32
-#include <windows.h>
-#else
 #include <iostream>
-#endif
-
-#ifdef USE_SDL
-#include "SDL.h"
-#endif
 
 #include <cstdlib>
 
@@ -40,19 +27,8 @@ int main(int argc, char* argv[])
   catch(...)
   {
     const char* Msg = "Fatal Error: Unknown exception thrown.";
-#ifdef WIN32
-    ShowWindow(GetActiveWindow(), SW_HIDE);
-    char Buffer[256];
-    strcpy(Buffer, Msg);
-    strcat(Buffer, globalerrorhandler::GetBugMsg());
-    MessageBox(NULL, Buffer, "Program aborted!", MB_OK|MB_ICONEXCLAMATION);
-#endif
 #ifdef LINUX
-    std::cout << Msg << globalerrorhandler::GetBugMsg() << std::endl;
-#endif
-#ifdef __DJGPP__
-    graphics::DeInit();
-    std::cout << Msg << globalerrorhandler::GetBugMsg() << std::endl;
+    std::cerr << Msg << globalerrorhandler::GetBugMsg() << std::endl;
 #endif
     exit(3);
   }

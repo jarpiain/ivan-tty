@@ -17,10 +17,6 @@
 
 #define ABORT globalerrorhandler::Abort
 
-#ifdef __DJGPP__
-#define SIGNALS 8
-#endif
-
 class globalerrorhandler
 {
  public:
@@ -30,18 +26,8 @@ class globalerrorhandler
   static const char* GetBugMsg() { return BugMsg; }
  private:
   static const char* BugMsg;
-#ifdef VC
-  static int NewHandler(size_t);
-  static int (*OldNewHandler)(size_t);
-#else
   static void NewHandler();
   static void (*OldNewHandler)();
-#endif
-#ifdef __DJGPP__
-  static void SignalHandler(int);
-  static void (*OldSignal[SIGNALS])(int);
-  static int Signal[SIGNALS];
-#endif
 };
 
 #endif
