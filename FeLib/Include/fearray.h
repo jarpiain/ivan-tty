@@ -34,7 +34,7 @@ template <class type> struct fearray
 };
 
 template <class type>
-inline fearray<type>::fearray<type>(const fearray<type>& A)
+inline fearray<type>::fearray(const fearray<type>& A)
 : Data(A.Data), Size(A.Size)
 {
   if(Data)
@@ -42,7 +42,7 @@ inline fearray<type>::fearray<type>(const fearray<type>& A)
 }
 
 template <class type>
-inline fearray<type>::fearray<type>(const type* Array, sizetype Size)
+inline fearray<type>::fearray(const type* Array, sizetype Size)
 : Size(Size)
 {
   char* Ptr = new char[Size * sizeof(type) + sizeof(ulong)];

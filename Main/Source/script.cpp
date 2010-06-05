@@ -471,7 +471,7 @@ void contentscript<character>::InitDataMap()
   INIT_ENTRY(Flags);
 }
 
-contentscript<character>::contentscript<character>()
+contentscript<character>::contentscript()
 : INIT(Team, DEFAULT_TEAM),
   INIT(Flags, 0)
 { }
@@ -498,7 +498,7 @@ character* contentscript<character>::Instantiate(int SpecialFlags) const
   return Instance;
 }
 
-contentscript<item>::contentscript<item>()
+contentscript<item>::contentscript()
 : INIT(Category, ANY_CATEGORY),
   INIT(MinPrice, 0),
   INIT(MaxPrice, MAX_PRICE),
@@ -592,7 +592,7 @@ void contentscript<glterrain>::InitDataMap()
   INIT_ENTRY(IsInside);
 }
 
-contentscript<olterrain>::contentscript<olterrain>()
+contentscript<olterrain>::contentscript()
 : INIT(VisualEffects, 0),
   INIT(AttachedArea, DEFAULT_ATTACHED_AREA),
   INIT(AttachedEntry, DEFAULT_ATTACHED_ENTRY)
@@ -679,7 +679,7 @@ void squarescript::ReadFrom(inputfile& SaveFile)
   }
 }
 
-template <class type, class contenttype> contentmap<type, contenttype>::contentmap<type, contenttype>() : ContentMap(0) { }
+template <class type, class contenttype> contentmap<type, contenttype>::contentmap() : ContentMap(0) { }
 
 template <class type, class contenttype> contentmap<type, contenttype>::~contentmap<type, contenttype>()
 {

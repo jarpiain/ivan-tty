@@ -11,6 +11,7 @@
  */
 
 #include <cctype>
+#include <cstdlib>
 
 #include "festring.h"
 #include "allocate.h"
