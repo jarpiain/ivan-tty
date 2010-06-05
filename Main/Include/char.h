@@ -991,7 +991,7 @@ class character : public entity, public id
   truth IsUsingWeaponOfCategory(int) const;
   virtual truth IsKamikazeDwarf() const { return false; }
   void AddRandomScienceName(festring&) const;
-  truth IsStuck() const { return truth(TrapData); }
+  truth IsStuck() const { return TrapData != 0; }
   festring GetTrapDescription() const;
   truth TryToUnStickTraps(v2);
   void RemoveTrap(ulong);

@@ -202,7 +202,7 @@ class lsquare : public square
   void PostProcessForBone(double&, int&);
   void DisplayEngravedInfo(festring&) const;
   truth EngravingsCanBeReadByPlayer();
-  truth HasEngravings() const { return truth(Engraved); }
+  truth HasEngravings() const { return Engraved != 0; }
   void FinalProcessForBone();
   truth IsFreezed() const { return Flags & FREEZED; }
   truth IsDangerousToBreathe(const character*) const;
@@ -237,7 +237,7 @@ class lsquare : public square
   void SendSunLightSignals();
   const sunemittervector& GetSunEmitter() const { return SunEmitter; }
   void ZeroReSunEmitatedFlags();
-  virtual truth HasBeenSeen() const { return truth(Memorized); }
+  virtual truth HasBeenSeen() const { return Memorized != 0; }
   truth CalculateIsTransparent();
   void CalculateSunLightLuminance(ulong);
   void CreateMemorized();

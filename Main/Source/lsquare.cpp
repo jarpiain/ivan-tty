@@ -1585,7 +1585,7 @@ truth lsquare::Duplicate(const beamdata& Beam)
   character* Character = GetCharacter();
 
   if(Character)
-    DuplicatedSomething = truth(Character->DuplicateToNearestSquare(Beam.Owner, Beam.SpecialParameters));
+    DuplicatedSomething = Character->DuplicateToNearestSquare(Beam.Owner, Beam.SpecialParameters) != 0;
 
   if(GetStack()->Duplicate(DuplicatedSomething ? 4 : 5, Beam.SpecialParameters))
     DuplicatedSomething = true;
