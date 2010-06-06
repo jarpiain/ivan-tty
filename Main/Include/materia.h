@@ -39,6 +39,7 @@ struct materialdatabase : public databasebase
   int ConsumeType;
   int Density;
   int Color;
+  int Attr;
   int RainColor;
   long PriceModifier;
   col24 Emitation;
@@ -127,6 +128,7 @@ class material
   virtual DATA_BASE_VALUE(int, StrengthValue);
   DATA_BASE_VALUE(int, ConsumeType);
   DATA_BASE_VALUE(int, Density);
+  DATA_BASE_VALUE(int, Attr);
   DATA_BASE_VALUE(int, Color);
   DATA_BASE_VALUE(int, RainColor);
   DATA_BASE_VALUE(long, PriceModifier);

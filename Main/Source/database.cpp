@@ -552,6 +552,7 @@ template<> void databasecreator<olterrain>::CreateDataBaseMemberMap()
 template<> void databasecreator<material>::CreateDataBaseMemberMap()
 {
   databasemembermap& Map = GetDataBaseMemberMap();
+  ADD_MEMBER(Attr);
   ADD_MEMBER(CommonFlags);
   ADD_MEMBER(NameFlags);
   ADD_MEMBER(CategoryFlags);

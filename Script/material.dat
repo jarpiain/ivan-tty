@@ -29,6 +29,7 @@ material
   /* Obligatory: ConsumeType */
   /* Obligatory: Density */
   /* Obligatory: Color */
+  Attr = 7; /* light gray */
   PriceModifier = 0;
   Emitation = 0;
   NutritionValue = 0;
@@ -61,6 +62,7 @@ solid
 {
   Config VALPURIUM;
   {
+    Attr = 15;
     StrengthValue = 400;
     ConsumeType = CT_METAL;
     Density = 3000;
@@ -78,6 +80,7 @@ solid
 
   Config GRAVEL;
   {
+    Attr = 3;
     StrengthValue = 40;
     ConsumeType = CT_MINERAL;
     Density = 2500;
@@ -89,6 +92,7 @@ solid
 
   Config MORAINE;
   {
+    Attr = 3;
     StrengthValue = 40;
     ConsumeType = CT_MINERAL;
     Density = 2500;
@@ -102,6 +106,7 @@ solid
 
   Config GLASS;
   {
+    Attr = 13;
     StrengthValue = 40;
     ConsumeType = CT_MINERAL;
     Density = 2500;
@@ -116,6 +121,7 @@ solid
 
   Config PARCHMENT;
   {
+    Attr = 7;
     StrengthValue = 7;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 800;
@@ -132,6 +138,7 @@ solid
 
   Config CLOTH;
   {
+    Attr = 2;
     StrengthValue = 5;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 200;
@@ -146,6 +153,7 @@ solid
 
   Config MITHRIL;
   {
+    Attr = 15;
     StrengthValue = 200;
     ConsumeType = CT_METAL;
     Density = 5000;
@@ -163,6 +171,7 @@ solid
 
   Config MARBLE;
   {
+    Attr = 15;
     StrengthValue = 50;
     ConsumeType = CT_MINERAL;
     Density = 3000;
@@ -177,6 +186,7 @@ solid
 
   Config GOLD;
   {
+    Attr = 11;
     StrengthValue = 55;
     ConsumeType = CT_METAL;
     Density = 20000;
@@ -195,6 +205,7 @@ solid
 
   Config GRASS;
   {
+    Attr = 2;
     StrengthValue = 2;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 100;
@@ -210,6 +221,7 @@ solid
 
   Config LEATHER;
   {
+    Attr = 1;
     StrengthValue = 20;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 800;
@@ -224,6 +236,7 @@ solid
 
   Config LEAF;
   {
+    Attr = 10;
     StrengthValue = 3;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 500;
@@ -238,6 +251,7 @@ solid
 
   Config FABRIC;
   {
+    Attr = 9;
     StrengthValue = 5;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 200;
@@ -251,6 +265,7 @@ solid
 
   Config PALM_LEAF;
   {
+    Attr = 10;
     StrengthValue = 5;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 500;
@@ -265,6 +280,7 @@ solid
 
   Config SULFUR;
   {
+    Attr = 11;
     StrengthValue = 50;
     ConsumeType = CT_MINERAL;
     Density = 2000;
@@ -278,6 +294,7 @@ solid
 
   Config UNICORN_HORN;
   {
+    Attr = 15;
     StrengthValue = 200;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 2000;
@@ -290,6 +307,7 @@ solid
 
   Config DIAMOND;
   {
+    Attr = 15;
     StrengthValue = 300;
     ConsumeType = CT_MINERAL;
     Density = 3500;
@@ -307,6 +325,7 @@ solid
 
   Config SILVER;
   {
+    Attr = 15;
     StrengthValue = 60;
     ConsumeType = CT_METAL;
     Density = 10500;
@@ -323,6 +342,7 @@ solid
 
   Config SAPPHIRE;
   {
+    Attr = 4;
     StrengthValue = 250;
     ConsumeType = CT_MINERAL;
     Density = 4000;
@@ -341,6 +361,7 @@ solid
 
   Config RUBY;
   {
+    Attr = 1;
     StrengthValue = 250;
     ConsumeType = CT_MINERAL;
     Density = 4000;
@@ -359,6 +380,7 @@ solid
 
   Config BRONZE;
   {
+    Attr = 3;
     StrengthValue = 80;
     ConsumeType = CT_METAL;
     Density = 8300;
@@ -372,6 +394,7 @@ solid
 
   Config COPPER;
   {
+    Attr = 3;
     StrengthValue = 70;
     ConsumeType = CT_METAL;
     Density = 9000; /* rounded from 8920 */
@@ -385,6 +408,7 @@ solid
 
   Config TIN;
   {
+    Attr = 5;
     StrengthValue = 60;
     ConsumeType = CT_METAL;
     Density = 7250;
@@ -398,6 +422,7 @@ solid
 
   Config SPIDER_SILK;
   {
+    Attr = 5;
     StrengthValue = 180;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 300;
@@ -413,6 +438,7 @@ solid
 
   Config KEVLAR;
   {
+    Attr = 6;
     StrengthValue = 140;
     ConsumeType = CT_PLASTIC;
     Density = 1500;
@@ -427,6 +453,7 @@ solid
 
   Config OMMEL_HAIR;
   {
+    Attr = 3;
     StrengthValue = 60;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 400;
@@ -444,6 +471,7 @@ solid
 
   Config HARDENED_LEATHER;
   {
+    Attr = 3;
     StrengthValue = 35;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 1200;
@@ -459,6 +487,7 @@ solid
 
   Config TROLL_HIDE;
   {
+    Attr = 3;
     StrengthValue = 45;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 2000;
@@ -474,6 +503,7 @@ solid
 
   Config NYMPH_HAIR;
   {
+    Attr = 4;
     StrengthValue = 35;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 300;
@@ -489,6 +519,7 @@ solid
 
   Config ANGEL_HAIR;
   {
+    Attr = 15;
     StrengthValue = 140;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 300;
@@ -505,6 +536,7 @@ solid
 
   Config PHOENIX_FEATHER;
   {
+    Attr = 9;
     StrengthValue = 80;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 200;
@@ -520,6 +552,7 @@ solid
 
   Config GOLDEN_EAGLE_FEATHER;
   {
+    Attr = 11;
     StrengthValue = 300;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 100;
@@ -535,6 +568,7 @@ solid
 
   Config ICE;
   {
+    Attr = 15;
     StrengthValue = 30;
     ConsumeType = CT_MINERAL;/* correct someday */
     Density = 750;
@@ -549,6 +583,7 @@ solid
 
   Config DRAGON_HIDE;
   {
+    Attr = 2;
     StrengthValue = 160;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 2500;
@@ -564,6 +599,7 @@ solid
 
   Config ARCANITE;
   {
+    Attr = 11;
     StrengthValue = 180;
     ConsumeType = CT_METAL;
     Density = 800;
@@ -582,6 +618,7 @@ solid
 
   Config ILLITHIUM;
   {
+    Attr = 15;
     StrengthValue = 225;
     ConsumeType = CT_METAL;
     Density = 6000;
@@ -598,6 +635,7 @@ solid
 
   Config BALSA_WOOD;
   {
+    Attr = 11;
     StrengthValue = 20;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 250;
@@ -612,6 +650,7 @@ solid
 
   Config PINE_WOOD;
   {
+    Attr = 2;
     StrengthValue = 25;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 400;
@@ -625,6 +664,7 @@ solid
 
   Config FIR_WOOD;
   {
+    Attr = 2;
     StrengthValue = 30;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 500;
@@ -638,6 +678,7 @@ solid
 
   Config BIRCH_WOOD;
   {
+    Attr = 2;
     StrengthValue = 35;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 600;
@@ -651,6 +692,7 @@ solid
 
   Config OAK_WOOD;
   {
+    Attr = 2;
     StrengthValue = 45;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 700;
@@ -666,6 +708,7 @@ solid
 
   Config TEAK_WOOD;
   {
+    Attr = 2;
     StrengthValue = 50;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 750;
@@ -680,6 +723,7 @@ solid
 
   Config EBONY_WOOD;
   {
+    Attr = 8;
     StrengthValue = 65;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 1000;
@@ -695,6 +739,7 @@ solid
 
   Config OCTIRON;
   {
+    Attr = 8;
     StrengthValue = 275;
     ConsumeType = CT_METAL;
     Density = 900;
@@ -712,6 +757,7 @@ solid
 
   Config BLUE_CRYSTAL;
   {
+    Attr = 12;
     StrengthValue = 140;
     ConsumeType = CT_MINERAL;
     Density = 2000;
@@ -732,6 +778,7 @@ solid
 
   Config PURPLE_CRYSTAL;
   {
+    Attr = 14;
     StrengthValue = 130;
     ConsumeType = CT_MINERAL;
     Density = 2000;
@@ -752,6 +799,7 @@ solid
 
   Config GREEN_CRYSTAL;
   {
+    Attr = 10;
     StrengthValue = 150;
     ConsumeType = CT_MINERAL;
     Density = 2000;
@@ -771,6 +819,7 @@ solid
 
   Config SAND_STONE;
   {
+    Attr = 3;
     StrengthValue = 25;
     ConsumeType = CT_MINERAL;
     Density = 2300;
@@ -784,6 +833,7 @@ solid
 
   Config LIME_STONE;
   {
+    Attr = 3;
     StrengthValue = 30;
     ConsumeType = CT_MINERAL;
     Density = 2500;
@@ -797,6 +847,7 @@ solid
 
   Config CALCITE;
   {
+    Attr = 7;
     StrengthValue = 35;
     ConsumeType = CT_MINERAL;
     Density = 2700;
@@ -811,6 +862,7 @@ solid
 
   Config OBSIDIAN;
   {
+    Attr = 4;
     StrengthValue = 40;
     ConsumeType = CT_MINERAL;
     Density = 2400;
@@ -825,6 +877,7 @@ solid
 
   Config GNEISS;
   {
+    Attr = 4;
     StrengthValue = 45;
     ConsumeType = CT_MINERAL;
     Density = 2900;
@@ -838,6 +891,7 @@ solid
 
   Config SLATE;
   {
+    Attr = 4;
     StrengthValue = 50;
     ConsumeType = CT_MINERAL;
     Density = 2700;
@@ -851,6 +905,7 @@ solid
 
   Config GRANITE;
   {
+    Attr = 5;
     StrengthValue = 55;
     ConsumeType = CT_MINERAL;
     Density = 2700;
@@ -864,6 +919,7 @@ solid
 
   Config BASALT;
   {
+    Attr = 4;
     StrengthValue = 60;
     ConsumeType = CT_MINERAL;
     Density = 2900;
@@ -877,6 +933,7 @@ solid
 
   Config MILKY_QUARTZ;
   {
+    Attr = 7;
     StrengthValue = 65;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -890,6 +947,7 @@ solid
 
   Config FLINT;
   {
+    Attr = 5;
     StrengthValue = 65;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -903,6 +961,7 @@ solid
 
   Config QUARTZITE;
   {
+    Attr = 4;
     StrengthValue = 70;
     ConsumeType = CT_MINERAL;
     Density = 2700;
@@ -916,6 +975,7 @@ solid
 
   Config AMETHYST;
   {
+    Attr = 6;
     StrengthValue = 75;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -933,6 +993,7 @@ solid
 
   Config CITRINE;
   {
+    Attr = 11;
     StrengthValue = 75;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -949,6 +1010,7 @@ solid
 
   Config ROSE_QUARTZ;
   {
+    Attr = 1;
     StrengthValue = 75;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -965,6 +1027,7 @@ solid
 
   Config JASPER;
   {
+    Attr = 1;
     StrengthValue = 75;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -980,6 +1043,7 @@ solid
 
   Config ROCK_CRYSTAL;
   {
+    Attr = 7;
     StrengthValue = 75;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -996,6 +1060,7 @@ solid
 
   Config DARK_GRASS;
   {
+    Attr = 2;
     StrengthValue = 2;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 100;
@@ -1017,6 +1082,7 @@ organic /* substances that spoil but are not flesh */
 
   Config BANANA_FLESH;
   {
+    Attr = 11;
     StrengthValue = 3;
     Density = 1200;
     ConsumeType = CT_FRUIT;
@@ -1030,6 +1096,7 @@ organic /* substances that spoil but are not flesh */
 
   Config SCHOOL_FOOD;
   {
+    Attr = 3;
     StrengthValue = 3;
     ConsumeType = CT_MEAT;
     Density = 1500;
@@ -1049,6 +1116,7 @@ organic /* substances that spoil but are not flesh */
 
   Config BANANA_PEEL;
   {
+    Attr = 11;
     StrengthValue = 5;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 500;
@@ -1063,6 +1131,7 @@ organic /* substances that spoil but are not flesh */
 
   Config KIWI_FLESH;
   {
+    Attr = 1;
     StrengthValue = 3;
     ConsumeType = CT_FRUIT;
     Density = 1200;
@@ -1076,6 +1145,7 @@ organic /* substances that spoil but are not flesh */
 
   Config PINEAPPLE_FLESH;
   {
+    Attr = 1;
     StrengthValue = 5;
     ConsumeType = CT_FRUIT;
     Density = 1200;
@@ -1089,6 +1159,7 @@ organic /* substances that spoil but are not flesh */
 
   Config PLANT_FIBER;
   {
+    Attr = 2;
     StrengthValue = 7;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 500;
@@ -1104,6 +1175,7 @@ organic /* substances that spoil but are not flesh */
 
   Config MUTANT_PLANT_FIBER;
   {
+    Attr = 6;
     StrengthValue = 7;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 500;
@@ -1119,6 +1191,7 @@ organic /* substances that spoil but are not flesh */
 
   Config BONE;
   {
+    Attr = 7;
     StrengthValue = 40;
     Density = 2000;
     ConsumeType = CT_BONE;
@@ -1134,6 +1207,7 @@ organic /* substances that spoil but are not flesh */
 
   Config BREAD;
   {
+    Attr = 3;
     StrengthValue = 5;
     ConsumeType = CT_PROCESSED;
     Density = 250;
@@ -1148,6 +1222,7 @@ organic /* substances that spoil but are not flesh */
 
   Config HOLY_BANANA_FLESH;
   {
+    Attr = 11;
     StrengthValue = 3;
     Density = 1200;
     ConsumeType = CT_FRUIT;
@@ -1165,6 +1240,7 @@ organic /* substances that spoil but are not flesh */
 
   Config CARROT_FLESH;
   {
+    Attr = 1;
     StrengthValue = 3;
     ConsumeType = CT_FRUIT;
     NameStem = "carrot flesh";
@@ -1181,6 +1257,7 @@ organic /* substances that spoil but are not flesh */
 
   Config OMMEL_CERUMEN;
   {
+    Attr = 1;
     StrengthValue = 1;
     Color = rgb16(180, 150, 50);
     NutritionValue = 500;
@@ -1199,6 +1276,7 @@ organic /* substances that spoil but are not flesh */
 
   Config OMMEL_BONE;
   {
+    Attr = 7;
     StrengthValue = 250;
     Flexibility = 4;
     Density = 750;
@@ -1217,6 +1295,7 @@ organic /* substances that spoil but are not flesh */
 
   Config OMMEL_TOOTH;
   {
+    Attr = 7;
     StrengthValue = 375;
     Density = 5000;
     ConsumeType = CT_BONE;
@@ -1244,6 +1323,7 @@ gas
 
   Config AIR;
   {
+    Attr = 7;
     StrengthValue = 1;
     Density = 1;
     Color = rgb16(180, 180, 255);
@@ -1255,6 +1335,7 @@ gas
 
   Config MAGICAL_AIR;
   {
+    Attr = 14;
     Color = rgb16(180, 180, 255);
     NameStem = "magical air";
     Alpha = 150;
@@ -1264,6 +1345,7 @@ gas
 
   Config SMOKE;
   {
+    Attr = 1;
     Color = rgb16(60, 60, 60);
     NameStem = "smoke";
     Alpha = 255;
@@ -1273,6 +1355,7 @@ gas
 
   Config SKUNK_SMELL;
   {
+    Attr = 1;
     Color = rgb16(20, 60, 20);
     NameStem = "skunk smell";
     Alpha = 200;
@@ -1285,6 +1368,7 @@ gas
 
   Config GHOST;
   {
+    Attr = 15;
     Color = rgb16(255, 255, 255);
     NameStem = "ghost";
     Alpha = 150;
@@ -1294,6 +1378,7 @@ gas
 
   Config MAGIC_VAPOUR;
   {
+    Attr = 14;
     Color = rgb16(200, 60, 200);
     NameStem = "raw vapourized magic";
     Alpha = 200;
@@ -1305,6 +1390,7 @@ gas
 
   Config EVIL_WONDER_STAFF_VAPOUR;
   {
+    Attr = 9;
     Color = rgb16(200, 0, 0);
     NameStem = "mysterious red gas";
     Alpha = 200;
@@ -1316,6 +1402,7 @@ gas
 
   Config GOOD_WONDER_STAFF_VAPOUR;
   {
+    Attr = 12;
     Color = rgb16(100, 100, 200);
     NameStem = "mysterious blue gas";
     Alpha = 200;
@@ -1326,6 +1413,7 @@ gas
 
   Config FART;
   {
+    Attr = 3;
     Color = rgb16(120, 70, 40);
     NameStem = "brown gas";
     Alpha = 150;
@@ -1345,6 +1433,7 @@ liquid
 
   Config OMMEL_URINE;
   {
+    Attr = 11;
     StrengthValue = 1;
     Color = rgb16(160, 160, 0);
     Emitation = rgb24(140, 140, 100);
@@ -1364,6 +1453,7 @@ liquid
 
   Config PEPSI;
   {
+    Attr = 4;
     StrengthValue = 200;
     Density = 1500;
     NutritionValue = 500;
@@ -1383,6 +1473,7 @@ liquid
 
   Config WATER;
   {
+    Attr = 4;
     StrengthValue = 1;
     NutritionValue = 10;
     Color = rgb16(144, 144, 240);
@@ -1393,6 +1484,7 @@ liquid
 
   Config HEALING_LIQUID;
   {
+    Attr = 1;
     StrengthValue = 1;
     NutritionValue = 250;
     Color = rgb16(180, 0, 0);
@@ -1409,6 +1501,7 @@ liquid
 
   Config BLOOD;
   {
+    Attr = 1;
     StrengthValue = 1;
     NutritionValue = 50;
     Color = rgb16(100, 0, 0);
@@ -1422,6 +1515,7 @@ liquid
 
   Config GLOWING_BLOOD;
   {
+    Attr = 9;
     StrengthValue = 1;
     NutritionValue = 75;
     Color = rgb16(100, 0, 0);
@@ -1436,6 +1530,7 @@ liquid
 
   Config BROWN_SLIME;
   {
+    Attr = 3;
     StrengthValue = 5;
     Density = 600;
     NutritionValue = 10;
@@ -1455,6 +1550,7 @@ liquid
 
   Config YELLOW_SLIME;
   {
+    Attr = 11;
     StrengthValue = 5;
     Density = 400;
     NutritionValue = 5;
@@ -1474,6 +1570,7 @@ liquid
 
   Config POISON_LIQUID;
   {
+    Attr = 2;
     StrengthValue = 1;
     NutritionValue = 100;
     Color = rgb16(0, 128, 0);
@@ -1487,6 +1584,7 @@ liquid
 
   Config VALDEMAR;
   {
+    Attr = 1;
     StrengthValue = 1;
     NutritionValue = 80;
     Color = rgb16(50, 0, 0);
@@ -1504,6 +1602,7 @@ liquid
 
   Config ANTIDOTE_LIQUID;
   {
+    Attr = 6;
     StrengthValue = 1;
     NutritionValue = 100;
     Color = rgb16(128, 0, 128);
@@ -1521,6 +1620,7 @@ liquid
 
   Config VODKA;
   {
+    Attr = 5;
     StrengthValue = 1;
     NutritionValue = 80;
     Color = rgb16(144, 144, 144);
@@ -1538,6 +1638,7 @@ liquid
 
   Config TROLL_BLOOD;
   {
+    Attr = 1;
     StrengthValue = 1;
     NutritionValue = 1000;
     Color = rgb16(160, 0, 0);
@@ -1558,6 +1659,7 @@ liquid
 
   Config DARK_FROG_BLOOD;
   {
+    Attr = 8;
     StrengthValue = 1;
     NutritionValue = 40;
     Color = rgb16(50, 0, 0);
@@ -1575,6 +1677,7 @@ liquid
 
   Config SPIDER_BLOOD;
   {
+    Attr = 1;
     StrengthValue = 1;
     NutritionValue = 40;
     Color = rgb16(50, 0, 0);
@@ -1589,6 +1692,7 @@ liquid
 
   Config VOMIT;
   {
+    Attr = 2;
     StrengthValue = 1;
     NutritionValue = 200;
     Color = rgb16(10, 230, 10);
@@ -1604,6 +1708,7 @@ liquid
 
   Config ACIDOUS_BLOOD;
   {
+    Attr = 8;
     StrengthValue = 150;
     NutritionValue = 50;
     Color = rgb16(100, 0, 0);
@@ -1622,6 +1727,7 @@ liquid
 
   Config SULPHURIC_ACID;
   {
+    Attr = 11;
     StrengthValue = 1;
     NutritionValue = 5;
     Color = rgb16(160, 160, 0);
@@ -1639,6 +1745,7 @@ liquid
 
   Config DOG_DROOL;
   {
+    Attr = 5;
     StrengthValue = 2;
     NutritionValue = 50;
     Color = rgb16(144, 144, 240);
@@ -1650,6 +1757,7 @@ liquid
 
   Config PEA_SOUP;
   {
+    Attr = 2;
     StrengthValue = 5;
     NutritionValue = 500;
     Color = rgb16(0, 200, 0);
@@ -1662,6 +1770,7 @@ liquid
 
   Config OMMEL_SWEAT;
   {
+    Attr = 5;
     StrengthValue = 1;
     Color = rgb16(144, 144, 240);
     NutritionValue = 250;
@@ -1678,6 +1787,7 @@ liquid
 
   Config OMMEL_TEARS;
   {
+    Attr = 5;
     StrengthValue = 1;
     Color = rgb16(144, 144, 240);
     NutritionValue = 250;
@@ -1694,6 +1804,7 @@ liquid
 
   Config OMMEL_SNOT;
   {
+    Attr = 1;
     StrengthValue = 1;
     Color = rgb16(145, 145, 16);
     NutritionValue = 750;
@@ -1712,6 +1823,7 @@ liquid
 
   Config SWEAT;
   {
+    Attr = 5;
     StrengthValue = 2;
     NutritionValue = 50;
     Color = rgb16(144, 144, 240);
@@ -1723,6 +1835,7 @@ liquid
 
   Config SICK_BLOOD;
   {
+    Attr = 1;
     StrengthValue = 1;
     NutritionValue = 40;
     Color = rgb16(50, 0, 0);
@@ -1736,6 +1849,7 @@ liquid
 
 flesh
 {
+  Attr = 1;
   StrengthValue = 5;
   ConsumeType = CT_MEAT;
   Density = 1200;
@@ -1749,6 +1863,7 @@ flesh
 
   Config GOBLINOID_FLESH;
   {
+    Attr = 2;
     Color = rgb16(0, 128, 0);
     NameStem = "green flesh";
     NutritionValue = 15;
@@ -1791,6 +1906,7 @@ flesh
 
   Config ELPURI_FLESH;
   {
+    Attr = 8;
     ConsumeWisdomLimit = 0;
     Effect = EFFECT_DARKNESS;
     ConsumeEndMessage = CEM_FROG_FLESH;
@@ -2124,6 +2240,7 @@ powder
 
   Config GUN_POWDER;
   {
+    Attr = 1;
     StrengthValue = 2;
     ConsumeType = CT_MINERAL;
     Density = 250;
@@ -2139,6 +2256,7 @@ powder
 
   Config SNOW;
   {
+    Attr = 15;
     StrengthValue = 2;
     ConsumeType = CT_MINERAL;/* add something appropriate for this */
     Density = 500;
@@ -2152,6 +2270,7 @@ powder
 
   Config SAND;
   {
+    Attr = 3;
     StrengthValue = 2;
     ConsumeType = CT_MINERAL;/* add something appropriate for this */
     Density = 1600;
@@ -2171,6 +2290,7 @@ ironalloy /* metals that rust */
 
   Config IRON;
   {
+    Attr = 5;
     StrengthValue = 100;
     Density = 8000;
     Color = rgb16(96, 96, 96);
@@ -2184,6 +2304,7 @@ ironalloy /* metals that rust */
 
   Config STEEL;
   {
+    Attr = 5;
     StrengthValue = 125;
     ConsumeType = CT_METAL;
     Density = 7500;
@@ -2199,6 +2320,7 @@ ironalloy /* metals that rust */
 
   Config METEORIC_STEEL;
   {
+    Attr = 13;
     StrengthValue = 150;
     ConsumeType = CT_METAL;
     Density = 7000;
@@ -2214,6 +2336,7 @@ ironalloy /* metals that rust */
 
   Config ADAMANT;
   {
+    Attr = 13;
     StrengthValue = 350;
     ConsumeType = CT_METAL;
     Density = 10000;
