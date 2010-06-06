@@ -17,24 +17,13 @@
 
 #define GET_KEY globalwindowhandler::GetKey
 #define READ_KEY globalwindowhandler::ReadKey
-#define GET_TICK globalwindowhandler::GetTick
 
 class globalwindowhandler
 {
  public:
   static int GetKey(truth = true);
   static int ReadKey();
-  static void InstallControlLoop(truth (*)());
-  static void DeInstallControlLoop(truth (*)());
-  static ulong GetTick() { return Tick; }
-  static truth ControlLoopsInstalled() { return Controls; }
-  static void EnableControlLoops() { ControlLoopsEnabled = true; }
-  static void DisableControlLoops() { ControlLoopsEnabled = false; }
  private:
-  static truth (*ControlLoop[MAX_CONTROLS])();
-  static int Controls;
-  static ulong Tick;
-  static truth ControlLoopsEnabled;
 };
 
 #endif
