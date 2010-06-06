@@ -16,7 +16,6 @@
 #include "v2.h"
 
 class bitmap;
-class rawbitmap;
 class outputfile;
 class inputfile;
 class festring;
@@ -103,7 +102,6 @@ class bitmap
   alpha GetAlpha(v2 Pos) const { return AlphaMap[Pos.Y][Pos.X]; }
   void Outline(col16, alpha, priority);
   void FadeToScreen(bitmapeditor = 0);
-  void CreateFlames(rawbitmap*, v2, ulong, int);
   truth IsValidPos(v2 What) const { return What.X >= 0 && What.Y >= 0 && What.X < Size.X && What.Y < Size.Y; }
   truth IsValidPos(int X, int Y) const { return X >= 0 && Y >= 0 && X < Size.X && Y < Size.Y; }
   void CreateSparkle(v2, int);

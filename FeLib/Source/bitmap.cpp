@@ -18,7 +18,6 @@
 #include "save.h"
 #include "allocate.h"
 #include "femath.h"
-#include "rawbit.h"
 
 /*
  * Blitting must be as fast as possible, even if no optimizations are used;
@@ -1310,65 +1309,6 @@ void bitmap::AlphaLuminanceBlit(const blitdata& BlitData) const
       }
     }
   }
-}
-
-/* Only works for 16x16 pictures :( */
-
-void bitmap::CreateFlames(rawbitmap* RawBitmap, v2 RawPos, ulong SeedNFlags, int Frame)
-{
-  femath::SaveSeed();
-  femath::SetSeed(SeedNFlags);
-  int FlameTop[16], FlameBottom[16], FlamePhase[16];
-  int x, y;
-
-  for(x = 0; x < 16; ++x)
-  {
-    FlameBottom[x] = NO_FLAME;
-
-    for(y = 0; y < 16; ++y)
-      if(GetPixel(x, y) != TRANSPARENT_COLOR)
-      {
-	if(1 << RawBitmap->GetMaterialColorIndex(RawPos.X + x, RawPos.Y + y) & SeedNFlags)
-	{
-	  FlamePhase[x] = RAND_16;
-
-	  if(y > 1)
-	  {
-	    FlameBottom[x] = y - 1;
-
-	    if(y >= 5)
-	      FlameTop[x] = (y - (RAND_32 * y >> 5)) >> 1;
-	    else
-	      FlameTop[x] = 0;
-	  }
-	  else
-	  {
-	    FlameBottom[x] = 1;
-	    FlameTop[x] = 0;
-	  }
-	}
-
-	break;
-      }
-  }
-
-  for(x = 0; x < 16; ++x)
-  {
-    if(FlameBottom[x] != NO_FLAME)
-    {
-      int Phase = (Frame + FlamePhase[x]) & 15;
-      int Length = FlameBottom[x] - FlameTop[x];
-      int Top = FlameBottom[x] - Length + Phase * (15 - Phase) * Length / 56;
-
-      for(y = Top; y <= FlameBottom[x]; ++y)
-      {
-	int Pos = y - Top;
-	PowerPutPixel(x, y, MakeRGB16(255, 255 - (Pos << 7) / Length, 0), 127 + (Pos << 6) / Length, AVERAGE_PRIORITY);
-      }
-    }
-  }
-
-  femath::LoadSeed();
 }
 
 void bitmap::CreateSparkle(v2 SparklePos, int Frame)

@@ -54,7 +54,7 @@ am_libFeLib_a_OBJECTS = bitmap.$(OBJEXT) config.$(OBJEXT) \
 	error.$(OBJEXT) feio.$(OBJEXT) felist.$(OBJEXT) \
 	femain.$(OBJEXT) femath.$(OBJEXT) festring.$(OBJEXT) \
 	fetime.$(OBJEXT) graphics.$(OBJEXT) hscore.$(OBJEXT) \
-	save.$(OBJEXT) rawbit.$(OBJEXT) whandler.$(OBJEXT)
+	save.$(OBJEXT) whandler.$(OBJEXT)
 libFeLib_a_OBJECTS = $(am_libFeLib_a_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -64,8 +64,8 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/felist.Po ./$(DEPDIR)/femain.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/femath.Po ./$(DEPDIR)/festring.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/fetime.Po ./$(DEPDIR)/graphics.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/hscore.Po ./$(DEPDIR)/rawbit.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/save.Po ./$(DEPDIR)/whandler.Po
+@AMDEP_TRUE@	./$(DEPDIR)/hscore.Po ./$(DEPDIR)/save.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/whandler.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -174,7 +174,7 @@ target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
 noinst_LIBRARIES = libFeLib.a
-libFeLib_a_SOURCES = bitmap.cpp config.cpp error.cpp feio.cpp felist.cpp femain.cpp femath.cpp festring.cpp fetime.cpp graphics.cpp hscore.cpp save.cpp rawbit.cpp whandler.cpp
+libFeLib_a_SOURCES = bitmap.cpp config.cpp error.cpp feio.cpp felist.cpp femain.cpp femath.cpp festring.cpp fetime.cpp graphics.cpp hscore.cpp save.cpp whandler.cpp
 INCLUDES = -I@top_srcdir@/FeLib/Include
 all: all-am
 
@@ -234,7 +234,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fetime.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/graphics.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hscore.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rawbit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/save.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/whandler.Po@am__quote@
 
