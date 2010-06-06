@@ -50,22 +50,21 @@ AR = ar
 ARFLAGS = cru
 libFeLib_a_AR = $(AR) $(ARFLAGS)
 libFeLib_a_LIBADD =
-am_libFeLib_a_OBJECTS = bitmap.$(OBJEXT) config.$(OBJEXT) \
-	error.$(OBJEXT) feio.$(OBJEXT) felist.$(OBJEXT) \
-	femain.$(OBJEXT) femath.$(OBJEXT) festring.$(OBJEXT) \
-	fetime.$(OBJEXT) graphics.$(OBJEXT) hscore.$(OBJEXT) \
-	save.$(OBJEXT) whandler.$(OBJEXT)
+am_libFeLib_a_OBJECTS = config.$(OBJEXT) error.$(OBJEXT) \
+	feio.$(OBJEXT) felist.$(OBJEXT) femain.$(OBJEXT) \
+	femath.$(OBJEXT) festring.$(OBJEXT) fetime.$(OBJEXT) \
+	graphics.$(OBJEXT) hscore.$(OBJEXT) save.$(OBJEXT) \
+	whandler.$(OBJEXT)
 libFeLib_a_OBJECTS = $(am_libFeLib_a_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/bitmap.Po ./$(DEPDIR)/config.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/error.Po ./$(DEPDIR)/feio.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/felist.Po ./$(DEPDIR)/femain.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/femath.Po ./$(DEPDIR)/festring.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/fetime.Po ./$(DEPDIR)/graphics.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/hscore.Po ./$(DEPDIR)/save.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/whandler.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/config.Po ./$(DEPDIR)/error.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/feio.Po ./$(DEPDIR)/felist.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/femain.Po ./$(DEPDIR)/femath.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/festring.Po ./$(DEPDIR)/fetime.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/graphics.Po ./$(DEPDIR)/hscore.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/save.Po ./$(DEPDIR)/whandler.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -174,7 +173,7 @@ target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
 noinst_LIBRARIES = libFeLib.a
-libFeLib_a_SOURCES = bitmap.cpp config.cpp error.cpp feio.cpp felist.cpp femain.cpp femath.cpp festring.cpp fetime.cpp graphics.cpp hscore.cpp save.cpp whandler.cpp
+libFeLib_a_SOURCES = config.cpp error.cpp feio.cpp felist.cpp femain.cpp femath.cpp festring.cpp fetime.cpp graphics.cpp hscore.cpp save.cpp whandler.cpp
 INCLUDES = -I@top_srcdir@/FeLib/Include
 all: all-am
 
@@ -223,7 +222,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bitmap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/config.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/feio.Po@am__quote@
