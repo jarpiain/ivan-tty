@@ -1153,39 +1153,6 @@ void bitmap::Outline(col16 Color, alpha Alpha, priority Priority)
 
 void bitmap::FadeToScreen(bitmapeditor BitmapEditor)
 {
-  bitmap Backup(DOUBLE_BUFFER);
-  Backup.ActivateFastFlag();
-  blitdata B = { DOUBLE_BUFFER,
-		 { 0, 0 },
-		 { 0, 0 },
-		 { RES.X, RES.Y },
-		 { 0 },
-		 0,
-		 0 };
-
-  for(int c = 0; c <= 5; ++c)
-  {
-    clock_t StartTime = clock();
-    int Element = 127 - c * 25;
-    B.Luminance = MakeRGB24(Element, Element, Element);
-    Backup.LuminanceMaskedBlit(B);
-
-    if(BitmapEditor)
-      BitmapEditor(this);
-
-    SimpleAlphaBlit(DOUBLE_BUFFER, c * 50, 0);
-    graphics::BlitDBToScreen();
-    while(clock() - StartTime < 0.05 * CLOCKS_PER_SEC);
-  }
-
-  DOUBLE_BUFFER->ClearToColor(0);
-
-  if(BitmapEditor)
-    BitmapEditor(this);
-
-  B.Flags = 0;
-  NormalMaskedBlit(B);
-  graphics::BlitDBToScreen();
 }
 
 void bitmap::StretchBlit(const blitdata& BlitData) const

@@ -24,7 +24,7 @@ const felist* FelistCurrentlyDrawn = 0;
 
 truth FelistDrawController()
 {
-  FelistCurrentlyDrawn->DrawPage(DOUBLE_BUFFER);
+  //FelistCurrentlyDrawn->DrawPage(DOUBLE_BUFFER);
   return true;
 }
 
@@ -132,7 +132,7 @@ uint felist::Draw()
   }
   else
   {
-    Buffer = DOUBLE_BUFFER;
+    //Buffer = DOUBLE_BUFFER;
     Buffer->FastBlit(&BackGround);
   }
 
@@ -162,7 +162,7 @@ uint felist::Draw()
     {
       if(JustSelectMove)
       {
-	Buffer->FastBlit(DOUBLE_BUFFER);
+	//Buffer->FastBlit(DOUBLE_BUFFER);
 	graphics::BlitDBToScreen();
       }
       else
@@ -286,8 +286,8 @@ uint felist::Draw()
 
   if(!(Flags & FADE))
   {
-    if(Flags & DRAW_BACKGROUND_AFTERWARDS)
-      BackGround.FastBlit(DOUBLE_BUFFER);
+    //if(Flags & DRAW_BACKGROUND_AFTERWARDS)
+    //  BackGround.FastBlit(DOUBLE_BUFFER);
 
     if(Flags & BLIT_AFTERWARDS)
       graphics::BlitDBToScreen();
@@ -339,12 +339,12 @@ truth felist::DrawPage(bitmap* Buffer) const
 		      v2(Pos.X + 13, LastFillBottom),
 		      Entry[c]->ImageKey);
 
-	if(Flags & SELECTABLE && Entry[c]->Selectable && Selected == i)
-	  FONT->PrintfUnshaded(Buffer, v2(Pos.X + 38, LastFillBottom + 5),
-			       WHITE, "%s", Str.CStr());
-	else
-	  FONT->Printf(Buffer, v2(Pos.X + 37, LastFillBottom + 4),
-		       Entry[c]->Color, "%s", Str.CStr());
+	//if(Flags & SELECTABLE && Entry[c]->Selectable && Selected == i)
+	//  FONT->PrintfUnshaded(Buffer, v2(Pos.X + 38, LastFillBottom + 5),
+	//		       WHITE, "%s", Str.CStr());
+	//else
+	//  FONT->Printf(Buffer, v2(Pos.X + 37, LastFillBottom + 4),
+	//	       Entry[c]->Color, "%s", Str.CStr());
 
 	LastFillBottom += 20;
       }
@@ -360,11 +360,11 @@ truth felist::DrawPage(bitmap* Buffer) const
 	  Buffer->Fill(Pos.X + 3, LastFillBottom, Width - 6, 10, BackColor);
 
 	  if(Flags & SELECTABLE && Entry[c]->Selectable && Selected == i)
-	    FONT->PrintfUnshaded(Buffer, v2(Pos.X + 38, LastFillBottom + 1),
-				 WHITE, "%s", Chapter[l].CStr());
-	  else
-	    FONT->Printf(Buffer, v2(Pos.X + 37, LastFillBottom),
-			 Entry[c]->Color, "%s", Chapter[l].CStr());
+	  //  FONT->PrintfUnshaded(Buffer, v2(Pos.X + 38, LastFillBottom + 1),
+//				 WHITE, "%s", Chapter[l].CStr());
+//	  else
+//	    FONT->Printf(Buffer, v2(Pos.X + 37, LastFillBottom),
+//			 Entry[c]->Color, "%s", Chapter[l].CStr());
 
 	  LastFillBottom += 10;
 	}
@@ -385,12 +385,12 @@ truth felist::DrawPage(bitmap* Buffer) const
       {
 	Buffer->Fill(Pos.X + 3, LastFillBottom, Width - 6, 10, BackColor);
 
-	if(Flags & SELECTABLE && Entry[c]->Selectable && Selected == i)
-	  FONT->PrintfUnshaded(Buffer, v2(Pos.X + 14, LastFillBottom + 1),
-			       WHITE, "%s", Chapter[l].CStr());
-	else
-	  FONT->Printf(Buffer, v2(Pos.X + 13, LastFillBottom),
-		       Entry[c]->Color, "%s", Chapter[l].CStr());
+//	if(Flags & SELECTABLE && Entry[c]->Selectable && Selected == i)
+//	  FONT->PrintfUnshaded(Buffer, v2(Pos.X + 14, LastFillBottom + 1),
+//			       WHITE, "%s", Chapter[l].CStr());
+//	else
+//	  FONT->Printf(Buffer, v2(Pos.X + 13, LastFillBottom),
+//		       Entry[c]->Color, "%s", Chapter[l].CStr());
 
 	LastFillBottom += 10;
       }
@@ -403,8 +403,8 @@ truth felist::DrawPage(bitmap* Buffer) const
 	 || (Flags & INVERSE_MODE && PageBegin))
       {
 	Buffer->Fill(Pos.X + 3, LastFillBottom, Width - 6, 30, BackColor);
-	FONT->Printf(Buffer, v2(Pos.X + 13, LastFillBottom + 10), WHITE,
-		     "- Press SPACE to continue, ESC to exit -");
+//	FONT->Printf(Buffer, v2(Pos.X + 13, LastFillBottom + 10), WHITE,
+//		     "- Press SPACE to continue, ESC to exit -");
 	LastFillBottom += 30;
       }
       else
@@ -432,8 +432,8 @@ void felist::DrawDescription(bitmap* Buffer) const
   for(uint c = 0; c < Description.size(); ++c)
   {
     Buffer->Fill(Pos.X + 3, Pos.Y + 13 + c * 10, Width - 6, 10, BackColor);
-    FONT->Printf(Buffer, v2(Pos.X + 13, Pos.Y + 13 + c * 10),
-		 Description[c]->Color, Description[c]->String.CStr());
+//    FONT->Printf(Buffer, v2(Pos.X + 13, Pos.Y + 13 + c * 10),
+//		 Description[c]->Color, Description[c]->String.CStr());
   }
 
   Buffer->Fill(Pos.X + 3, Pos.Y + 13 + Description.size() * 10,
@@ -471,8 +471,8 @@ void felist::QuickDraw(bitmap* Bitmap, uint PageLength) const
 					      * Index / PageLength) >> 2),
 			GetBlue16(Color) - ((GetBlue16(Color) * 3
 					     * Index / PageLength) >> 2));
-      FONT->Printf(Bitmap, v2(13, Bottom), Color, "%s",
-		   Chapter[ChapterSize - c2 - 1].CStr());
+//      FONT->Printf(Bitmap, v2(13, Bottom), Color, "%s",
+//		   Chapter[ChapterSize - c2 - 1].CStr());
       Bottom -= 10;
 
       if(++Index == PageLength)

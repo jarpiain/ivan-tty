@@ -13,11 +13,6 @@
 #ifndef __WHANDLER_H__
 #define __WHANDLER_H__
 
-#ifdef USE_SDL
-#include <vector>
-#include "SDL.h"
-#endif
-
 #include "felibdef.h"
 
 #define GET_KEY globalwindowhandler::GetKey
@@ -35,18 +30,7 @@ class globalwindowhandler
   static truth ControlLoopsInstalled() { return Controls; }
   static void EnableControlLoops() { ControlLoopsEnabled = true; }
   static void DisableControlLoops() { ControlLoopsEnabled = false; }
-#ifdef USE_SDL
-  static void Init();
-  static void SetQuitMessageHandler(truth (*What)())
-  { QuitMessageHandler = What; }
-  static void UpdateTick() { Tick = SDL_GetTicks() / 40; }
-#endif
  private:
-#ifdef USE_SDL
-  static void ProcessMessage(SDL_Event*);
-  static std::vector<int> KeyBuffer;
-  static truth (*QuitMessageHandler)();
-#endif
   static truth (*ControlLoop[MAX_CONTROLS])();
   static int Controls;
   static ulong Tick;

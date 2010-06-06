@@ -57,7 +57,7 @@ void iosystem::TextScreen(const festring& Text, col16 Color,
       Line[c - LastBeginningOfLine] = 0;
       v2 PrintPos((RES.X >> 1) - (strlen(Line) << 2),
 		  (RES.Y << 1) / 5 - (LineNumber - Lines) * 15);
-      FONT->Printf(&Buffer, PrintPos, Color, Line);
+      //FONT->Printf(&Buffer, PrintPos, Color, Line);
       ++Lines;
       LastBeginningOfLine = c + 1;
     }
@@ -67,7 +67,7 @@ void iosystem::TextScreen(const festring& Text, col16 Color,
   Line[c - LastBeginningOfLine] = 0;
   v2 PrintPos((RES.X >> 1) - (strlen(Line) << 2),
 	      (RES.Y << 1) / 5 - (LineNumber - Lines) * 15);
-  FONT->Printf(&Buffer, PrintPos, Color, Line);
+  //FONT->Printf(&Buffer, PrintPos, Color, Line);
   Buffer.FadeToScreen(BitmapEditor);
 
   if(GKey)
@@ -111,7 +111,7 @@ int iosystem::Menu(const bitmap* BackGround, v2 Pos,
 
   truth bReady = false;
   int iSelected = 0;
-  bitmap Backup(DOUBLE_BUFFER);
+  bitmap Backup(0);
   Backup.ActivateFastFlag();
   bitmap Buffer(RES);
   Buffer.ActivateFastFlag();
@@ -140,7 +140,7 @@ int iosystem::Menu(const bitmap* BackGround, v2 Pos,
       v2 PrintPos(Pos.X - (VeryUnGuruPrintf.GetSize() << 2),
 		  Pos.Y - 30 - (CountChars('\r', Topic)
 				+ CountChars('\r', sMS)) * 25 + i * 25);
-      FONT->Printf(&Buffer, PrintPos, RED, "%s", VeryUnGuruPrintf.CStr());
+      //FONT->Printf(&Buffer, PrintPos, RED, "%s", VeryUnGuruPrintf.CStr());
     }
 
     sCopyOfMS = sMS;
@@ -155,12 +155,12 @@ int iosystem::Menu(const bitmap* BackGround, v2 Pos,
       int YPos = Pos.Y - CountChars('\r', sMS) * 25 + i * 50;
       Buffer.Fill(XPos, YPos, ((VeryUnGuruPrintf.GetSize() + 3) << 3), 9, 0);
 
-      if(i == iSelected)
+      /*if(i == iSelected)
 	FONT->PrintfUnshaded(&Buffer, v2(XPos + 1, YPos + 1), WHITE,
 			     "%d. %s", i + 1, VeryUnGuruPrintf.CStr());
       else
 	FONT->Printf(&Buffer, v2(XPos, YPos), Color, "%d. %s",
-		     i + 1, VeryUnGuruPrintf.CStr());
+		     i + 1, VeryUnGuruPrintf.CStr());*/
     }
 
     sCopyOfMS = SmallText1;
@@ -172,7 +172,7 @@ int iosystem::Menu(const bitmap* BackGround, v2 Pos,
       VeryUnGuruPrintf.Resize(RPos);
       sCopyOfMS.Erase(0,RPos+1);
       v2 PrintPos(3, RES.Y - CountChars('\r', SmallText1) * 10 + i * 10);
-      FONT->Printf(&Buffer, PrintPos, Color, "%s", VeryUnGuruPrintf.CStr());
+      //FONT->Printf(&Buffer, PrintPos, Color, "%s", VeryUnGuruPrintf.CStr());
     }
 
     sCopyOfMS = SmallText2;
@@ -185,7 +185,7 @@ int iosystem::Menu(const bitmap* BackGround, v2 Pos,
       sCopyOfMS.Erase(0,RPos+1);
       v2 PrintPos(RES.X - (VeryUnGuruPrintf.GetSize() << 3) - 2,
 		  RES.Y - CountChars('\r', SmallText2) * 10 + i * 10);
-      FONT->Printf(&Buffer, PrintPos, Color, "%s", VeryUnGuruPrintf.CStr());
+      //FONT->Printf(&Buffer, PrintPos, Color, "%s", VeryUnGuruPrintf.CStr());
     }
 
     int k;
@@ -193,7 +193,7 @@ int iosystem::Menu(const bitmap* BackGround, v2 Pos,
     if(c < 5)
     {
       int Element = 127 - c * 25;
-      blitdata BlitData = { DOUBLE_BUFFER,
+      blitdata BlitData = { 0,
 			    { 0, 0 },
 			    { 0, 0 },
 			    { RES.X, RES.Y },
@@ -201,14 +201,14 @@ int iosystem::Menu(const bitmap* BackGround, v2 Pos,
 			    0,
 			    0 };
       Backup.LuminanceMaskedBlit(BlitData);
-      Buffer.SimpleAlphaBlit(DOUBLE_BUFFER, c++ * 50, 0);
+      //Buffer.SimpleAlphaBlit(DOUBLE_BUFFER, c++ * 50, 0);
       graphics::BlitDBToScreen();
       while(clock() - StartTime < 0.05 * CLOCKS_PER_SEC);
       k = READ_KEY();
     }
     else
     {
-      Buffer.FastBlit(DOUBLE_BUFFER);
+      //Buffer.FastBlit(DOUBLE_BUFFER);
       graphics::BlitDBToScreen();
       k = GET_KEY(false);
     }
@@ -276,35 +276,35 @@ int iosystem::StringQuestion(festring& Input,
   {
     bitmap Buffer(RES, 0);
     Buffer.ActivateFastFlag();
-    FONT->Printf(&Buffer, Pos, Color, "%s", Topic.CStr());
-    FONT->Printf(&Buffer, v2(Pos.X, Pos.Y + 10), Color, "%s_", Input.CStr());
+    //FONT->Printf(&Buffer, Pos, Color, "%s", Topic.CStr());
+    //FONT->Printf(&Buffer, v2(Pos.X, Pos.Y + 10), Color, "%s_", Input.CStr());
     Buffer.FadeToScreen();
   }
-  else
-    DOUBLE_BUFFER->NormalBlit(B);
+  //else
+  //  DOUBLE_BUFFER->NormalBlit(B);
 
   truth TooShort = false;
-  FONT->Printf(DOUBLE_BUFFER, Pos, Color, "%s", Topic.CStr());
+  //FONT->Printf(DOUBLE_BUFFER, Pos, Color, "%s", Topic.CStr());
   Swap(B.Src, B.Dest);
 
   for(int LastKey = 0;; LastKey = 0)
   {
-    B.Bitmap = DOUBLE_BUFFER;
+    //B.Bitmap = DOUBLE_BUFFER;
     BackUp.NormalBlit(B);
-    FONT->Printf(DOUBLE_BUFFER, v2(Pos.X, Pos.Y + 10),
-		 Color, "%s_", Input.CStr());
+    //FONT->Printf(DOUBLE_BUFFER, v2(Pos.X, Pos.Y + 10),
+//		 Color, "%s_", Input.CStr());
 
     if(TooShort)
     {
-      FONT->Printf(DOUBLE_BUFFER, v2(Pos.X, Pos.Y + 30),
-		   Color, "Too short!");
+//      FONT->Printf(DOUBLE_BUFFER, v2(Pos.X, Pos.Y + 30),
+//		   Color, "Too short!");
       TooShort = false;
     }
 
     graphics::BlitDBToScreen();
 
-    if(TooShort)
-      DOUBLE_BUFFER->Fill(Pos.X, Pos.Y + 30, 81, 9, 0);
+//    if(TooShort)
+//      DOUBLE_BUFFER->Fill(Pos.X, Pos.Y + 30, 81, 9, 0);
 
     /* if LastKey is less than 20 it is a control
        character not available in the font */
@@ -385,23 +385,23 @@ long iosystem::NumberQuestion(const festring& Topic, v2 Pos, col16 Color,
   {
     bitmap Buffer(RES, 0);
     Buffer.ActivateFastFlag();
-    FONT->Printf(&Buffer, Pos, Color, "%s", Topic.CStr());
-    FONT->Printf(&Buffer, v2(Pos.X, Pos.Y + 10), Color, "_");
+//    FONT->Printf(&Buffer, Pos, Color, "%s", Topic.CStr());
+//    FONT->Printf(&Buffer, v2(Pos.X, Pos.Y + 10), Color, "_");
     Buffer.FadeToScreen();
   }
-  else
-    DOUBLE_BUFFER->NormalBlit(B);
+//  else
+//    DOUBLE_BUFFER->NormalBlit(B);
 
   festring Input;
-  FONT->Printf(DOUBLE_BUFFER, Pos, Color, "%s", Topic.CStr());
+//  FONT->Printf(DOUBLE_BUFFER, Pos, Color, "%s", Topic.CStr());
   Swap(B.Src, B.Dest);
 
   for(int LastKey = 0;; LastKey = 0)
   {
-    B.Bitmap = DOUBLE_BUFFER;
+//    B.Bitmap = DOUBLE_BUFFER;
     BackUp.NormalBlit(B);
-    FONT->Printf(DOUBLE_BUFFER, v2(Pos.X, Pos.Y + 10),
-		 Color, "%s_", Input.CStr());
+//    FONT->Printf(DOUBLE_BUFFER, v2(Pos.X, Pos.Y + 10),
+//		 Color, "%s_", Input.CStr());
     graphics::BlitDBToScreen();
 
     while(!isdigit(LastKey) && LastKey != KEY_BACK_SPACE
@@ -462,10 +462,10 @@ long iosystem::ScrollBarQuestion(const festring& Topic, v2 Pos,
   {
     bitmap Buffer(RES, 0);
     Buffer.ActivateFastFlag();
-    FONT->Printf(&Buffer, Pos, TopicColor,
-		 "%s %ld", Topic.CStr(), StartValue);
-    FONT->Printf(&Buffer, v2(Pos.X + (Topic.GetSize() << 3) + 8, Pos.Y + 1),
-		 TopicColor, "_");
+//    FONT->Printf(&Buffer, Pos, TopicColor,
+//		 "%s %ld", Topic.CStr(), StartValue);
+//    FONT->Printf(&Buffer, v2(Pos.X + (Topic.GetSize() << 3) + 8, Pos.Y + 1),
+//		 TopicColor, "_");
     Buffer.DrawHorizontalLine(Pos.X + 1, Pos.X + 201,
 			      Pos.Y + 15, Color2, false);
     Buffer.DrawVerticalLine(Pos.X + 201, Pos.Y + 12,
@@ -489,7 +489,7 @@ long iosystem::ScrollBarQuestion(const festring& Topic, v2 Pos,
 		   0,
 		   0 };
 
-    DOUBLE_BUFFER->NormalBlit(B);
+//    DOUBLE_BUFFER->NormalBlit(B);
   }
 
   blitdata B1 = { 0,
@@ -521,40 +521,40 @@ long iosystem::ScrollBarQuestion(const festring& Topic, v2 Pos,
     if(Handler)
       Handler(BarValue);
 
-    B1.Bitmap = B2.Bitmap = DOUBLE_BUFFER;
+//    B1.Bitmap = B2.Bitmap = DOUBLE_BUFFER;
     BackUp.NormalBlit(B1);
     BackUp.NormalBlit(B2);
 
     if(FirstTime)
     {
-      FONT->Printf(DOUBLE_BUFFER, Pos, TopicColor,
-		   "%s %ld", Topic.CStr(), StartValue);
-      FONT->Printf(DOUBLE_BUFFER,
-		   v2(Pos.X + (Topic.GetSize() << 3) + 8, Pos.Y + 1),
-		   TopicColor, "_");
+//      FONT->Printf(DOUBLE_BUFFER, Pos, TopicColor,
+//		   "%s %ld", Topic.CStr(), StartValue);
+//      FONT->Printf(DOUBLE_BUFFER,
+//		   v2(Pos.X + (Topic.GetSize() << 3) + 8, Pos.Y + 1),
+//		   TopicColor, "_");
       FirstTime = false;
     }
     else
     {
-      FONT->Printf(DOUBLE_BUFFER, Pos, TopicColor,
-		   "%s %s", Topic.CStr(), Input.CStr());
-      FONT->Printf(DOUBLE_BUFFER,
-		   v2(Pos.X + ((Topic.GetSize() + Input.GetSize()) << 3) + 8,
-		   Pos.Y + 1), TopicColor, "_");
+//      FONT->Printf(DOUBLE_BUFFER, Pos, TopicColor,
+//		   "%s %s", Topic.CStr(), Input.CStr());
+//      FONT->Printf(DOUBLE_BUFFER,
+//		   v2(Pos.X + ((Topic.GetSize() + Input.GetSize()) << 3) + 8,
+//		   Pos.Y + 1), TopicColor, "_");
     }
 
-    DOUBLE_BUFFER->DrawHorizontalLine(Pos.X + 1, Pos.X + 201,
-				      Pos.Y + 15, Color2, false);
-    DOUBLE_BUFFER->DrawVerticalLine(Pos.X + 201, Pos.Y + 12,
-				    Pos.Y + 18, Color2, false);
-    DOUBLE_BUFFER->DrawHorizontalLine(Pos.X + 1, Pos.X + 1
-				      + (BarValue - Min) * 200 / (Max - Min),
-				      Pos.Y + 15, Color1, true);
-    DOUBLE_BUFFER->DrawVerticalLine(Pos.X + 1, Pos.Y + 12,
-				    Pos.Y + 18, Color1, true);
-    DOUBLE_BUFFER->DrawVerticalLine(Pos.X + 1 + (BarValue - Min)
-				    * 200 / (Max - Min), Pos.Y + 12,
-				    Pos.Y + 18, Color1, true);
+//    DOUBLE_BUFFER->DrawHorizontalLine(Pos.X + 1, Pos.X + 201,
+//				      Pos.Y + 15, Color2, false);
+//    DOUBLE_BUFFER->DrawVerticalLine(Pos.X + 201, Pos.Y + 12,
+//				    Pos.Y + 18, Color2, false);
+//    DOUBLE_BUFFER->DrawHorizontalLine(Pos.X + 1, Pos.X + 1
+//				      + (BarValue - Min) * 200 / (Max - Min),
+//				      Pos.Y + 15, Color1, true);
+//    DOUBLE_BUFFER->DrawVerticalLine(Pos.X + 1, Pos.Y + 12,
+//				    Pos.Y + 18, Color1, true);
+//    DOUBLE_BUFFER->DrawVerticalLine(Pos.X + 1 + (BarValue - Min)
+//				    * 200 / (Max - Min), Pos.Y + 12,
+//				    Pos.Y + 18, Color1, true);
     graphics::BlitDBToScreen();
 
     while(!isdigit(LastKey) && LastKey != KEY_ESC
