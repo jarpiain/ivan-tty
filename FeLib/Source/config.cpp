@@ -189,20 +189,20 @@ truth configsystem::NormalStringChangeInterface(stringoption* O)
 {
   festring String;
 
-  if(iosystem::StringQuestion(String, CONST_S("Set new ")
+/*  if(iosystem::StringQuestion(String, CONST_S("Set new ")
 			      + O->Description + ':',
 			      v2(30, 30), WHITE, 0, 80,
 			      true, true) == NORMAL_EXIT)
-    O->ChangeValue(String);
+    O->ChangeValue(String);*/
 
   return false;
 }
 
 truth configsystem::NormalNumberChangeInterface(numberoption* O)
 {
-  O->ChangeValue(iosystem::NumberQuestion(CONST_S("Set new ")
+/*  O->ChangeValue(iosystem::NumberQuestion(CONST_S("Set new ")
 					  + O->Description + ':',
-					  v2(30, 30), WHITE, true));
+					  v2(30, 30), WHITE, true));*/
   return false;
 }
 
