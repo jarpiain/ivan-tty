@@ -35,10 +35,21 @@ class outputfile
   ~outputfile();
   void Put(char What) { fputc(What, Buffer); }
   void Write(const char* Offset, long Size)
-  { fwrite(Offset, 1, Size, Buffer); }
+  {
+    if(fwrite(Offset, 1, Size, Buffer) < Size)
+      ABORT("Error writing to %s", FileName.CStr());
+  }
   truth IsOpen() { return Buffer != 0; }
-  void Close() { fclose(Buffer); }
-  void Flush() { fflush(Buffer); }
+  void Close()
+  {
+    if(fclose(Buffer))
+      ABORT("Error writing to %s", FileName.CStr());
+  }
+  void Flush()
+  {
+    if(fflush(Buffer))
+      ABORT("Error writing to %s", FileName.CStr());
+  }
   void ReOpen();
  private:
   FILE* Buffer;
@@ -57,7 +68,11 @@ class inputfile
   v2 ReadVector2d();
   rect ReadRect();
   int Get() { return fgetc(Buffer); }
-  void Read(char* Offset, long Size) { fread(Offset, 1, Size, Buffer); }
+  void Read(char* Offset, long Size)
+  {
+    if(fread(Offset, 1, Size, Buffer) < Size)
+      ABORT("Error reading from %s", FileName.CStr());
+  }
   truth IsOpen() { return Buffer != 0; }
   truth Eof() { return feof(Buffer); }
   void ClearFlags() { clearerr(Buffer); }
