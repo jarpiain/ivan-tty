@@ -19,24 +19,21 @@
 
 class outputfile;
 class inputfile;
-class rawbitmap;
-class bitmap;
 class festring;
 struct felistentry;
 struct felistdescription;
 
-typedef void (*entrydrawer)(bitmap*, v2, uint);
-
 class felist
 {
  public:
-  felist(const festring&, col16 = WHITE, uint = 0);
+  felist(const festring&, col16 = WHITE, uint = 0,
+	 uint Row = 0, uint Col = 0, uint Width = 75, uint Height = 20);
   ~felist();
   void AddEntry(const festring&, col16, uint = 0,
-		uint = NO_IMAGE, truth = true);
+		truth = true);
   void AddDescription(const festring&, col16 = WHITE);
   uint Draw();
-  void QuickDraw(bitmap*, uint) const;
+  void QuickDraw(uint, uint, uint, uint) const;
   void Empty();
   void EmptyDescription();
   festring GetEntry(uint) const;
@@ -50,9 +47,8 @@ class felist
   uint GetSelected() const { return Selected; }
   void SetSelected(uint What) { Selected = What; }
   void EditSelected(int What) { Selected += What; }
-  truth DrawPage(bitmap*) const;
+  truth DrawPage() const;
   void Pop();
-  static void CreateQuickDrawFontCaches(rawbitmap*, col16, uint);
   void PrintToFile(const festring&);
   void SetPos(v2 What) { Pos = What; }
   void SetWidth(uint What) { Width = What; }
@@ -63,9 +59,9 @@ class felist
   void RemoveFlags(uint What) { Flags &= ~What; }
   void SetUpKey(uint What) { UpKey = What; }
   void SetDownKey(uint What) { DownKey = What; }
-  void SetEntryDrawer(entrydrawer What) { EntryDrawer = What; }
+  static truth NeedRedraw();
  private:
-  void DrawDescription(bitmap*) const;
+  void DrawDescription() const;
   std::vector<felistentry*> Entry;
   std::vector<felistdescription*> Description;
   uint PageBegin;
@@ -78,7 +74,6 @@ class felist
   uint Flags;
   uint UpKey;
   uint DownKey;
-  entrydrawer EntryDrawer;
 };
 
 #endif
