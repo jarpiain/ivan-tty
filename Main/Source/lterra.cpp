@@ -341,7 +341,7 @@ int olterrainprototype::CreateSpecialConfigurations(olterraindatabase** TempConf
     for(int c1 = 0; c1 < OldConfigs; ++c1)
       if(!TempConfig[c1]->IsAbstract)
       {
-	int NewConfig = TempConfig[c1]->Config | WINDOW;
+	int NewConfig = TempConfig[c1]->Config | IVAN_WINDOW;
 	olterraindatabase* ConfigDataBase = new olterraindatabase(*TempConfig[c1]);
 	ConfigDataBase->InitDefaults(this, NewConfig);
 	ConfigDataBase->PostFix << "with a window";

@@ -2385,7 +2385,7 @@ truth level::GenerateWindows(int X, int Y) const
 
   if(Terrain && Terrain->CreateWindowConfigurations() && !(RAND() % 6))
   {
-    Terrain->SetConfig(Terrain->GetConfig() | WINDOW);
+    Terrain->SetConfig(Terrain->GetConfig() | IVAN_WINDOW);
     Map[X][Y]->CalculateIsTransparent();
     return true;
   }

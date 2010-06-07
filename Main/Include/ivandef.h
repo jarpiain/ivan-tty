@@ -605,7 +605,7 @@ const v2 SILHOUETTE_SIZE(48, 64);
 #define DIM_LUMINANCE 0x6E6E6E
 
 #define BROKEN 128
-#define WINDOW 1024
+#define IVAN_WINDOW 1024
 
 /* item flags */
 
