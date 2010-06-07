@@ -14,6 +14,7 @@
 #define __IGRAPH_H__
 
 #include <map>
+#include <cstring>
 
 #include "ivandef.h"
 #include "femath.h"

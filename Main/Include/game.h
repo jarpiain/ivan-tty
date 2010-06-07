@@ -16,6 +16,7 @@
 #include <map>
 #include <vector>
 #include <ctime>
+#include <cstring>
 
 #include "femath.h"
 #include "festring.h"
