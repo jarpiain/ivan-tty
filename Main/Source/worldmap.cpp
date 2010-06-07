@@ -146,7 +146,6 @@ void worldmap::Generate()
 
     for(int c1 = 0; c1 < 25; ++c1)
     {
-      game::BusyAnimation();
       PetrusLikes = PerfectForAttnam[RAND() % PerfectForAttnam.size()];
       AttnamPos = PetrusLikes->GetRandomMember(EGForestType);
       ElpuriCavePos = PetrusLikes->GetRandomMember(SnowType);
@@ -310,8 +309,6 @@ void worldmap::Generate()
 
 void worldmap::RandomizeAltitude()
 {
-  game::BusyAnimation();
-
   for(int x = 0; x < XSize; ++x)
     for(int y = 0; y < YSize; ++y)
       AltitudeBuffer[x][y] = 4000 - RAND() % 8000;
@@ -321,7 +318,6 @@ void worldmap::SmoothAltitude()
 {
   for(int c = 0; c < 10; ++c)
   {
-    game::BusyAnimation();
     int x, y;
 
     for(y = 0; y < YSize; ++y)
@@ -392,8 +388,6 @@ void worldmap::SafeSmooth(int x, int y)
 
 void worldmap::GenerateClimate()
 {
-  game::BusyAnimation();
-
   for(int y = 0; y < YSize; ++y)
   {
     double DistanceFromEquator = fabs(double(y) / YSize - 0.5);
@@ -448,15 +442,11 @@ void worldmap::SmoothClimate()
 {
   for(int c = 0; c < 3; ++c)
   {
-    game::BusyAnimation();
-
     for(int x = 0; x < XSize; ++x)
       for(int y = 0; y < YSize; ++y)
 	if((OldTypeBuffer[x][y] = TypeBuffer[x][y]) != OceanType)
 	  TypeBuffer[x][y] = WhatTerrainIsMostCommonAroundCurrentTerritorySquareIncludingTheSquareItself(x, y);
   }
-
-  game::BusyAnimation();
 
   for(int x = 0; x < XSize; ++x)
     for(int y = 0; y < YSize; ++y)
@@ -529,7 +519,6 @@ void worldmap::CalculateContinents()
 
   Continent.resize(1, 0);
   memset(ContinentBuffer[0], 0, XSizeTimesYSize * sizeof(uchar));
-  game::BusyAnimation();
 
   for(int x = 0; x < XSize; ++x)
     for(int y = 0; y < YSize; ++y)

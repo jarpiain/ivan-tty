@@ -212,7 +212,7 @@ void lsquare::UpdateStaticContentCache(col24 Luminance) const
 
 void lsquare::DrawStaticContents(blitdata& BlitData) const
 {
-  if(BlitData.CustomData & ALLOW_ANIMATE && !StaticAnimatedEntities && Memorized && !game::GetSeeWholeMapCheatMode())
+  if(BlitData.CustomData & ALLOW_ANIMATE && Memorized && !game::GetSeeWholeMapCheatMode())
   {
     if(StaticContentCache.Luminance != BlitData.Luminance)
       UpdateStaticContentCache(BlitData.Luminance);
@@ -271,7 +271,7 @@ void lsquare::DrawStaticContents(blitdata& BlitData) const
 
 void lsquare::Draw(blitdata& BlitData) const
 {
-  if(Flags & NEW_DRAW_REQUEST || AnimatedEntities)
+  if(Flags & NEW_DRAW_REQUEST)
   {
     if(!IsDark() || game::GetSeeWholeMapCheatMode())
     {
@@ -671,9 +671,6 @@ void lsquare::AddCharacter(character* Guy)
   SignalEmitationIncrease(Guy->GetEmitation());
   Flags |= STRONG_NEW_DRAW_REQUEST;
 
-  if(Guy->IsAnimated())
-    IncAnimatedEntities();
-
   SignalPossibleTransparencyChange();
 
   if(Guy->IsPlayer()
@@ -691,9 +688,6 @@ void lsquare::RemoveCharacter()
   if(Character)
   {
     character* Backup = Character;
-
-    if(Backup->IsAnimated())
-      DecAnimatedEntities();
 
     Character = 0;
     SignalEmitationDecrease(Backup->GetEmitation());
@@ -858,9 +852,6 @@ void lsquare::ChangeLTerrain(glterrain* NewGround, olterrain* NewOver)
 
 void lsquare::ChangeGLTerrain(glterrain* NewGround)
 {
-  if(GLTerrain->IsAnimated())
-    DecStaticAnimatedEntities();
-
   truth WasUsingBorderTiles = GLTerrain->UseBorderTiles();
   delete GLTerrain;
   GLTerrain = NewGround;
@@ -872,16 +863,10 @@ void lsquare::ChangeGLTerrain(glterrain* NewGround)
 
   if(WasUsingBorderTiles || NewGround->UseBorderTiles())
     RequestForGroundBorderPartnerUpdates();
-
-  if(NewGround->IsAnimated())
-    IncStaticAnimatedEntities();
 }
 
 void lsquare::ChangeOLTerrain(olterrain* NewOver)
 {
-  if(OLTerrain && OLTerrain->IsAnimated())
-    DecStaticAnimatedEntities();
-
   truth WasUsingBorderTiles = OLTerrain && OLTerrain->UseBorderTiles();
   delete OLTerrain;
   OLTerrain = NewOver;
@@ -897,9 +882,6 @@ void lsquare::ChangeOLTerrain(olterrain* NewOver)
   if(NewOver)
   {
     NewOver->SetLSquareUnder(this);
-
-    if(NewOver->IsAnimated())
-      IncStaticAnimatedEntities();
   }
 }
 
@@ -908,17 +890,11 @@ void lsquare::SetLTerrain(glterrain* NewGround, olterrain* NewOver)
   GLTerrain = NewGround;
   NewGround->SetLSquareUnder(this);
 
-  if(NewGround->IsAnimated())
-    IncStaticAnimatedEntities();
-
   OLTerrain = NewOver;
 
   if(NewOver)
   {
     NewOver->SetLSquareUnder(this);
-
-    if(NewOver->IsAnimated())
-      IncStaticAnimatedEntities();
 
     if(!NewOver->IsTransparent())
       Flags &= ~IS_TRANSPARENT;
@@ -1138,8 +1114,6 @@ void lsquare::ChangeOLTerrainAndUpdateLights(olterrain* NewTerrain)
 
   if(!IsFlyable() && Smoke)
   {
-    DecAnimatedEntities();
-
     for(smoke* S = Smoke; S; S = S->Next)
       S->SendToHell();
 
@@ -1759,9 +1733,6 @@ void lsquare::RemoveSmoke(smoke* ToBeRemoved)
   if(S == ToBeRemoved)
   {
     Smoke = S->Next;
-
-    if(!S)
-      DecAnimatedEntities();
   }
   else
   {
@@ -1785,7 +1756,6 @@ void lsquare::AddSmoke(gas* ToBeAdded)
   if(!S)
   {
     Smoke = new smoke(ToBeAdded, this);
-    IncAnimatedEntities();
   }
   else
   {
@@ -1859,8 +1829,6 @@ void lsquare::PreProcessForBone()
 
   if(Smoke)
   {
-    DecAnimatedEntities();
-
     for(smoke* S = Smoke; S; S = S->Next)
       S->SendToHell();
 
@@ -1951,9 +1919,6 @@ struct groundborderpartner
 
 void lsquare::CalculateGroundBorderPartners()
 {
-  if(GroundBorderPartnerInfo & BORDER_PARTNER_ANIMATED)
-    DecStaticAnimatedEntities();
-
   groundborderpartner BorderPartner[8];
   int Index = 0;
   int Priority = GLTerrain->GetBorderTilePriority();
@@ -1989,22 +1954,12 @@ void lsquare::CalculateGroundBorderPartners()
     GroundBorderPartnerTerrain = new glterrain*[8];
 
   std::sort(BorderPartner, BorderPartner + Index);
-  truth Animated = false;
 
   for(int c = 0; c < Index; ++c)
   {
     glterrain* T = BorderPartner[c].Terrain;
     GroundBorderPartnerTerrain[c] = T;
     GroundBorderPartnerInfo |= BorderPartner[c].SquareIndex << ((c << 1) + c);
-
-    if(T->IsAnimated())
-      Animated = true;
-  }
-
-  if(Animated)
-  {
-    GroundBorderPartnerInfo |= BORDER_PARTNER_ANIMATED;
-    IncStaticAnimatedEntities();
   }
 
   GroundBorderPartnerInfo |= Index << 24;
@@ -2019,9 +1974,6 @@ struct overborderpartner
 
 void lsquare::CalculateOverBorderPartners()
 {
-  if(OverBorderPartnerInfo & BORDER_PARTNER_ANIMATED)
-    DecStaticAnimatedEntities();
-
   overborderpartner BorderPartner[8];
   int Index = 0;
   int Priority = OLTerrain ? OLTerrain->GetBorderTilePriority() : 0;
@@ -2057,22 +2009,12 @@ void lsquare::CalculateOverBorderPartners()
     OverBorderPartnerTerrain = new olterrain*[8];
 
   std::sort(BorderPartner, BorderPartner + Index);
-  truth Animated = false;
 
   for(int c = 0; c < Index; ++c)
   {
     olterrain* T = BorderPartner[c].Terrain;
     OverBorderPartnerTerrain[c] = T;
     OverBorderPartnerInfo |= BorderPartner[c].SquareIndex << ((c << 1) + c);
-
-    if(T->IsAnimated())
-      Animated = true;
-  }
-
-  if(Animated)
-  {
-    OverBorderPartnerInfo |= BORDER_PARTNER_ANIMATED;
-    IncStaticAnimatedEntities();
   }
 
   OverBorderPartnerInfo |= Index << 24;
@@ -2236,9 +2178,6 @@ void lsquare::RemoveRain(rain* ToBeRemoved)
   SendNewDrawRequest();
   rain* R = Rain;
 
-  if(ToBeRemoved->IsEnabled())
-    DecAnimatedEntities();
-
   if(R == ToBeRemoved)
     Rain = R->Next;
   else
@@ -2261,9 +2200,6 @@ void lsquare::RemoveRain(rain* ToBeRemoved)
 void lsquare::AddRain(liquid* RainLiquid, v2 Speed, int Team, truth OwnLiquid)
 {
   rain* R = Rain, * NewRain = new rain(RainLiquid, this, Speed, Team, OwnLiquid);
-
-  if(NewRain->IsEnabled())
-    IncAnimatedEntities();
 
   if(!R)
     Rain = NewRain;
@@ -2426,7 +2362,6 @@ void lsquare::EnableGlobalRain()
     if(!R->HasOwnLiquid())
     {
       R->Enable();
-      IncAnimatedEntities();
     }
 }
 
@@ -2438,7 +2373,6 @@ void lsquare::DisableGlobalRain()
     if(!R->HasOwnLiquid())
     {
       R->Disable();
-      DecAnimatedEntities();
     }
 }
 

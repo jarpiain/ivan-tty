@@ -74,8 +74,6 @@ truth helmet::IsInCorrectSlot(int I) const { return I == HELMET_INDEX; }
 col16 helmet::GetMaterialColorB(int) const { return GetConfig() != GOROVITS_FAMILY_GAS_MASK ? (GetConfig() & ~BROKEN) ? MakeRGB16(140, 70, 70) : MakeRGB16(111, 64, 37) : MakeRGB16(0, 40, 0); }
 col16 helmet::GetMaterialColorC(int) const { return MakeRGB16(180, 200, 180); }
 
-int wondersmellstaff::GetClassAnimationFrames() const { return !IsBroken() ? 128 : 1; }
-
 truth meleeweapon::HitEffect(character* Enemy, character*, v2, int BodyPartIndex, int, truth BlockedByArmour)
 {
   if(!BlockedByArmour && Fluid)

@@ -53,21 +53,6 @@ class square
   truth IsFatalToStay() const;
   int GetEntryDifficulty() const;
   int GetRestModifier() const;
-  void IncStaticAnimatedEntities()
-  {
-    ++StaticAnimatedEntities;
-    ++AnimatedEntities;
-  }
-  void DecStaticAnimatedEntities()
-  {
-    if(!StaticAnimatedEntities)
-      int esko = esko = 2;
-
-    --StaticAnimatedEntities;
-    --AnimatedEntities;
-  }
-  void IncAnimatedEntities() { ++AnimatedEntities; }
-  void DecAnimatedEntities() { --AnimatedEntities; }
   truth CanBeSeenBy(const character*, truth = false) const;
   col24 GetLuminance() const { return Luminance; }
   square* GetNeighbourSquare(int) const;
@@ -85,8 +70,6 @@ class square
   v2 Pos;
   col24 Luminance;
   mutable ulong Flags;
-  ushort StaticAnimatedEntities;
-  ushort AnimatedEntities;
   mutable uchar LastSeen;
 };
 

@@ -210,7 +210,6 @@ truth object::RandomizeSparklePos(v2& SparklePos, v2 BPos, int& SparkleTime, ulo
 
 void object::UpdatePictures(graphicdata& GraphicData, v2 Position, int SpecialFlags, alpha MaxAlpha, int GraphicsContainerIndex, bposretriever BitmapPosRetriever) const
 {
-  int AnimationFrames = GetClassAnimationFrames();
   v2 SparklePos;
   int SparkleTime = 0;
   int Seed = 0;
@@ -231,9 +230,6 @@ void object::UpdatePictures(graphicdata& GraphicData, v2 Position, int SpecialFl
 				SpecialFlags, GraphicsContainerIndex))
       {
 	Sparkling = true;
-
-	if(AnimationFrames <= 256)
-	  AnimationFrames = 256;
       }
     }
 
@@ -241,25 +237,16 @@ void object::UpdatePictures(graphicdata& GraphicData, v2 Position, int SpecialFl
     {
       SeedNeeded = true;
       FrameNeeded = true;
-
-      if(AnimationFrames <= 32)
-	AnimationFrames = 32;
     }
   }
   else if(SpecialFlags & ST_FLAMES)
   {
     SeedNeeded = true;
     FrameNeeded = true;
-
-    if(AnimationFrames <= 16)
-      AnimationFrames = 16;
   }
   else if(SpecialFlags & ST_LIGHTNING)
   {
     SeedNeeded = true;
-
-    if(AnimationFrames <= 128)
-      AnimationFrames = 128;
   }
 
   if(SeedNeeded)
@@ -279,31 +266,9 @@ void object::UpdatePictures(graphicdata& GraphicData, v2 Position, int SpecialFl
     int Freq = (WobbleData & WOBBLE_FREQ_RANGE) >> WOBBLE_FREQ_SHIFT;
     int WobbleFrames = 512 >> (Freq + Speed);
     WobbleMask = 7 >> Freq << (6 - Speed);
-
-    if(AnimationFrames <= WobbleFrames)
-      AnimationFrames = WobbleFrames;
   }
 
-  ModifyAnimationFrames(AnimationFrames);
   int c;
-  int OldAnimationFrames = GraphicData.AnimationFrames;
-
-  for(c = 0; c < OldAnimationFrames; ++c)
-    igraph::RemoveUser(GraphicData.GraphicIterator[c]);
-
-  if(OldAnimationFrames != AnimationFrames)
-  {
-    if(OldAnimationFrames)
-    {
-      delete [] GraphicData.Picture;
-      delete [] GraphicData.GraphicIterator;
-    }
-
-    GraphicData.Picture = new bitmap*[AnimationFrames];
-    GraphicData.GraphicIterator = new tilemap::iterator[AnimationFrames];
-  }
-
-  GraphicData.AnimationFrames = AnimationFrames;
 
   if(!AllowRegularColors())
     SpecialFlags |= ST_DISALLOW_R_COLORS;
@@ -321,7 +286,7 @@ void object::UpdatePictures(graphicdata& GraphicData, v2 Position, int SpecialFl
   GI.RustData[3] = GetRustDataD();
   GI.WobbleData = WobbleData;
 
-  for(c = 0; c < AnimationFrames; ++c)
+  for(c = 0; c < 1; ++c)
   {
     GI.Color[0] = GetMaterialColorA(c);
     GI.Color[1] = GetMaterialColorB(c);

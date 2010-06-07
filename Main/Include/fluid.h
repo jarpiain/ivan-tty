@@ -74,7 +74,6 @@ class fluid : public entity
   {
     imagedata(truth = true);
     ~imagedata();
-    void Animate(blitdata&, int) const;
     void AddLiquidToPicture(const rawbitmap*, long, long, col16, pixelpredicate);
     void Save(outputfile&) const;
     void Load(inputfile&);
@@ -83,11 +82,6 @@ class fluid : public entity
     /* Only pictures of fluids not on ground have their RandMaps initialized,
        since they are animated. Note that the picture is always unrotated. */
     bitmap* Picture;
-    /* Used by Animate() */
-    mutable int DripTimer;
-    mutable v2 DripPos;
-    mutable col16 DripColor;
-    mutable alpha DripAlpha;
     /* Sum of all alphas of Picture. The volume of the liquid is currently
        proportional to AlphaSum of the fluid's Image, limiting it
        considerably. */

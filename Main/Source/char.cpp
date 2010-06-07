@@ -9410,11 +9410,6 @@ int character::GetBodyPartSparkleFlags(int) const
 	  | (GetNaturalSparkleFlags() & TORSO_SPECIAL_COLOR ? SPARKLING_D : 0));
 }
 
-truth character::IsAnimated() const
-{
-  return combinebodypartpredicates()(this, &bodypart::IsAnimated, 1);
-}
-
 double character::GetNaturalExperience(int Identifier) const
 {
   return DataBase->NaturalExperience[Identifier];

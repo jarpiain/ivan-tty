@@ -85,9 +85,6 @@ void stack::AddItem(item* ToBeAdded, truth RunRoomEffects)
   if(!SquareUnder)
     return;
 
-  if(ToBeAdded->IsAnimated())
-    SquareUnder->IncStaticAnimatedEntities();
-
   if(!game::IsGenerating())
   {
     if(RunRoomEffects && GetLSquareUnder()->GetRoom())
@@ -101,7 +98,6 @@ void stack::AddItem(item* ToBeAdded, truth RunRoomEffects)
 void stack::RemoveItem(stackslot* Slot)
 {
   item* Item = Slot->GetItem();
-  truth WasAnimated = Item->IsAnimated();
   col24 Emit = Item->GetEmitation();
   RemoveElement(Slot);
   SignalVolumeAndWeightChange();
@@ -117,9 +113,6 @@ void stack::RemoveItem(stackslot* Slot)
 
   if(!SquareUnder)
     return;
-
-  if(WasAnimated)
-    SquareUnder->DecStaticAnimatedEntities();
 
   if(!game::IsGenerating())
   {
@@ -148,14 +141,6 @@ void stack::Clean(truth LastClean)
   while(Slot)
   {
     item* Item = Slot->GetItem();
-
-    if(!(Flags & HIDDEN) && Item->IsAnimated() && !LastClean)
-    {
-      lsquare* Square = GetLSquareTrulyUnder(Item->GetSquarePosition());
-
-      if(Square)
-	Square->DecStaticAnimatedEntities();
-    }
 
     if(LastClean && Item->GetSquaresUnder() == 1)
       delete Item;
@@ -1225,16 +1210,6 @@ void stack::DropSideItems()
 
     if(SquarePosition != CENTER)
     {
-      if(i->IsAnimated())
-      {
-	lsquare* Square = GetLSquareTrulyUnder(SquarePosition);
-
-	if(Square)
-	  Square->DecStaticAnimatedEntities();
-
-	GetLSquareUnder()->IncStaticAnimatedEntities();
-      }
-
       i->SignalSquarePositionChange(CENTER);
       SignalEmitationDecrease(SquarePosition, i->GetEmitation());
       SignalEmitationIncrease(CENTER, i->GetEmitation());

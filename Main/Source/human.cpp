@@ -1565,7 +1565,7 @@ void humanoid::DrawSilhouette(truth AnimationDraw) const
 
 	item* Equipment = GetEquipment(c);
 
-	if(Equipment && (!AnimationDraw || Equipment->IsAnimated()))
+	if(Equipment && (!AnimationDraw))
 	{
 	  igraph::BlitBackGround(Pos, TILE_V2);
 	  B1.Dest = Pos;

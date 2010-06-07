@@ -80,7 +80,6 @@ ITEM(justifier, meleeweapon)
  public:
   virtual truth AllowAlphaEverywhere() const { return true; }
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual col16 GetOutlineColor(int) const;
   virtual alpha GetOutlineAlpha(int) const;
 };
@@ -91,7 +90,6 @@ ITEM(neercseulb, meleeweapon)
   virtual truth HitEffect(character*, character*, v2, int, int, truth);
   virtual truth AllowAlphaEverywhere() const { return true; }
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual col16 GetOutlineColor(int) const;
   virtual alpha GetOutlineAlpha(int) const;
 };
@@ -151,7 +149,6 @@ ITEM(gorovitshammer, meleeweapon)
   virtual truth IsGorovitsFamilyRelic() const { return true; }
   virtual truth AllowAlphaEverywhere() const { return true; }
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual col16 GetOutlineColor(int) const;
   virtual alpha GetOutlineAlpha(int) const;
 };
@@ -162,7 +159,6 @@ ITEM(gorovitssickle, meleeweapon)
   virtual truth IsGorovitsFamilyRelic() const { return true; }
   virtual truth AllowAlphaEverywhere() const { return true; }
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual col16 GetOutlineColor(int) const;
   virtual alpha GetOutlineAlpha(int) const;
 };
@@ -225,7 +221,6 @@ ITEM(goldeneagleshirt, bodyarmor)
   virtual truth IsConsumable() const { return false; }
   virtual truth AllowAlphaEverywhere() const { return true; }
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual col16 GetOutlineColor(int) const;
   virtual alpha GetOutlineAlpha(int) const;
 };
@@ -322,7 +317,6 @@ ITEM(wondersmellstaff, meleeweapon)
   virtual truth HitEffect(character*, character*, v2, int, int, truth);
   virtual truth AllowAlphaEverywhere() const { return true; }
  protected:
-  virtual int GetClassAnimationFrames() const;
   virtual col16 GetOutlineColor(int) const;
   virtual alpha GetOutlineAlpha(int) const;
 };

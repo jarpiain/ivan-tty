@@ -24,7 +24,7 @@ typedef owterrain* (*owterrainspawner)();
 class wterrain
 {
  public:
-  wterrain() : WSquareUnder(0), AnimationFrames(1) { }
+  wterrain() : WSquareUnder(0) { }
   virtual ~wterrain() { }
   virtual void Load(inputfile&);
   v2 GetPos() const { return WSquareUnder->GetPos(); }
@@ -32,14 +32,11 @@ class wterrain
   worldmap* GetWorldMap() const { return WSquareUnder->GetWorldMap(); }
   void AddName(festring&, int) const;
   festring GetName(int) const;
-  truth IsAnimated() const { return AnimationFrames > 1; }
-  void SetAnimationFrames(int What) { AnimationFrames = What; }
   virtual const char* GetNameStem() const = 0;
  protected:
   virtual truth UsesLongArticle() const { return false; }
   virtual v2 GetBitmapPos(int) const = 0;
   wsquare* WSquareUnder;
-  int AnimationFrames;
 };
 
 class gwterrainprototype

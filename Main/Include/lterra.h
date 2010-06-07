@@ -182,14 +182,12 @@ class glterrain : public lterrain, public gterrain
   virtual int GetAttachedGod() const;
   virtual int GetTheoreticalWalkability() const { return DataBase->Walkability; }
   void Draw(blitdata&) const;
-  virtual truth IsAnimated() const;
  protected:
   virtual void InstallDataBase(int);
   virtual int GetGraphicsContainerIndex() const;
   virtual const prototype* FindProtoType() const { return &ProtoType; }
   virtual v2 GetBitmapPos(int) const;
   v2 GetBorderBitmapPos(v2, int) const;
-  virtual void ModifyAnimationFrames(int&) const;
   static const prototype ProtoType;
   const database* DataBase;
 };
@@ -329,12 +327,10 @@ class olterrain : public lterrain, public oterrain
   virtual void PostProcessForBone() { }
   virtual void FinalProcessForBone() { }
   virtual void RestoreHP() { HP = CalculateMaxHP(); }
-  virtual truth IsAnimated() const;
   virtual truth VomitingIsDangerous(const character*) const { return false; }
  protected:
   virtual v2 GetBitmapPos(int) const;
   v2 GetBorderBitmapPos(v2, int) const;
-  virtual void ModifyAnimationFrames(int&) const;
   virtual void InstallDataBase(int);
   virtual int GetGraphicsContainerIndex() const;
   virtual const prototype* FindProtoType() const { return &ProtoType; }

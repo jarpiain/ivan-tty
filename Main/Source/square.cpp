@@ -12,7 +12,7 @@
 
 /* Compiled through areaset.cpp */
 
-square::square(area* AreaUnder, v2 Pos) : AreaUnder(AreaUnder), Character(0), Pos(Pos), Luminance(0), Flags(IS_TRANSPARENT|MEMORIZED_UPDATE_REQUEST|DESCRIPTION_CHANGE), StaticAnimatedEntities(0), AnimatedEntities(0), LastSeen(0) { }
+square::square(area* AreaUnder, v2 Pos) : AreaUnder(AreaUnder), Character(0), Pos(Pos), Luminance(0), Flags(IS_TRANSPARENT|MEMORIZED_UPDATE_REQUEST|DESCRIPTION_CHANGE), LastSeen(0) { }
 
 square::~square()
 {
@@ -32,7 +32,7 @@ void square::Save(outputfile& SaveFile) const
   if(!Character || Character->IsMainPos(Pos))
     SaveFile << Character;
 
-  SaveFile << StaticAnimatedEntities << AnimatedEntities << MemorizedDescription;
+  SaveFile << MemorizedDescription;
 }
 
 void square::Load(inputfile& SaveFile)
@@ -40,7 +40,7 @@ void square::Load(inputfile& SaveFile)
   if(!Character)
     SaveFile >> Character;
 
-  SaveFile >> StaticAnimatedEntities >> AnimatedEntities >> MemorizedDescription;
+  SaveFile >> MemorizedDescription;
 }
 
 void square::AddCharacter(character* Guy)
@@ -48,17 +48,11 @@ void square::AddCharacter(character* Guy)
   Character = Guy;
   Flags |= STRONG_NEW_DRAW_REQUEST;
 
-  if(Guy->IsAnimated())
-    IncAnimatedEntities();
-
   Guy->CheckIfSeen();
 }
 
 void square::RemoveCharacter()
 {
-  if(Character && Character->IsAnimated())
-    DecAnimatedEntities();
-
   Character = 0;
   Flags |= STRONG_NEW_DRAW_REQUEST;
 }

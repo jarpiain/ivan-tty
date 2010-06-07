@@ -86,7 +86,6 @@ OLTERRAIN(stairs, olterrain)
 OLTERRAIN(portal, stairs)
 {
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual v2 GetBitmapPos(int) const;
 };
 
@@ -183,7 +182,6 @@ GLTERRAIN(liquidterrain, glterrain)
   virtual void AddLocationDescription(festring&) const;
  protected:
   virtual void AddPostFix(festring& String) const { AddLumpyPostFix(String); }
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual v2 GetBitmapPos(int) const;
 };
 
@@ -220,7 +218,6 @@ OLTERRAIN(monsterportal, olterrain)
  public:
   monsterportal();
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual v2 GetBitmapPos(int) const;
 };
 

@@ -157,7 +157,6 @@ truth game::WizardMode;
 int game::SeeWholeMapCheatMode;
 truth game::GoThroughWallsCheat;
 int game::QuestMonstersFound;
-bitmap* game::BusyAnimationCache[32];
 festring game::PlayerName;
 ulong game::EquipmentMemory[MAX_EQUIPMENT_SLOTS];
 olterrain* game::MonsterPortal;
@@ -263,7 +262,6 @@ truth game::Init(const festring& Name)
   {
    case LOADED:
     {
-      globalwindowhandler::InstallControlLoop(AnimationController);
       SetIsRunning(true);
       SetForceJumpToPlayerBe(true);
       GetCurrentArea()->SendNewDrawRequest();
@@ -304,10 +302,9 @@ truth game::Init(const festring& Name)
 				    "word. The point is that tomorrow you can finally forget your home and\n"
 				    "face the untold adventures ahead."));
 
-      globalwindowhandler::InstallControlLoop(AnimationController);
       SetIsRunning(true);
       InWilderness = true;
-      iosystem::TextScreen(CONST_S("Generating game...\n\nThis may take some time, please wait."), WHITE, false, &BusyAnimation);
+      iosystem::TextScreen(CONST_S("Generating game...\n\nThis may take some time, please wait."), WHITE, false);
       igraph::CreateBackGround(GRAY_FRACTAL);
       NextCharacterID = 1;
       NextItemID = 1;
@@ -720,12 +717,10 @@ void game::DrawEverythingNoBlit(truth AnimationDraw)
     else
       DOUBLE_BUFFER->Fill(CalculateScreenCoordinates(CursorPos), TILE_V2, 0);
 
-  globalwindowhandler::UpdateTick();
   GetCurrentArea()->Draw(AnimationDraw);
   Player->DrawPanel(AnimationDraw);
 
-  if(!AnimationDraw)
-    msgsystem::Draw();
+  msgsystem::Draw();
 
   if(OnScreen(CursorPos))
   {
@@ -1299,80 +1294,6 @@ void game::CreateGods()
     God[c] = protocontainer<god>::GetProto(c)->Spawn();
 }
 
-void game::BusyAnimation()
-{
-  BusyAnimation(DOUBLE_BUFFER);
-}
-
-void game::BusyAnimation(bitmap* Buffer)
-{
-  static clock_t LastTime = 0;
-  static int Frame = 0;
-  static blitdata B = { 0,
-			{ 0, 0 },
-			{ (RES.X >> 1) - 100, (RES.Y << 1) / 3 - 100 },
-			{ 200, 200 },
-			{ 0 },
-			0,
-			0 };
-
-  if(clock() - LastTime > CLOCKS_PER_SEC / 25)
-  {
-    B.Bitmap = Buffer;
-    BusyAnimationCache[Frame]->NormalBlit(B);
-
-    if(Buffer == DOUBLE_BUFFER)
-      graphics::BlitDBToScreen();
-
-    if(++Frame == 32)
-      Frame = 0;
-
-    LastTime = clock();
-  }
-}
-
-void game::CreateBusyAnimationCache()
-{
-  bitmap Elpuri(TILE_V2, TRANSPARENT_COLOR);
-  Elpuri.ActivateFastFlag();
-  packcol16 Color = MakeRGB16(60, 60, 60);
-  igraph::GetCharacterRawGraphic()->MaskedBlit(&Elpuri, v2(64, 0), ZERO_V2, TILE_V2, &Color);
-  bitmap Circle(v2(200, 200), TRANSPARENT_COLOR);
-  Circle.ActivateFastFlag();
-
-  for(int x = 0; x < 4; ++x)
-    Circle.DrawPolygon(100, 100, 95 + x, 50, MakeRGB16(255 - 12 * x, 0, 0));
-
-  blitdata B1 = { 0,
-		  { 0, 0 },
-		  { 92, 92 },
-		  { TILE_SIZE, TILE_SIZE },
-		  { 0 },
-		  TRANSPARENT_COLOR,
-		  0 };
-
-  blitdata B2 = { 0,
-		  { 0, 0 },
-		  { 0, 0 },
-		  { 200, 200 },
-		  { 0 },
-		  TRANSPARENT_COLOR,
-		  0 };
-
-  for(int c = 0; c < 32; ++c)
-  {
-    B1.Bitmap = B2.Bitmap = BusyAnimationCache[c] = new bitmap(v2(200, 200), 0);
-    B1.Bitmap->ActivateFastFlag();
-    Elpuri.NormalMaskedBlit(B1);
-    double Rotation = 0.3 + c * FPI / 80;
-
-    for(int x = 0; x < 10; ++x)
-      B1.Bitmap->DrawPolygon(100, 100, 95, 5, MakeRGB16(5 + 25 * x, 0, 0), false, true, Rotation + double(x) / 50);
-
-    Circle.NormalMaskedBlit(B2);
-  }
-}
-
 int game::AskForKeyPress(const festring& Topic)
 {
   DrawEverythingNoBlit();
@@ -1519,12 +1440,6 @@ void game::LookHandler(v2 CursorPos)
     Square->SetMemorizedDescription(OldMemory);
 }
 
-truth game::AnimationController()
-{
-  DrawEverythingNoBlit(true);
-  return true;
-}
-
 void game::InitGlobalValueMap()
 {
   inputfile SaveFile(GetGameDir() + "Script/define.dat", &GlobalValueMap);
@@ -1648,7 +1563,6 @@ v2 game::NameKeyHandler(v2 CursorPos, int Key)
 
 void game::End(festring DeathMessage, truth Permanently, truth AndGoToMenu)
 {
-  globalwindowhandler::DeInstallControlLoop(AnimationController);
   SetIsRunning(false);
 
   if(Permanently || !WizardModeIsReallyActive())
@@ -1716,7 +1630,6 @@ void game::InitDangerMap()
 
   for(int c1 = 1; c1 < protocontainer<character>::GetSize(); ++c1)
   {
-    BusyAnimation();
     const character::prototype* Proto = protocontainer<character>::GetProto(c1);
     const character::database*const* ConfigData = Proto->GetConfigData();
     int ConfigSize = Proto->GetConfigSize();

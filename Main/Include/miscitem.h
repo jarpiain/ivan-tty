@@ -92,7 +92,6 @@ ITEM(lantern, item)
   virtual int GetSpecialFlags() const;
   virtual truth IsLanternOnWall() const { return GetSquarePosition() != CENTER; }
  protected:
-  virtual int GetClassAnimationFrames() const { return !IsBroken() ? 32 : 1; }
   virtual col16 GetMaterialColorA(int) const;
   virtual col16 GetMaterialColorB(int) const;
   virtual col16 GetMaterialColorC(int) const;

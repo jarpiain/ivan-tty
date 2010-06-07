@@ -18,7 +18,6 @@
 GWTERRAIN(ocean, gwterrain)
 {
  public:
-  ocean() { SetAnimationFrames(32); }
   virtual const char* GetNameStem() const;
   virtual truth UsesLongArticle() const { return true; }
   virtual v2 GetBitmapPos(int) const;

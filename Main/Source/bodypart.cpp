@@ -661,7 +661,6 @@ void corpse::SetDeceased(character* What)
   Deceased->SetMotherEntity(this);
   SignalVolumeAndWeightChange();
   SignalEmitationIncrease(Deceased->GetEmitation());
-  UpdatePictures();
   Enable();
 }
 
@@ -2204,7 +2203,6 @@ void arm::UpdateWieldedPicture()
 {
   if(!Master || !Master->PictureUpdatesAreForbidden())
   {
-    truth WasAnimated = MasterIsAnimated();
     item* Wielded = GetWielded();
 
     if(Wielded && Master)
@@ -2222,9 +2220,6 @@ void arm::UpdateWieldedPicture()
     }
     else
       WieldedGraphicData.Retire();
-
-    if(!WasAnimated != !MasterIsAnimated())
-      SignalAnimationStateChange(WasAnimated);
   }
 }
 
@@ -2244,9 +2239,7 @@ void arm::UpdatePictures()
 
 void bodypart::Draw(blitdata& BlitData) const
 {
-  const int AF = GraphicData.AnimationFrames;
-  const int F = !(BlitData.CustomData & ALLOW_ANIMATE) || AF == 1 ? 0 : GET_TICK() & (AF - 1);
-  const bitmap* P = GraphicData.Picture[F];
+  const bitmap* P = GraphicData.Picture[0];
 
   if(BlitData.CustomData & ALLOW_ALPHA)
     P->AlphaPriorityBlit(BlitData);
@@ -2687,13 +2680,13 @@ void leg::UpdateLegArmorPictures(graphicdata& LegArmorGraphicData, graphicdata& 
 
 void bodypart::DrawEquipment(const graphicdata& GraphicData, blitdata& BlitData) const
 {
-  int EAF = GraphicData.AnimationFrames;
+  /*int EAF = GraphicData.AnimationFrames;
 
   if(EAF)
   {
     int F = !(BlitData.CustomData & ALLOW_ANIMATE) || EAF == 1 ? 0 : GET_TICK() & (EAF - 1);
     GraphicData.Picture[F]->AlphaPriorityBlit(BlitData);
-  }
+  }*/
 }
 
 void playerkindhead::DrawArmor(blitdata& BlitData) const
@@ -2866,28 +2859,14 @@ void playerkindleftleg::Load(inputfile& SaveFile)
   SaveFile >> LegArmorGraphicData >> BootGraphicData;
 }
 
-truth bodypart::MasterIsAnimated() const
-{
-  return Master && !Master->IsInitializing() && Master->IsAnimated();
-}
-
 void bodypart::UpdatePictures()
 {
-  truth WasAnimated = MasterIsAnimated();
-
-  item::UpdatePictures();
   UpdateArmorPictures();
-
-  if(!WasAnimated != !MasterIsAnimated())
-    SignalAnimationStateChange(WasAnimated);
 }
 
 void playerkindtorso::SignalVolumeAndWeightChange()
 {
   humanoidtorso::SignalVolumeAndWeightChange();
-
-  if(Master && !Master->IsInitializing())
-    Master->UpdatePictures();
 }
 
 void bodypart::ReceiveAcid(material* Material, const festring& LocationName, long Modifier)
@@ -3044,15 +3023,12 @@ v2 dogtorso::GetBitmapPos(int Frame) const
 {
   v2 BasePos = torso::GetBitmapPos(Frame);
 
-  if(Frame >= GraphicData.AnimationFrames >> 1)
-    BasePos.X += 32;
-
   return v2(BasePos.X + ((Frame & 4) << 2), BasePos.Y);
 }
 
 void dogtorso::Draw(blitdata& BlitData) const
 {
-  const int AF = GraphicData.AnimationFrames >> 1;
+  /*const int AF = GraphicData.AnimationFrames >> 1;
   int Index = !(BlitData.CustomData & ALLOW_ANIMATE) || AF == 1 ? 0 : GET_TICK() & (AF - 1);
 
   if(GetHP() << 1 <= GetMaxHP())
@@ -3063,7 +3039,7 @@ void dogtorso::Draw(blitdata& BlitData) const
   if(BlitData.CustomData & ALLOW_ALPHA)
     P->AlphaPriorityBlit(BlitData);
   else
-    P->MaskedPriorityBlit(BlitData);
+    P->MaskedPriorityBlit(BlitData);*/
 }
 
 void corpse::SetLifeExpectancy(int Base, int RandPlus)
@@ -3272,35 +3248,6 @@ void bodypart::SetSparkleFlags(int What)
 {
   const int S = SPARKLING_B|SPARKLING_C|SPARKLING_D;
   Flags = Flags & ~(S << BODYPART_SPARKLE_SHIFT) | ((What & S) << BODYPART_SPARKLE_SHIFT);
-}
-
-truth arm::IsAnimated() const
-{
-  return WieldedGraphicData.AnimationFrames > 1;
-}
-
-void bodypart::SignalAnimationStateChange(truth WasAnimated)
-{
-  if(WasAnimated)
-  {
-    for(int c = 0; c < GetSquaresUnder(); ++c)
-    {
-      square* Square = GetSquareUnder(c);
-
-      if(Square)
-	Square->DecAnimatedEntities();
-    }
-  }
-  else
-  {
-    for(int c = 0; c < GetSquaresUnder(); ++c)
-    {
-      square* Square = GetSquareUnder(c);
-
-      if(Square)
-	Square->IncAnimatedEntities();
-    }
-  }
 }
 
 truth bodypart::MaterialIsChangeable(const character*) const

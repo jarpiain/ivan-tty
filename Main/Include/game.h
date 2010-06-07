@@ -256,12 +256,9 @@ class game
   static int GetScreenXSize() { return 42; }
   static int GetScreenYSize() { return 26; }
   static v2 CalculateScreenCoordinates(v2);
-  static void BusyAnimation();
-  static void BusyAnimation(bitmap*);
   static v2 PositionQuestion(const festring&, v2, positionhandler = 0, positionkeyhandler = 0, truth = true);
   static void LookHandler(v2);
   static int AskForKeyPress(const festring&);
-  static truth AnimationController();
   static gamescript* GetGameScript() { return GameScript; }
   static void InitScript();
   static valuemap& GetGlobalValueMap() { return GlobalValueMap; }
@@ -356,7 +353,6 @@ class game
   static character* CreateGhost();
   static truth TooGreatDangerFound() { return TooGreatDangerFoundTruth; }
   static void SetTooGreatDangerFound(truth What) { TooGreatDangerFoundTruth = What; }
-  static void CreateBusyAnimationCache();
   static long GetScore();
   static truth TweraifIsFree();
   static truth IsXMas();
@@ -490,7 +486,6 @@ class game
   static boneidmap BoneItemIDMap;
   static boneidmap BoneCharacterIDMap;
   static truth TooGreatDangerFoundTruth;
-  static bitmap* BusyAnimationCache[32];
   static itemvectorvector ItemDrawVector;
   static charactervector CharacterDrawVector;
   static truth SumoWrestling;

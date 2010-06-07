@@ -192,9 +192,6 @@ void fluid::Draw(blitdata& BlitData) const
   }
   else
     Picture->AlphaPriorityBlit(BlitData);
-
-  if(MotherItem && BlitData.CustomData & ALLOW_ANIMATE)
-    Image.Animate(BlitData, SpecialFlags);
 }
 
 outputfile& operator<<(outputfile& SaveFile, const fluid* Fluid)
@@ -407,9 +404,6 @@ void fluid::DrawGearPicture(blitdata& BlitData, int SpecialFlags) const
   }
   else
     GearImage->Picture->AlphaPriorityBlit(BlitData);
-
-  if(BlitData.CustomData & ALLOW_ANIMATE)
-    GearImage->Animate(BlitData, SpecialFlags);
 }
 
 void fluid::DrawBodyArmorPicture(blitdata& BlitData, int SpecialFlags) const
@@ -425,9 +419,6 @@ void fluid::DrawBodyArmorPicture(blitdata& BlitData, int SpecialFlags) const
     Index = 0;
 
   GearImage[Index].Picture->AlphaPriorityBlit(BlitData);
-
-  if(BlitData.CustomData & ALLOW_ANIMATE)
-    GearImage[Index].Animate(BlitData, 0);
 }
 
 truth fluid::imagedata::Fade()
@@ -435,51 +426,7 @@ truth fluid::imagedata::Fade()
   return ShadowPos != ERROR_V2 ? Picture->Fade(AlphaSum, AlphaAverage, 1) : false;
 }
 
-/* Let two pixels fall every now and then over the picture. CurrentFlags
-   should include rotation info. */
-
-void fluid::imagedata::Animate(blitdata& BlitData, int CurrentFlags) const
-{
-  if(!AlphaSum)
-    return;
-
-  if(!DripTimer)
-  {
-    DripPos = Picture->RandomizePixel();
-
-    /* DripPos != ERROR_V2 since AlphaSum != 0 */
-
-    if(DripPos.Y <= 12)
-    {
-      DripColor = Picture->GetPixel(DripPos);
-      DripAlpha = Picture->GetAlpha(DripPos);
-    }
-    else
-      ++DripTimer;
-  }
-
-  if(DripTimer <= 0)
-  {
-    v2 TrueDripPos = DripPos;
-    Rotate(TrueDripPos, 16, CurrentFlags);
-    TrueDripPos.Y -= DripTimer;
-
-    if(TrueDripPos.Y < 16)
-      BlitData.Bitmap->AlphaPutPixel(TrueDripPos + BlitData.Dest, DripColor, BlitData.Luminance, DripAlpha);
-
-    if(TrueDripPos.Y < 15)
-    {
-      ++TrueDripPos.Y;
-      BlitData.Bitmap->AlphaPutPixel(TrueDripPos + BlitData.Dest, DripColor, BlitData.Luminance, DripAlpha);
-    }
-    else
-      DripTimer = Min<long>(RAND() % (500000 / AlphaSum), 25000);
-  }
-
-  --DripTimer;
-}
-
-fluid::imagedata::imagedata(truth Load) : Picture(0), DripTimer(0), AlphaSum(0), ShadowPos(ERROR_V2)
+fluid::imagedata::imagedata(truth Load) : Picture(0), AlphaSum(0), ShadowPos(ERROR_V2)
 {
   if(!Load)
   {

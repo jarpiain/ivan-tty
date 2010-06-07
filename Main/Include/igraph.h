@@ -78,12 +78,11 @@ typedef std::map<graphicid, tile> tilemap;
 
 struct graphicdata
 {
-  graphicdata() : AnimationFrames(0) { }
+  graphicdata() { }
   ~graphicdata();
   void Save(outputfile&) const;
   void Load(inputfile&);
   void Retire();
-  int AnimationFrames;
   bitmap** Picture;
   tilemap::iterator* GraphicIterator;
 };

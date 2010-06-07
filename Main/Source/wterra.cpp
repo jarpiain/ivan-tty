@@ -55,10 +55,7 @@ festring wterrain::GetName(int Case) const
 
 void gwterrain::Draw(blitdata& BlitData) const
 {
-  const int AF = AnimationFrames;
-  const int F = !(BlitData.CustomData & ALLOW_ANIMATE) || AF == 1
-		? 0 : GET_TICK() & (AF - 1);
-  BlitData.Src = GetBitmapPos(F);
+  BlitData.Src = GetBitmapPos(0);
   igraph::GetWTerrainGraphic()->LuminanceBlit(BlitData);
 
   for(int c = 0; c < 8 && Neighbour[c].second; ++c)
@@ -72,10 +69,7 @@ void gwterrain::Draw(blitdata& BlitData) const
 
 void owterrain::Draw(blitdata& BlitData) const
 {
-  const int AF = AnimationFrames;
-  const int F = !(BlitData.CustomData & ALLOW_ANIMATE) || AF == 1
-		? 0 : GET_TICK() & (AF - 1);
-  BlitData.Src = GetBitmapPos(F);
+  BlitData.Src = GetBitmapPos(0);
   igraph::GetWTerrainGraphic()->LuminanceMaskedBlit(BlitData);
   BlitData.Src.X = BlitData.Src.Y = 0;
 }

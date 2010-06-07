@@ -1009,7 +1009,6 @@ class character : public entity, public id
   virtual truth CanChokeOnWeb(web*) const { return CanChoke(); }
   virtual truth BrainsHurt() const { return false; }
   truth IsSwimming() const;
-  truth IsAnimated() const;
   virtual truth IsPlayerKind() const { return false; }
   truth HasBodyPart(sorter) const;
   truth PossessesItem(sorter) const;

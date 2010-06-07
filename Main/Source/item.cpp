@@ -37,7 +37,6 @@ square* item::GetSquareUnderEntity(int I) const { return GetSquareUnder(I); }
 square* item::GetSquareUnder(int I) const { return Slot[I] ? Slot[I]->GetSquareUnder() : 0; }
 lsquare* item::GetLSquareUnder(int I) const { return static_cast<lsquare*>(Slot[I]->GetSquareUnder()); }
 void item::SignalStackAdd(stackslot* StackSlot, void (stack::*)(item*, truth)) { Slot[0] = StackSlot; }
-truth item::IsAnimated() const { return GraphicData.AnimationFrames > 1 || (Fluid && ShowFluids()); }
 truth item::IsRusted() const { return MainMaterial->GetRustLevel() != NOT_RUSTED; }
 truth item::IsEatable(const character* Eater) const { return GetConsumeMaterial(Eater, &material::IsSolid) && IsConsumable(); }
 truth item::IsDrinkable(const character* Eater) const { return GetConsumeMaterial(Eater, &material::IsLiquid) && IsConsumable(); }
@@ -849,10 +848,6 @@ int item::GetSpoilLevel() const
 
 void item::SignalSpoilLevelChange(material*)
 {
-  if(!IsAnimated() && GetSpoilLevel() && Slot[0] && Slot[0]->IsVisible())
-    for(int c = 0; c < SquaresUnder; ++c)
-      GetSquareUnder(c)->IncStaticAnimatedEntities();
-
   SignalVolumeAndWeightChange(); // gum
   UpdatePictures();
 }
@@ -1087,9 +1082,7 @@ int itemprototype::CreateSpecialConfigurations(itemdatabase** TempConfig, int Co
 
 void item::Draw(blitdata& BlitData) const
 {
-  const int AF = GraphicData.AnimationFrames;
-  const int F = !(BlitData.CustomData & ALLOW_ANIMATE) || AF == 1 ? 0 : GET_TICK() & (AF - 1);
-  const bitmap* P = GraphicData.Picture[F];
+  const bitmap* P = GraphicData.Picture[0];
 
   if(BlitData.CustomData & ALLOW_ALPHA)
     P->AlphaLuminanceBlit(BlitData);
@@ -1102,16 +1095,13 @@ void item::Draw(blitdata& BlitData) const
 
 v2 item::GetLargeBitmapPos(v2 BasePos, int I) const
 {
-  const int SquareIndex = I ? I / (GraphicData.AnimationFrames >> 2) : 0;
+  const int SquareIndex = 0;
   return v2(SquareIndex & 1 ? BasePos.X + 16 : BasePos.X, SquareIndex & 2 ? BasePos.Y + 16 : BasePos.Y);
 }
 
 void item::LargeDraw(blitdata& BlitData) const
 {
-  const int TrueAF = GraphicData.AnimationFrames >> 2;
-  const int SquareIndex = BlitData.CustomData & SQUARE_INDEX_MASK;
-  const int F = !(BlitData.CustomData & ALLOW_ANIMATE) ? SquareIndex * TrueAF : SquareIndex * TrueAF + (GET_TICK() & (TrueAF - 1));
-  const bitmap* P = GraphicData.Picture[F];
+  const bitmap* P = GraphicData.Picture[0];
 
   if(BlitData.CustomData & ALLOW_ALPHA)
     P->AlphaLuminanceBlit(BlitData);
@@ -1141,7 +1131,6 @@ const rawbitmap* item::GetRawPicture() const
 
 void item::RemoveFluid(fluid* ToBeRemoved)
 {
-  truth WasAnimated = IsAnimated();
   truth HasFluids = false;
 
   for(int c = 0; c < SquaresUnder; ++c)
@@ -1172,9 +1161,6 @@ void item::RemoveFluid(fluid* ToBeRemoved)
   {
     delete [] Fluid;
     Fluid = 0;
-
-    if(!IsAnimated() != !WasAnimated && Slot[0]->IsVisible())
-      GetSquareUnder()->DecStaticAnimatedEntities();
   }
 
   SignalEmitationDecrease(ToBeRemoved->GetEmitation());
@@ -1183,8 +1169,6 @@ void item::RemoveFluid(fluid* ToBeRemoved)
 
 void item::AddFluid(liquid* ToBeAdded, festring LocationName, int SquareIndex, truth IsInside)
 {
-  truth WasAnimated = IsAnimated();
-
   if(Fluid)
   {
     fluid* F = Fluid[SquareIndex];
@@ -1225,9 +1209,6 @@ void item::AddFluid(liquid* ToBeAdded, festring LocationName, int SquareIndex, t
 
   if(Slot[0])
   {
-    if(!IsAnimated() != !WasAnimated && Slot[0]->IsVisible())
-      GetSquareUnder()->IncStaticAnimatedEntities();
-
     SendNewDrawAndMemorizedUpdateRequest();
   }
 }

@@ -318,40 +318,14 @@ inputfile& operator>>(inputfile& SaveFile, graphicid& Value)
 
 graphicdata::~graphicdata()
 {
-  if(AnimationFrames)
-  {
-    for(int c = 0; c < AnimationFrames; ++c)
-      igraph::RemoveUser(GraphicIterator[c]);
-
-    delete [] Picture;
-    delete [] GraphicIterator;
-  }
 }
 
 void graphicdata::Save(outputfile& SaveFile) const
 {
-  SaveFile << (int)AnimationFrames;
-
-  for(int c = 0; c < AnimationFrames; ++c)
-    SaveFile << GraphicIterator[c]->first;
 }
 
 void graphicdata::Load(inputfile& SaveFile)
 {
-  SaveFile >> (int&)AnimationFrames;
-
-  if(AnimationFrames)
-  {
-    Picture = new bitmap*[AnimationFrames];
-    GraphicIterator = new tilemap::iterator[AnimationFrames];
-    graphicid GraphicID;
-
-    for(int c = 0; c < AnimationFrames; ++c)
-    {
-      SaveFile >> GraphicID;
-      Picture[c] = (GraphicIterator[c] = igraph::AddUser(GraphicID))->second.Bitmap;
-    }
-  }
 }
 
 outputfile& operator<<(outputfile& SaveFile, const graphicdata& Data)
@@ -368,15 +342,6 @@ inputfile& operator>>(inputfile& SaveFile, graphicdata& Data)
 
 void graphicdata::Retire()
 {
-  if(AnimationFrames)
-  {
-    for(int c = 0; c < AnimationFrames; ++c)
-      igraph::RemoveUser(GraphicIterator[c]);
-
-    AnimationFrames = 0;
-    delete [] Picture;
-    delete [] GraphicIterator;
-  }
 }
 
 const int* igraph::GetBodyBitmapValidityMap(int SpecialFlags)

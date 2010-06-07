@@ -147,8 +147,6 @@ ITEM(bodypart, item)
   void UpdateArmorPicture(graphicdata&, item*, int, v2 (item::*)(int) const, truth = false) const;
   void DrawEquipment(const graphicdata&, blitdata&) const;
   void UpdateFlags();
-  truth MasterIsAnimated() const;
-  void SignalAnimationStateChange(truth);
   virtual truth AddAdjective(festring&, truth) const;
   festring OwnerDescription;
   character* Master;
@@ -323,7 +321,6 @@ ITEM(arm, bodypart)
   double GetStrengthExperience() const { return StrengthExperience; }
   double GetDexterityExperience() const { return DexterityExperience; }
   virtual void SignalPossibleUsabilityChange();
-  virtual truth IsAnimated() const;
  protected:
   virtual sweaponskill** GetCurrentSWeaponSkill() const { return 0; }
   void UpdateArmArmorPictures(graphicdata&, graphicdata&, int) const;
@@ -513,7 +510,6 @@ ITEM(corpse, item)
 ITEM(eddytorso, normaltorso)
 {
  protected:
-  virtual int GetClassAnimationFrames() const { return 8; }
   virtual v2 GetBitmapPos(int) const;
 };
 
@@ -526,7 +522,6 @@ ITEM(largetorso, normaltorso)
   virtual void CalculateSquaresUnder() { SquaresUnder = 4; }
  protected:
   virtual v2 GetBitmapPos(int I) const { return GetLargeBitmapPos(BitmapPos, I); }
-  virtual void ModifyAnimationFrames(int& AF) const { AF <<= 2; }
 };
 
 ITEM(largecorpse, corpse)
@@ -538,13 +533,11 @@ ITEM(largecorpse, corpse)
   virtual void CalculateSquaresUnder() { SquaresUnder = 4; }
  protected:
   virtual v2 GetBitmapPos(int I) const { return GetLargeBitmapPos(item::GetBitmapPos(I), I); }
-  virtual void ModifyAnimationFrames(int& AF) const { AF <<= 2; }
 };
 
 ITEM(ennerhead, head)
 {
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual v2 GetBitmapPos(int) const;
 };
 
@@ -558,7 +551,6 @@ ITEM(playerkindhead, head)
   virtual truth UpdateArmorPictures();
   virtual void DrawArmor(blitdata&) const;
   virtual truth ShowFluids() const { return true; }
-  virtual truth IsAnimated() const { return true; }
  protected:
   graphicdata HelmetGraphicData;
 };
@@ -574,7 +566,6 @@ ITEM(playerkindtorso, humanoidtorso)
   virtual void DrawArmor(blitdata&) const;
   virtual void SignalVolumeAndWeightChange();
   virtual truth ShowFluids() const { return true; }
-  virtual truth IsAnimated() const { return true; }
  protected:
   graphicdata TorsoArmorGraphicData;
   graphicdata CloakGraphicData;
@@ -591,7 +582,6 @@ ITEM(playerkindrightarm, rightarm)
   virtual truth UpdateArmorPictures();
   virtual void DrawArmor(blitdata&) const;
   virtual truth ShowFluids() const { return true; }
-  virtual truth IsAnimated() const { return true; }
  protected:
   graphicdata ArmArmorGraphicData;
   graphicdata GauntletGraphicData;
@@ -607,7 +597,6 @@ ITEM(playerkindleftarm, leftarm)
   virtual truth UpdateArmorPictures();
   virtual void DrawArmor(blitdata&) const;
   virtual truth ShowFluids() const { return true; }
-  virtual truth IsAnimated() const { return true; }
  protected:
   graphicdata ArmArmorGraphicData;
   graphicdata GauntletGraphicData;
@@ -623,7 +612,6 @@ ITEM(playerkindgroin, groin)
   virtual truth UpdateArmorPictures();
   virtual void DrawArmor(blitdata&) const;
   virtual truth ShowFluids() const { return true; }
-  virtual truth IsAnimated() const { return true; }
  protected:
   graphicdata GroinArmorGraphicData;
 };
@@ -638,7 +626,6 @@ ITEM(playerkindrightleg, rightleg)
   virtual truth UpdateArmorPictures();
   virtual void DrawArmor(blitdata&) const;
   virtual truth ShowFluids() const { return true; }
-  virtual truth IsAnimated() const { return true; }
  protected:
   graphicdata LegArmorGraphicData;
   graphicdata BootGraphicData;
@@ -654,7 +641,6 @@ ITEM(playerkindleftleg, leftleg)
   virtual truth UpdateArmorPictures();
   virtual void DrawArmor(blitdata&) const;
   virtual truth ShowFluids() const { return true; }
-  virtual truth IsAnimated() const { return true; }
  protected:
   graphicdata LegArmorGraphicData;
   graphicdata BootGraphicData;
@@ -663,7 +649,6 @@ ITEM(playerkindleftleg, leftleg)
 ITEM(magicmushroomtorso, normaltorso)
 {
  protected:
-  virtual int GetClassAnimationFrames() const { return 64; }
   virtual v2 GetBitmapPos(int) const;
 };
 
@@ -671,7 +656,6 @@ ITEM(dogtorso, normaltorso)
 {
  protected:
   virtual void Draw(blitdata&) const;
-  virtual int GetClassAnimationFrames() const { return 16; }
   virtual v2 GetBitmapPos(int) const;
 };
 
@@ -679,7 +663,6 @@ ITEM(blinkdogtorso, dogtorso)
 {
  protected:
   virtual alpha GetAlphaA(int) const;
-  virtual int GetClassAnimationFrames() const { return 64; }
 };
 
 ITEM(mysticfrogtorso, normaltorso)
@@ -687,7 +670,6 @@ ITEM(mysticfrogtorso, normaltorso)
  public:
   virtual truth AllowAlphaEverywhere() const { return true; }
  protected:
-  virtual int GetClassAnimationFrames() const { return 128; }
   virtual col16 GetOutlineColor(int) const;
   virtual alpha GetOutlineAlpha(int) const;
 };
@@ -695,7 +677,6 @@ ITEM(mysticfrogtorso, normaltorso)
 ITEM(lobhsetorso, largetorso)
 {
  protected:
-  virtual int GetClassAnimationFrames() const { return 32; }
   virtual col16 GetMaterialColorD(int) const;
 };
 

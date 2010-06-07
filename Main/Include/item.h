@@ -492,7 +492,6 @@ class item : public object
   virtual void TryToRust(long);
   void RemoveFluid(fluid*);
   void AddFluid(liquid*, festring, int, truth);
-  virtual truth IsAnimated() const;
   const rawbitmap* GetRawPicture() const;
   void DrawFluidGearPictures(blitdata&, int = 0) const;
   void DrawFluidBodyArmorPictures(blitdata&, int) const;

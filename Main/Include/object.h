@@ -45,8 +45,6 @@ class object : public entity, public id
   int GetVisualEffects() const { return VisualEffects; }
   void SetVisualEffects(int What) { VisualEffects = What; }
   virtual int GetForcedVisualEffects() const { return 0; }
-  int GetAnimationFrames() const { return GraphicData.AnimationFrames; }
-  virtual truth IsAnimated() const { return GraphicData.AnimationFrames > 1; }
   virtual void CalculateEmitation();
   void LoadMaterial(inputfile&, material*&);
   virtual const fearray<long>& GetMaterialConfigChances() const = 0;
@@ -82,13 +80,11 @@ class object : public entity, public id
   virtual truth AddRustLevelDescription(festring&, truth) const;
   virtual truth AddMaterialDescription(festring&, truth) const;
   int RandomizeMaterialConfiguration();
-  virtual int GetClassAnimationFrames() const { return 1; }
   void AddContainerPostFix(festring&) const;
   void AddLumpyPostFix(festring&) const;
   truth AddEmptyAdjective(festring&, truth) const;
   virtual v2 GetBitmapPos(int) const = 0;
   void RandomizeVisualEffects();
-  virtual void ModifyAnimationFrames(int&) const { }
   virtual int GetRustDataA() const;
   virtual int GetRustDataB() const { return NOT_RUSTED; }
   virtual int GetRustDataC() const { return NOT_RUSTED; }

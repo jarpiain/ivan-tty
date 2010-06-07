@@ -262,7 +262,6 @@ void level::GenerateTunnel(int FromX, int FromY, int TargetX, int TargetY, truth
 
 void level::Generate(int Index)
 {
-  game::BusyAnimation();
   Initialize(LevelScript->GetSize()->X, LevelScript->GetSize()->Y);
   game::SetCurrentArea(this);
   game::SetCurrentLevel(this);
@@ -376,7 +375,6 @@ void level::CreateItems(int Amount)
 
 truth level::MakeRoom(const roomscript* RoomScript)
 {
-  game::BusyAnimation();
   v2 Pos = RoomScript->GetPos()->Randomize();
   v2 Size = RoomScript->GetSize()->Randomize();
   int x, y;
@@ -398,11 +396,9 @@ truth level::MakeRoom(const roomscript* RoomScript)
   RoomClass->SetFlags(*RoomScript->GetFlags());
   AddRoom(RoomClass);
   RoomClass->SetDivineMaster(*RoomScript->GetDivineMaster());
-  game::BusyAnimation();
   std::vector<v2> OKForDoor, Inside, Border;
 
   GenerateRectangularRoom(OKForDoor, Inside, Border, RoomScript, RoomClass, Pos, Size);
-  game::BusyAnimation();
 
   if(*RoomScript->GenerateFountains() && !(RAND() % 10))
     GetLSquare(Inside[RAND() % Inside.size()])->ChangeOLTerrain(fountain::Spawn());
@@ -417,7 +413,6 @@ truth level::MakeRoom(const roomscript* RoomScript)
 
   if(*RoomScript->GenerateTunnel() && !Door.empty())
   {
-    game::BusyAnimation();
     v2 OutsideDoorPos = Door[RAND() % Door.size()]; // An other room
 
     if(OKForDoor.empty())
@@ -461,7 +456,6 @@ truth level::MakeRoom(const roomscript* RoomScript)
 
   if(*RoomScript->GenerateDoor())
   {
-    game::BusyAnimation();
     v2 DoorPos;
 
     if(OKForDoor.empty())
@@ -486,7 +480,6 @@ truth level::MakeRoom(const roomscript* RoomScript)
 
     for(int x = 0; x < CharacterMap->GetSize()->X; ++x)
     {
-      game::BusyAnimation();
 
       for(y = 0; y < CharacterMap->GetSize()->Y; ++y)
 	if(IsValidScript(CharacterScript = CharacterMap->GetContentScript(x, y)))
@@ -518,8 +511,6 @@ truth level::MakeRoom(const roomscript* RoomScript)
 
     for(int x = 0; x < ItemMap->GetSize()->X; ++x)
     {
-      game::BusyAnimation();
-
       for(y = 0; y < ItemMap->GetSize()->Y; ++y)
 	if(IsValidScript(ItemScript = ItemMap->GetContentScript(x, y)))
 	  for(uint c1 = 0; c1 < ItemScript->Size; ++c1)
@@ -555,8 +546,6 @@ truth level::MakeRoom(const roomscript* RoomScript)
 
     for(int x = 0; x < GTerrainMap->GetSize()->X; ++x)
     {
-      game::BusyAnimation();
-
       for(y = 0; y < GTerrainMap->GetSize()->Y; ++y)
 	if(IsValidScript(GTerrainScript = GTerrainMap->GetContentScript(x, y)))
 	{
@@ -581,8 +570,6 @@ truth level::MakeRoom(const roomscript* RoomScript)
 
     for(int x = 0; x < OTerrainMap->GetSize()->X; ++x)
     {
-      game::BusyAnimation();
-
       for(y = 0; y < OTerrainMap->GetSize()->Y; ++y)
 	if(IsValidScript(OTerrainScript = OTerrainMap->GetContentScript(x, y)))
 	{
@@ -596,7 +583,6 @@ truth level::MakeRoom(const roomscript* RoomScript)
 
   for(std::list<squarescript>::const_iterator i = Square.begin(); i != Square.end(); ++i)
   {
-    game::BusyAnimation();
     const squarescript* Script = &*i;
     const interval* ScriptTimes = Script->GetTimes();
     int Times = ScriptTimes ? ScriptTimes->Randomize() : 1;
@@ -1139,8 +1125,6 @@ void level::Draw(truth AnimationDraw) const
 
   if(!game::GetSeeWholeMapCheatMode())
   {
-    if(!AnimationDraw)
-    {
       for(int x = XMin; x < XMax; ++x)
       {
 	BlitData.Dest = game::CalculateScreenCoordinates(v2(x, YMin));
@@ -1157,30 +1141,6 @@ void level::Draw(truth AnimationDraw) const
 	    Square->DrawMemorized(BlitData);
 	}
       }
-    }
-    else
-    {
-      for(int x = XMin; x < XMax; ++x)
-      {
-	BlitData.Dest = game::CalculateScreenCoordinates(v2(x, YMin));
-	lsquare** SquarePtr = &Map[x][YMin];
-
-	for(int y = YMin; y < YMax; ++y, ++SquarePtr, BlitData.Dest.Y += TILE_SIZE)
-	{
-	  const lsquare* Square = *SquarePtr;
-
-	  if(Square->LastSeen == LOSTick)
-	    Square->Draw(BlitData);
-	  else
-	  {
-	    const character* C = Square->Character;
-
-	    if(C && C->CanBeSeenByPlayer())
-	      Square->DrawMemorizedCharacter(BlitData);
-	  }
-	}
-      }
-    }
   }
   else
   {
@@ -1284,8 +1244,6 @@ void level::GenerateRectangularRoom(std::vector<v2>& OKForDoor, std::vector<v2>&
     Border.push_back(v2(x, Pos.Y));
     Border.push_back(v2(x, Pos.Y + Size.Y - 1));
   }
-
-  game::BusyAnimation();
 
   for(y = Pos.Y + 1; y < Pos.Y + Size.Y - 1; ++y, Counter += 2)
   {
@@ -1782,7 +1740,6 @@ void level::GenerateDungeon(int Index)
   const contentscript<olterrain>* OTerrain = LevelScript->GetFillSquare()->GetOTerrain();
   long Counter = 0;
   int x;
-  game::BusyAnimation();
 
   for(x = 0; x < XSize; ++x)
     for(int y = 0; y < YSize; ++y, ++Counter)
@@ -1795,8 +1752,6 @@ void level::GenerateDungeon(int Index)
 
   for(c = 0; c < Rooms; ++c)
   {
-    game::BusyAnimation();
-
     if(c < RoomList.size())
     {
       int i;
@@ -1820,8 +1775,6 @@ void level::GenerateDungeon(int Index)
     }
   }
 
-  game::BusyAnimation();
-
   if(!*LevelScript->IgnoreDefaultSpecialSquares())
   {
     /* Gum solution */
@@ -1834,7 +1787,6 @@ void level::GenerateDungeon(int Index)
 
       for(std::list<squarescript>::const_iterator i = Square.begin(); i != Square.end(); ++i)
       {
-	game::BusyAnimation();
 	ApplyLSquareScript(&*i);
       }
     }
@@ -1844,7 +1796,6 @@ void level::GenerateDungeon(int Index)
 
   for(std::list<squarescript>::const_iterator i = Square.begin(); i != Square.end(); ++i)
   {
-    game::BusyAnimation();
     ApplyLSquareScript(&*i);
   }
 
@@ -1905,8 +1856,6 @@ void level::GenerateJungle()
 
     for(x = 0; x < XSize; ++x)
     {
-      game::BusyAnimation();
-
       for(y = 0; y < YSize; ++y)
       {
 	if(FlagMap[x][y] != PREFERRED)
@@ -1922,7 +1871,6 @@ void level::CreateTunnelNetwork(int MinLength, int MaxLength, int MinNodes, int 
 {
   v2 Pos = StartPos, Direction;
   int Length;
-  game::BusyAnimation();
   FlagMap[Pos.X][Pos.Y] = PREFERRED;
 
   for(int c1 = 0; c1 < MaxNodes; ++c1)
@@ -1957,7 +1905,6 @@ void level::GenerateDesert()
       Map[x][y]->SetLTerrain(solidterrain::Spawn(SAND_TERRAIN), 0);
     }
 
-  game::BusyAnimation();
   int AmountOfCactuses = RAND_N(10);
   int c;
 
@@ -1979,7 +1926,6 @@ void level::GenerateSteppe()
       Map[x][y]->SetLTerrain(solidterrain::Spawn(GRASS_TERRAIN), 0);
     }
 
-  game::BusyAnimation();
   int c;
 
   int AmountOfBoulders = RAND_N(20) + 5;
@@ -2062,7 +2008,6 @@ void level::GenerateTundra()
       Map[x][y]->SetLTerrain(solidterrain::Spawn(SNOW_TERRAIN), 0);
     }
 
-  game::BusyAnimation();
   int c;
   int AmountOfBoulders = RAND_N(20) + 8;
 
@@ -2128,8 +2073,6 @@ void level::GenerateGlacier()
 
     for(x = 0; x < XSize; ++x)
     {
-      game::BusyAnimation();
-
       for(y = 0; y < YSize; ++y)
       {
 	if(!(FlagMap[x][y] & PREFERRED))

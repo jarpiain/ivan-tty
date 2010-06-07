@@ -13,8 +13,8 @@
 /* Compiled through wmapset.cpp */
 
 const char* ocean::GetNameStem() const { return "ocean"; }
-v2 ocean::GetBitmapPos(int Frame) const
-{ return v2(48 + ((Frame << 3)&~8), 48); }
+v2 ocean::GetBitmapPos(int) const
+{ return v2(48, 48); }
 const char* ocean::SurviveMessage() const
 { return "you manage to reach the shore"; }
 const char* ocean::MonsterSurviveMessage() const

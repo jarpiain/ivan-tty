@@ -90,12 +90,11 @@ truth dungeon::PrepareLevel(int Index, truth Visual)
     NewLevel->SetLevelScript(GetLevelScript(Index));
 
     if(Visual)
-      game::TextScreen(CONST_S("Entering ") + GetLevelDescription(Index) + CONST_S("...\n\nThis may take some time, please wait."), WHITE, false, &game::BusyAnimation);
+      game::TextScreen(CONST_S("Entering ") + GetLevelDescription(Index) + CONST_S("...\n\nThis may take some time, please wait."), WHITE, false);
 
     NewLevel->Generate(Index);
     game::SetCurrentLSquareMap(NewLevel->GetMap());
     Generated[Index] = true;
-    game::BusyAnimation();
 
     if(*NewLevel->GetLevelScript()->GenerateMonsters())
       NewLevel->GenerateNewMonsters(NewLevel->GetIdealPopulation(), false);

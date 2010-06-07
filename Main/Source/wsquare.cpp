@@ -38,7 +38,7 @@ void wsquare::Load(inputfile& SaveFile)
 
 void wsquare::Draw(blitdata& BlitData)
 {
-  if(Flags & NEW_DRAW_REQUEST || AnimatedEntities)
+  if(Flags & NEW_DRAW_REQUEST)
   {
     BlitData.Luminance = ivanconfig::ApplyContrastTo(Luminance);
     GWTerrain->Draw(BlitData);
@@ -66,9 +66,6 @@ void wsquare::ChangeWTerrain(gwterrain* NewGround, owterrain* NewOver)
 
 void wsquare::ChangeGWTerrain(gwterrain* NewGround)
 {
-  if(GWTerrain->IsAnimated())
-    DecStaticAnimatedEntities();
-
   delete GWTerrain;
   SetGWTerrain(NewGround);
   Flags |= DESCRIPTION_CHANGE|NEW_DRAW_REQUEST;
@@ -76,9 +73,6 @@ void wsquare::ChangeGWTerrain(gwterrain* NewGround)
 
 void wsquare::ChangeOWTerrain(owterrain* NewOver)
 {
-  if(OWTerrain && OWTerrain->IsAnimated())
-    DecStaticAnimatedEntities();
-
   delete OWTerrain;
   SetOWTerrain(NewOver);
   Flags |= DESCRIPTION_CHANGE|NEW_DRAW_REQUEST;
@@ -97,9 +91,6 @@ void wsquare::SetGWTerrain(gwterrain* What)
   if(What)
   {
     What->SetWSquareUnder(this);
-
-    if(What->IsAnimated())
-      IncStaticAnimatedEntities();
   }
 }
 
@@ -110,9 +101,6 @@ void wsquare::SetOWTerrain(owterrain* What)
   if(What)
   {
     What->SetWSquareUnder(this);
-
-    if(What->IsAnimated())
-      IncStaticAnimatedEntities();
   }
 }
 

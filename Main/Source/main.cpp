@@ -53,7 +53,6 @@ int Main(int argc, char **argv)
   game::InitLuxTable();
   ivanconfig::Initialize();
   igraph::Init();
-  game::CreateBusyAnimationCache();
   globalwindowhandler::SetQuitMessageHandler(game::HandleQuitMessage);
   msgsystem::Init();
   protosystem::Initialize();
