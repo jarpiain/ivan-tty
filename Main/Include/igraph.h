@@ -37,21 +37,21 @@ struct graphicid
   ushort BitmapPosX NO_ALIGNMENT;
   ushort BitmapPosY NO_ALIGNMENT;
   packcol16 Color[4] NO_ALIGNMENT;
-  uchar Frame NO_ALIGNMENT;
-  uchar FileIndex NO_ALIGNMENT;
+  uchar Frame;
+  uchar FileIndex;
   ushort SpecialFlags NO_ALIGNMENT;
-  packalpha Alpha[4] NO_ALIGNMENT;
-  packalpha BaseAlpha NO_ALIGNMENT;
-  uchar SparkleFrame NO_ALIGNMENT;
-  uchar SparklePosX NO_ALIGNMENT;
-  uchar SparklePosY NO_ALIGNMENT;
+  packalpha Alpha[4];
+  packalpha BaseAlpha;
+  uchar SparkleFrame;
+  uchar SparklePosX;
+  uchar SparklePosY;
   packcol16 OutlineColor NO_ALIGNMENT;
-  packalpha OutlineAlpha NO_ALIGNMENT;
-  uchar FlyAmount NO_ALIGNMENT;
+  packalpha OutlineAlpha;
+  uchar FlyAmount;
   v2 Position NO_ALIGNMENT;
-  uchar RustData[4] NO_ALIGNMENT;
+  uchar RustData[4];
   ushort Seed NO_ALIGNMENT;
-  uchar WobbleData NO_ALIGNMENT;
+  uchar WobbleData;
 };
 
 #ifdef VC
