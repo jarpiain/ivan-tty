@@ -64,7 +64,6 @@ ulong game::NextTrapID = 1;
 team** game::Team;
 ulong game::LOSTick;
 v2 game::CursorPos(-1, -1);
-truth game::Zoom;
 truth game::Generating = false;
 double game::AveragePlayerArmStrengthExperience;
 double game::AveragePlayerLegStrengthExperience;
@@ -754,10 +753,10 @@ int game::Load(const festring& SaveName)
 
   if(Version != SAVE_FILE_VERSION)
   {
-    if(!iosystem::Menu(0, v2(RES.X >> 1, RES.Y >> 1), CONST_S("Sorry, this save is incompatible with the new version.\rStart new game?\r"), CONST_S("Yes\rNo\r"), LIGHT_GRAY))
+    /*if(!iosystem::Menu(0, v2(RES.X >> 1, RES.Y >> 1), CONST_S("Sorry, this save is incompatible with the new version.\rStart new game?\r"), CONST_S("Yes\rNo\r"), LIGHT_GRAY))*/
       return NEW_GAME;
-    else
-      return BACK;
+    /*else
+      return BACK;*/
   }
 
   SaveFile >> GameScript >> CurrentDungeonIndex >> CurrentLevelIndex >> Camera;
@@ -1130,7 +1129,8 @@ truth game::HandleQuitMessage()
   {
     if(IsInGetCommand())
     {
-      switch(Menu(0, v2(RES.X >> 1, RES.Y >> 1), CONST_S("Do you want to save your game before quitting?\r"), CONST_S("Yes\rNo\rCancel\r"), LIGHT_GRAY))
+      //switch(Menu(0, v2(RES.X >> 1, RES.Y >> 1), CONST_S("Do you want to save your game before quitting?\r"), CONST_S("Yes\rNo\rCancel\r"), LIGHT_GRAY))
+      switch(0)
       {
        case 0:
 	Save();
@@ -1534,8 +1534,8 @@ int game::CalculateRoughDirection(v2 Vector)
 
 int game::Menu(bitmap* BackGround, v2 Pos, const festring& Topic, const festring& sMS, col16 Color, const festring& SmallText1, const festring& SmallText2)
 {
-  int Return = iosystem::Menu(BackGround, Pos, Topic, sMS, Color, SmallText1, SmallText2);
-  return Return;
+  //int Return = iosystem::Menu(BackGround, Pos, Topic, sMS, Color, SmallText1, SmallText2);
+  return -1;
 }
 
 void game::InitDangerMap()
@@ -3077,7 +3077,7 @@ void game::CommandScreen(const festring& Topic, ulong PossibleFlags, ulong Const
 	else
 	  Entry << (1 << c & Flags ? "yes" : "no");
 
-	List.AddEntry(Entry, Changeable ? LIGHT_GRAY : DARK_GRAY, 0, NO_IMAGE, Changeable);
+	List.AddEntry(Entry, Changeable ? LIGHT_GRAY : DARK_GRAY, 0, Changeable);
       }
 
     int Chosen = List.Draw();

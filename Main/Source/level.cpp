@@ -1108,49 +1108,44 @@ truth level::CollectCreatures(charactervector& CharacterArray, character* Leader
   return true;
 }
 
-void level::Draw(truth AnimationDraw) const
+void level::Draw() const
 {
   const int XMin = Max(game::GetCamera().X, 0);
   const int YMin = Max(game::GetCamera().Y, 0);
   const int XMax = Min(XSize, game::GetCamera().X + game::GetScreenXSize());
   const int YMax = Min(YSize, game::GetCamera().Y + game::GetScreenYSize());
-  const ulong LOSTick = game::GetLOSTick();
-  blitdata BlitData = { DOUBLE_BUFFER,
-			{ 0, 0 },
-			{ 0, 0 },
-			{ TILE_SIZE, TILE_SIZE },
-			{ 0 },
-			TRANSPARENT_COLOR,
-			ALLOW_ANIMATE|ALLOW_ALPHA };
+  ulong LOSTick = game::GetLOSTick();
+
+  v2 Grid;
 
   if(!game::GetSeeWholeMapCheatMode())
   {
-      for(int x = XMin; x < XMax; ++x)
+    for(int x = XMin; x < XMax; ++x)
+    {
+      Grid = game::CalculateScreenCoordinates(v2(x, YMin));
+      lsquare** SquarePtr = &Map[x][YMin];
+
+      for(int y = YMin; y < YMax; ++y, ++SquarePtr, Grid.Y++)
       {
-	BlitData.Dest = game::CalculateScreenCoordinates(v2(x, YMin));
-	lsquare** SquarePtr = &Map[x][YMin];
+        const lsquare* Square = *SquarePtr;
+        const ulong LastSeen = Square->LastSeen;
 
-	for(int y = YMin; y < YMax; ++y, ++SquarePtr, BlitData.Dest.Y += TILE_SIZE)
-	{
-	  const lsquare* Square = *SquarePtr;
-	  const ulong LastSeen = Square->LastSeen;
-
-	  if(LastSeen == LOSTick)
-	    Square->Draw(BlitData);
-	  else if(Square->Flags & STRONG_BIT || LastSeen == LOSTick - 2)
-	    Square->DrawMemorized(BlitData);
-	}
+        if(LastSeen == LOSTick)
+          Square->Draw(Grid);
+        else if(Square->Flags & STRONG_BIT || LastSeen == LOSTick - 2)
+          Square->DrawMemorized(Grid);
       }
+    }
   }
   else
   {
     for(int x = XMin; x < XMax; ++x)
     {
-      BlitData.Dest = game::CalculateScreenCoordinates(v2(x, YMin));
+      Grid = game::CalculateScreenCoordinates(v2(x, YMin));
       lsquare** SquarePtr = &Map[x][YMin];
 
-      for(int y = YMin; y < YMax; ++y, ++SquarePtr, BlitData.Dest.Y += TILE_SIZE)
-	(*SquarePtr)->Draw(BlitData);
+      for(int y = YMin; y < YMax; ++y, ++SquarePtr, Grid.Y++)
+	(*SquarePtr)->Draw(Grid);
     }
   }
 }

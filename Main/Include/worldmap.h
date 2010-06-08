@@ -45,7 +45,7 @@ class worldmap : public area
   int GetAltitude(v2);
   charactervector& GetPlayerGroup();
   character* GetPlayerGroupMember(int);
-  virtual void Draw(truth) const;
+  virtual void Draw() const;
   void CalculateLuminances();
   void CalculateNeighbourBitmapPoses();
   wsquare* GetNeighbourWSquare(v2, int) const;

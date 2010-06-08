@@ -29,7 +29,7 @@ class area
   area();
   area(int, int);
   virtual ~area();
-  virtual void Draw(truth) const = 0;
+  virtual void Draw() const = 0;
   void Save(outputfile&) const;
   void Load(inputfile&);
   int GetFlag(v2 Pos) const { return FlagMap[Pos.X][Pos.Y]; }

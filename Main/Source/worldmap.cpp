@@ -596,43 +596,40 @@ void worldmap::RemoveEmptyContinents()
 	}
 }
 
-void worldmap::Draw(truth) const
+void worldmap::Draw() const
 {
   const int XMin = Max(game::GetCamera().X, 0);
   const int YMin = Max(game::GetCamera().Y, 0);
   const int XMax = Min(XSize, game::GetCamera().X + game::GetScreenXSize());
   const int YMax = Min(YSize, game::GetCamera().Y + game::GetScreenYSize());
-  blitdata BlitData = { DOUBLE_BUFFER,
-			{ 0, 0 },
-			{ 0, 0 },
-			{ TILE_SIZE, TILE_SIZE },
-			{ 0 },
-			TRANSPARENT_COLOR,
-			ALLOW_ANIMATE|ALLOW_ALPHA };
+
+  v2 Grid;
 
   if(!game::GetSeeWholeMapCheatMode())
   {
     for(int x = XMin; x < XMax; ++x)
     {
-      BlitData.Dest = game::CalculateScreenCoordinates(v2(x, YMin));
+      Grid = game::CalculateScreenCoordinates(v2(x, YMin));
       wsquare** Square = &Map[x][YMin];
 
-      for(int y = YMin; y < YMax;
-	  ++y, ++Square, BlitData.Dest.Y += TILE_SIZE)
-	if((*Square)->LastSeen)
-	  (*Square)->Draw(BlitData);
+      for(int y = YMin; y < YMax; ++y, ++Square, Grid.Y++)
+      {
+        if((*Square)->LastSeen)
+          (*Square)->Draw(Grid);
+      }
     }
   }
   else
   {
     for(int x = XMin; x < XMax; ++x)
     {
-      BlitData.Dest = game::CalculateScreenCoordinates(v2(x, YMin));
+      Grid = game::CalculateScreenCoordinates(v2(x, YMin));
       wsquare** Square = &Map[x][YMin];
 
-      for(int y = YMin; y < YMax;
-	  ++y, ++Square, BlitData.Dest.Y += TILE_SIZE)
-	(*Square)->Draw(BlitData);
+      for(int y = YMin; y < YMax; ++y, ++Square, Grid.Y++)
+      {
+        (*Square)->Draw(Grid);
+      }
     }
   }
 }
