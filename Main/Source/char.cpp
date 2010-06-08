@@ -850,8 +850,8 @@ void character::Be()
 
 	msgsystem::ThyMessagesAreNowOld();
 
-	if(Action->IsVoluntary() && READ_KEY())
-	  Action->Terminate(false);
+	//if(Action->IsVoluntary() && READ_KEY())
+	//  Action->Terminate(false);
       }
     }
     else
