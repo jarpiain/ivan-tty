@@ -387,6 +387,9 @@ v2 glterrain::GetBorderBitmapPos(v2 BasePos, int I) const
 
 void glterrain::Draw() const
 {
+  int Glyph = GetGlyph();
+  int Attr = GetMainMaterial()->GetAttr();
+  graphics::PutChar(Glyph, Attr);
 }
 
 v2 olterrain::GetBorderBitmapPos(v2 BasePos, int I) const
@@ -417,6 +420,9 @@ v2 olterrain::GetBorderBitmapPos(v2 BasePos, int I) const
 
 void olterrain::Draw() const
 {
+  int Glyph = GetGlyph();
+  int Attr = GetMainMaterial()->GetAttr();
+  graphics::PutChar(Glyph, Attr);
 }
 
 void lterrain::SignalRustLevelChange()
