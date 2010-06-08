@@ -4163,7 +4163,7 @@ void character::DrawPanel() const
        && (1 << c != HASTE || !StateIsActivated(SLOW))
        && (1 << c != SLOW || !StateIsActivated(HASTE)))
     {
-      int Color = ((1 << c) & EquipmentState || TemporaryStateCounter[c] == PERMAMENT)
+      int Color = ((1 << c) & EquipmentState || TemporaryStateCounter[c] == PERMANENT)
                   ? BLUE
 		  : WHITE;
       graphics::PutStrf(Color, "%s ", StateData[c].Description);
