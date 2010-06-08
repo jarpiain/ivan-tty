@@ -2440,10 +2440,7 @@ character* game::CreateGhost()
 
 int game::GetMoveCommandKey(int I)
 {
-  if(!ivanconfig::GetUseAlternativeKeys())
-    return MoveNormalCommandKey[I];
-  else
-    return MoveAbnormalCommandKey[I];
+  return MoveNormalCommandKey[I];
 }
 
 long game::GetScore()
