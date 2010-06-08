@@ -28,9 +28,7 @@ EXTENDED_SYSTEM_SPECIALIZATIONS(material)(0, 0, 0, "material");
 #include "save.h"
 #include "fluid.h"
 #include "smoke.h"
-#include "bitmap.h"
 #include "game.h"
-#include "rawbit.h"
 #include "whandler.h"
 #include "rain.h"
 

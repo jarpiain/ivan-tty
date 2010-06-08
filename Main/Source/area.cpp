@@ -72,9 +72,9 @@ void area::SendNewDrawRequest()
     for(int y = YMin; y < YMax; ++y)
       Map[x][y]->SendStrongNewDrawRequest();
 
-  igraph::GetBackGround()->FastBlit(DOUBLE_BUFFER);
+  /*igraph::GetBackGround()->FastBlit(DOUBLE_BUFFER);
   DOUBLE_BUFFER->DrawRectangle(14, 30, 17 + (game::GetScreenXSize() << 4), 33 + (game::GetScreenYSize() << 4), DARK_GRAY, true);
-  DOUBLE_BUFFER->Fill(16, 32, game::GetScreenXSize() << 4, game::GetScreenYSize() << 4, BLACK);
+  DOUBLE_BUFFER->Fill(16, 32, game::GetScreenXSize() << 4, game::GetScreenYSize() << 4, BLACK);*/
 }
 
 square* area::GetNeighbourSquare(v2 Pos, int I) const

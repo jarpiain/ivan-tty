@@ -23,7 +23,6 @@
 
 #include "whandler.h"
 #include "hscore.h"
-#include "rawbit.h"
 #include "message.h"
 #include "feio.h"
 #include "team.h"
@@ -39,7 +38,6 @@
 #include "wsquare.h"
 #include "game.h"
 #include "graphics.h"
-#include "bitmap.h"
 #include "save.h"
 #include "miscitem.h"
 #include "room.h"

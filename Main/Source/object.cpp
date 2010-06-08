@@ -14,10 +14,8 @@
 #include "materia.h"
 #include "festring.h"
 #include "whandler.h"
-#include "rawbit.h"
 #include "proto.h"
 #include "game.h"
-#include "bitmap.h"
 #include "save.h"
 
 v2 RightArmSparkleValidityArray[128];

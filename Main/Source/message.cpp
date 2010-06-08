@@ -19,7 +19,6 @@
 #include "game.h"
 #include "graphics.h"
 #include "save.h"
-#include "bitmap.h"
 #include "igraph.h"
 
 felist msgsystem::MessageHistory(CONST_S("Message history"), WHITE, 128);

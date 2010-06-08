@@ -19,7 +19,6 @@
 #include "god.h"
 #include "felist.h"
 #include "iconf.h"
-#include "bitmap.h"
 #include "actions.h"
 #include "miscitem.h"
 #include "worldmap.h"

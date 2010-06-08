@@ -16,7 +16,6 @@
 #include "trap.h"
 #include "felibdef.h"
 #include "igraph.h"
-#include "rawbit.h"
 
 SYSTEM_SPECIALIZATIONS(trap)
 
@@ -29,7 +28,6 @@ SYSTEM_SPECIALIZATIONS(trap)
 #include "char.h"
 #include "message.h"
 #include "lsquare.h"
-#include "bitmap.h"
 
 #include "trap.cpp"
 #include "traps.cpp"

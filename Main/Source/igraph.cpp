@@ -12,10 +12,8 @@
 
 #include "igraph.h"
 #include "felist.h"
-#include "bitmap.h"
 #include "graphics.h"
 #include "iconf.h"
-#include "rawbit.h"
 #include "game.h"
 #include "save.h"
 #include "object.h"

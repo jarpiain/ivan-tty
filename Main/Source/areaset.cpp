@@ -14,7 +14,6 @@
 #include "char.h"
 #include "game.h"
 #include "graphics.h"
-#include "bitmap.h"
 #include "terra.h"
 #include "proto.h"
 #include "save.h"

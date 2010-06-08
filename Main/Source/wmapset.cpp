@@ -43,7 +43,6 @@ const int JungleType = jungle::ProtoType.GetIndex();
 #include "whandler.h"
 #include "message.h"
 #include "igraph.h"
-#include "bitmap.h"
 #include "save.h"
 
 #include "cont.cpp"

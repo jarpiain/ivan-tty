@@ -19,7 +19,6 @@
 #include "felist.h"
 #include "room.h"
 #include "game.h"
-#include "bitmap.h"
 #include "proto.h"
 #include "action.h"
 #include "save.h"

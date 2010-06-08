@@ -15,7 +15,6 @@
 #include "feio.h"
 #include "area.h"
 #include "graphics.h"
-#include "bitmap.h"
 #include "igraph.h"
 
 stringoption ivanconfig::DefaultPetName(  "DefaultPetName",
