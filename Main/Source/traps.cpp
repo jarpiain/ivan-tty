@@ -18,14 +18,7 @@ web::web()
   {
     TrapData.TrapID = game::CreateNewTrapID(this);
     TrapData.VictimID = 0;
-    Picture = new bitmap(TILE_V2, TRANSPARENT_COLOR);
-    bitmap Temp(TILE_V2, TRANSPARENT_COLOR);
-    Temp.ActivateFastFlag();
     packcol16 Color = MakeRGB16(250, 250, 250);
-    const rawbitmap* Effect = igraph::GetRawGraphic(GR_EFFECT);
-    Effect->MaskedBlit(&Temp, v2(RAND_2 ? 64 : 80, 32),
-		       ZERO_V2, TILE_V2, &Color);
-    Temp.NormalBlit(Picture, Flags);
   }
 }
 
@@ -124,13 +117,13 @@ truth web::TryToUnStick(character* Victim, v2)
 void web::Save(outputfile& SaveFile) const
 {
   trap::Save(SaveFile);
-  SaveFile << TrapData << Strength << Picture;
+  SaveFile << TrapData << Strength;
 }
 
 void web::Load(inputfile& SaveFile)
 {
   trap::Load(SaveFile);
-  SaveFile >> TrapData >> Strength >> Picture;
+  SaveFile >> TrapData >> Strength;
   game::AddTrapID(this, TrapData.TrapID);
 }
 
@@ -166,9 +159,9 @@ void web::AddTrapName(festring& String, int) const
   String << "a spider web";
 }
 
-void web::Draw(blitdata& BlitData) const
+void web::Draw() const
 {
-  Picture->LuminanceMaskedBlit(BlitData);
+  trap::Draw();
 }
 
 truth web::IsStuckToBodyPart(int I) const
