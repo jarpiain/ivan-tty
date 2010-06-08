@@ -105,7 +105,6 @@ int Main(int argc, char **argv)
 	break;
       }
      case 2:
-      ivanconfig::Show();
       break;
      case 3:
       {

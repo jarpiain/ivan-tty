@@ -68,7 +68,6 @@ command* commandsystem::Command[] =
   new command(&Save, "save game", 'S', 'S', true),
   new command(&ScrollMessagesDown, "scroll messages down", '+', '+', true),
   new command(&ScrollMessagesUp, "scroll messages up", '-', '-', true),
-  new command(&ShowConfigScreen, "show config screen", '\\', '\\', true),
   new command(&ShowInventory, "show inventory", 'i', 'i', true),
   new command(&ShowKeyLayout, "show key layout", '?', '?', true),
   new command(&DrawMessageHistory, "show message history", 'M', 'M', true),
@@ -646,7 +645,7 @@ truth commandsystem::Look(character* Char)
   else
     Msg = CONST_S("Direction keys move cursor, ESC exits, 'c' examines a character.");
 
-  game::PositionQuestion(Msg, Char->GetPos(), &game::LookHandler, &game::LookKeyHandler, ivanconfig::GetLookZoom());
+  game::PositionQuestion(Msg, Char->GetPos(), &game::LookHandler, &game::LookKeyHandler);
   return false;
 }
 
@@ -1042,12 +1041,6 @@ truth commandsystem::Go(character* Char)
   Char->EditAP(Char->GetStateAPGain(100)); // gum solution
   Char->GoOn(Go, true);
   return Char->GetAction() != 0;
-}
-
-truth commandsystem::ShowConfigScreen(character*)
-{
-  ivanconfig::Show();
-  return false;
 }
 
 truth commandsystem::AssignName(character*)
