@@ -124,15 +124,6 @@ struct characterdatabase : public databasebase
   int AcidResistance;
   int ConsumeFlags;
   long TotalVolume;
-  packv2 HeadBitmapPos;
-  packv2 TorsoBitmapPos;
-  packv2 ArmBitmapPos;
-  packv2 LegBitmapPos;
-  packv2 RightArmBitmapPos;
-  packv2 LeftArmBitmapPos;
-  packv2 RightLegBitmapPos;
-  packv2 LeftLegBitmapPos;
-  packv2 GroinBitmapPos;
   packcol16 ClothColor;
   packcol16 SkinColor;
   packcol16 CapColor;
@@ -216,6 +207,8 @@ struct characterdatabase : public databasebase
   festring RunDescriptionLineOne;
   festring RunDescriptionLineTwo;
   truth AllowPlayerToChangeEquipment;
+  int Glyph;
+  int Attr;
 };
 
 class characterprototype
@@ -450,15 +443,6 @@ class character : public entity, public id
   DATA_BASE_VALUE(int, AcidResistance);
   DATA_BASE_VALUE(int, ConsumeFlags);
   DATA_BASE_VALUE(long, TotalVolume);
-  virtual DATA_BASE_VALUE(v2, HeadBitmapPos);
-  virtual DATA_BASE_VALUE(v2, TorsoBitmapPos);
-  virtual DATA_BASE_VALUE(v2, ArmBitmapPos);
-  virtual DATA_BASE_VALUE(v2, LegBitmapPos);
-  virtual DATA_BASE_VALUE(v2, RightArmBitmapPos);
-  virtual DATA_BASE_VALUE(v2, LeftArmBitmapPos);
-  virtual DATA_BASE_VALUE(v2, RightLegBitmapPos);
-  virtual DATA_BASE_VALUE(v2, LeftLegBitmapPos);
-  virtual DATA_BASE_VALUE(v2, GroinBitmapPos);
   virtual DATA_BASE_VALUE(col16, ClothColor);
   virtual DATA_BASE_VALUE(col16, SkinColor);
   virtual DATA_BASE_VALUE(col16, CapColor);
@@ -474,6 +458,8 @@ class character : public entity, public id
   virtual DATA_BASE_VALUE(col16, LegMainColor);
   virtual DATA_BASE_VALUE(col16, LegSpecialColor);
   virtual DATA_BASE_TRUTH(IsNameable);
+  virtual DATA_BASE_VALUE(int, Glyph);
+  virtual DATA_BASE_VALUE(int, Attr);
   virtual DATA_BASE_VALUE(col24, BaseEmitation); // devirtualize ASAP
   DATA_BASE_TRUTH(UsesLongArticle);
   DATA_BASE_VALUE(const festring&, Adjective);
@@ -1029,7 +1015,6 @@ class character : public entity, public id
   void Initialize(int, int);
   virtual void PostConstruct() { }
   void LoadDataBaseStats();
-  virtual v2 GetBodyPartBitmapPos(int, truth = false) const;
   virtual col16 GetBodyPartColorA(int, truth = false) const;
   virtual col16 GetBodyPartColorB(int, truth = false) const;
   virtual col16 GetBodyPartColorC(int, truth = false) const;

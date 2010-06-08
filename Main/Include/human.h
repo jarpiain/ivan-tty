@@ -165,7 +165,6 @@ CHARACTER(humanoid, character)
   virtual const char* GetRunDescriptionLine(int) const;
   virtual const char* GetNormalDeathMessage() const;
  protected:
-  virtual v2 GetBodyPartBitmapPos(int, truth = false) const;
   virtual col16 GetBodyPartColorB(int, truth = false) const;
   virtual col16 GetBodyPartColorC(int, truth = false) const;
   virtual col16 GetBodyPartColorD(int, truth = false) const;
@@ -204,9 +203,6 @@ CHARACTER(playerkind, humanoid)
   virtual truth IsHuman() const { return true; }
   virtual col16 GetHairColor() const { return HairColor; }
   virtual col16 GetEyeColor() const { return EyeColor; }
-  virtual v2 GetHeadBitmapPos() const;
-  virtual v2 GetRightArmBitmapPos() const;
-  virtual v2 GetLeftArmBitmapPos() const;
   virtual int GetNaturalSparkleFlags() const;
   virtual truth IsPlayerKind() const { return true; }
   virtual double GetNaturalExperience(int) const;
@@ -242,9 +238,6 @@ CHARACTER(petrus, humanoid)
 CHARACTER(farmer, humanoid)
 {
  public:
-  virtual v2 GetHeadBitmapPos() const;
-  virtual v2 GetRightArmBitmapPos() const;
-  virtual v2 GetLeftArmBitmapPos() const { return GetRightArmBitmapPos(); }
 };
 
 CHARACTER(guard, humanoid)

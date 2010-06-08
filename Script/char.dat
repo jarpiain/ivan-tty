@@ -28,6 +28,7 @@ character
   /* Obligatory: DefaultArmStrength */
   /* Obligatory for humanoids: DefaultLegStrength */
   /* Obligatory for humanoids: DefaultDexterity */
+  Attr = 99; /* use torso material */
   DefaultAgility = 0;
   DefaultEndurance = 0;
   DefaultPerception = 0;
@@ -56,7 +57,6 @@ character
   /* Obligatory: TotalVolume */
   IsNameable = true;
   BaseEmitation = 0;
-  /* Obligatory: TorsoBitmapPos */
   UsesLongArticle = false;
   Adjective = "";
   UsesLongAdjectiveArticle = false;
@@ -301,6 +301,7 @@ humanoid
   CanApply = true;
   IsImmuneToLeprosy = false;
   WillCarryItems = true;
+  Glyph = 64; /* @ */
 }
 
 nonhumanoid
@@ -310,6 +311,7 @@ nonhumanoid
 
 playerkind
 {
+  Attr = 15;
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
   DefaultDexterity = 10;
@@ -321,8 +323,6 @@ playerkind
   DefaultCharisma = 10;
   DefaultMana = 10;
   DefaultMoney = 45;
-  TorsoBitmapPos = 32, 416;
-  LegBitmapPos = 0, 416;
   TotalVolume = 80000;
   TotalSize = 175;
   CanRead = true;
@@ -334,6 +334,7 @@ playerkind
 
 petrus
 {
+  Attr = 15;
   DefaultArmStrength = 40;
   DefaultLegStrength = 40;
   DefaultDexterity = 40;
@@ -350,10 +351,6 @@ petrus
   HairColor = rgb16(160, 160, 160);
   ClothColor = rgb16(48, 48, 48);
   EyeColor = rgb16(100, 60, 30);
-  HeadBitmapPos = 96, 144;
-  TorsoBitmapPos = 32, 80;
-  ArmBitmapPos = 64, 16;
-  LegBitmapPos = 0, 0;
   TotalVolume = 80000;
   TotalSize = 225;
   CanRead = true;
@@ -389,6 +386,7 @@ petrus
 
 farmer
 {
+  Attr = 2;
   DefaultArmStrength = 20;
   DefaultLegStrength = 20;
   DefaultDexterity = 20;
@@ -404,8 +402,6 @@ farmer
   TotalVolume = 50000;
   TotalSize = 170;
   NameSingular = "farmer";
-  TorsoBitmapPos = 32, 16;
-  LegBitmapPos = 0, 0;
   Belt = LEATHER belt;
   RightWielded = meleeweapon(AXE);
   KnownCWeaponSkills == AXES;
@@ -437,6 +433,7 @@ farmer
 
 guard
 {
+  Attr = 5;
   DefaultArmStrength = 25;
   DefaultLegStrength = 25;
   DefaultDexterity = 15;
@@ -448,10 +445,6 @@ guard
   DefaultCharisma = 15;
   DefaultMana = 10;
   HairColor = rgb16(140, 60, 60); /* horns */
-  HeadBitmapPos = 96, 112;
-  TorsoBitmapPos = 32, 128;
-  ArmBitmapPos = 64, 80;
-  LegBitmapPos = 0, 64;
   TotalVolume = 70000;
   TotalSize = 180;
   NameSingular = "guard";
@@ -653,6 +646,7 @@ guard
 
 shopkeeper
 {
+  Attr = 1;
   DefaultArmStrength = 20;
   DefaultLegStrength = 30;
   DefaultDexterity = 10;
@@ -665,10 +659,6 @@ shopkeeper
   DefaultMana = 10;
   DefaultMoney = 3000;
   TorsoSpecialColor = rgb16(0, 96, 0);
-  HeadBitmapPos = 96, 64;
-  TorsoBitmapPos = 32, 32;
-  ArmBitmapPos = 64, 16;
-  LegBitmapPos = 0, 32;
   TotalVolume = 150000;
   TotalSize = 160;
   NameSingular = "shopkeeper";
@@ -692,10 +682,6 @@ shopkeeper
     BodyArmor = LEATHER bodyarmor(PLATE_MAIL);
     Belt = LEATHER belt(BELT_OF_CARRYING);
     RightBoot = LEATHER boot;
-    HeadBitmapPos = 96, 64;
-    TorsoBitmapPos = 48, 192;
-    ArmBitmapPos = 64, 0;
-    LegBitmapPos = 0, 16;
     DefaultName = "Zolku";
     FriendlyReplies =
     {
@@ -757,6 +743,7 @@ shopkeeper
 
 priest
 {
+  Attr = 7;
   CanRead = true;
   NameSingular = "priest";
   CanBeCloned = false;
@@ -777,10 +764,6 @@ priest
     DefaultCharisma = 20;
     DefaultMana = 20;
     CapColor = rgb16(180, 0, 80);
-    HeadBitmapPos = 96, 128;
-    TorsoBitmapPos = 32, 16;
-    ArmBitmapPos = 64, 16;
-    LegBitmapPos = 0, 32;
     TotalVolume = 100000;
     TotalSize = 180;
     AttachedGod = VALPURUS;
@@ -812,10 +795,6 @@ priest
     DefaultMana = 25;
     TotalVolume = 60000;
     TotalSize = 170;
-    HeadBitmapPos = 112, 0;
-    TorsoBitmapPos = 32, 208;
-    ArmBitmapPos = 64, 208;
-    LegBitmapPos = 0, 144;
     SkinColor = rgb16(160, 100, 64);
     HairColor = rgb16(80, 48, 32);
     AttachedGod = SILVA;
@@ -841,6 +820,7 @@ priest
 
 oree
 {
+  Attr = 1;
   DefaultArmStrength = 40;
   DefaultLegStrength = 40;
   DefaultDexterity = 80;
@@ -854,10 +834,6 @@ oree
   IsCharmable = false;
   IsNameable = false;
   IsUnique = true;
-  HeadBitmapPos = 96, 32;
-  TorsoBitmapPos = 48, 160;
-  ArmBitmapPos = 80, 160;
-  LegBitmapPos = 16, 144;
   ClothColor = rgb16(30, 20, 0);
   SkinColor = rgb16(180, 0, 0);
   EyeColor = rgb16(100, 0, 0);
@@ -898,10 +874,12 @@ oree
   AllowUnconsciousness = false;
   DisplacePriority = 8;
   VomittingIsUnhealthy = false;
+  Glyph = 38; /* & */
 }
 
 darkknight
 {
+  Attr = 8;
   DefaultArmStrength = 30;
   DefaultLegStrength = 30;
   DefaultDexterity = 20;
@@ -912,10 +890,6 @@ darkknight
   DefaultWisdom = 10;
   DefaultCharisma = 10;
   DefaultMana = 10;
-  HeadBitmapPos = 96, 240;
-  TorsoBitmapPos = 32, 16;
-  ArmBitmapPos = 80, 176;
-  LegBitmapPos = 0, 48;
   ClothColor = rgb16(0, 0, 100);
   EyeColor = rgb16(255, 255, 0);
   TotalVolume = 80000;
@@ -1012,7 +986,6 @@ darkknight
     CanBeCloned = false;
     IsPolymorphable = false;
     Inventory = { 2, scrollofenchantarmor { Times = 2; }, scrollofenchantweapon { Times = 2; } }
-    HeadBitmapPos = 96, 112;
     ClothColor = rgb16(100, 0, 0);
     CapColor = rgb16(48, 48, 48);
     HairColor = rgb16(32, 32, 32);
@@ -1030,6 +1003,7 @@ darkknight
 
 ennerbeast
 {
+  Attr = 1;
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
   DefaultDexterity = 10;
@@ -1052,10 +1026,6 @@ ennerbeast
   BaseBiteStrength = 5000;
   CanUseEquipment = false;
   CanBeWished = false;
-  LegBitmapPos = 16, 48;
-  TorsoBitmapPos = 32, 48;
-  ArmBitmapPos = 64, 48;
-  HeadBitmapPos = 96, 320;
   HairColor = rgb16(64, 20, 0);
   ClothColor = rgb16(0, 0, 100);
   BootColor = rgb16(90, 50, 10);
@@ -1076,10 +1046,12 @@ ennerbeast
   }
   AttachedGod = SCABIES;
   BiteCapturesBodyPart = false;
+  Glyph = 79; /* O */
 }
 
 frog
 {
+  Attr = 2;
   HostileReplies == "@Dd croaks angrily.";
   FriendlyReplies =
   {
@@ -1089,6 +1061,7 @@ frog
     "@Dd jumps up and down in enlightened trance.",
     "@Dd goes \"Ribbit! Ribbit!\" full of transcendent delight.";
   }
+  Glyph = 70; /* F */
   NameSingular = "frog";
   IsAbstract = true;
   AttackStyle = USE_HEAD;
@@ -1103,6 +1076,7 @@ frog
 
   Config DARK;
   {
+    Attr = 8;
     DefaultArmStrength = 5;
     DefaultAgility = 40;
     DefaultEndurance = 10;
@@ -1113,7 +1087,6 @@ frog
     DefaultMana = 20;
     BloodMaterial = DARK_FROG_BLOOD;
     TotalVolume = 5000;
-    TorsoBitmapPos = 80, 0;
     TotalSize = 25;
     SkinColor = rgb16(60, 60, 60);
     Adjective = "dark";
@@ -1131,6 +1104,7 @@ frog
 
   Config GREATER_DARK;
   {
+    Attr = 8;
     DefaultArmStrength = 15;
     DefaultAgility = 35;
     DefaultEndurance = 15;
@@ -1142,7 +1116,6 @@ frog
     BaseBiteStrength = 1000;
     BloodMaterial = DARK_FROG_BLOOD;
     TotalVolume = 50000;
-    TorsoBitmapPos = 96, 0;
     TotalSize = 100;
     SkinColor = rgb16(60, 60, 60);
     Adjective = "greater dark";
@@ -1160,6 +1133,7 @@ frog
 
   Config GIANT_DARK;
   {
+    Attr = 8;
     DefaultArmStrength = 45;
     DefaultAgility = 30;
     DefaultEndurance = 20;
@@ -1171,7 +1145,6 @@ frog
     BaseBiteStrength = 1250;
     BloodMaterial = DARK_FROG_BLOOD;
     TotalVolume = 250000;
-    TorsoBitmapPos = 64, 0;
     TotalSize = 200;
     SkinColor = rgb16(60, 60, 60);
     Adjective = "giant dark";
@@ -1200,7 +1173,6 @@ frog
     DefaultCharisma = 15;
     DefaultMana = 20;
     TotalVolume = 5000;
-    TorsoBitmapPos = 80, 0;
     TotalSize = 25;
     SkinColor = rgb16(32, 88, 32);
     Adjective = "light";
@@ -1225,7 +1197,6 @@ frog
     DefaultMana = 25;
     BaseBiteStrength = 1000;
     TotalVolume = 50000;
-    TorsoBitmapPos = 96, 0;
     TotalSize = 100;
     SkinColor = rgb16(32, 88, 32);
     Adjective = "greater light";
@@ -1250,7 +1221,6 @@ frog
     DefaultMana = 30;
     BaseBiteStrength = 1250;
     TotalVolume = 250000;
-    TorsoBitmapPos = 64, 0;
     TotalSize = 200;
     SkinColor = rgb16(32, 88, 32);
     Adjective = "giant light";
@@ -1269,6 +1239,8 @@ frog
 
 billswill
 {
+  Attr = 6;
+  Glyph = 42; /* * */
   DefaultArmStrength = 1;
   DefaultAgility = 50;
   DefaultEndurance = 5;
@@ -1281,7 +1253,6 @@ billswill
   Frequency = 250;
   DangerModifier = 500;
   TotalVolume = 500000;
-  TorsoBitmapPos = 48, 0;
   TotalSize = 100;
   Adjective = "pure";
   NameSingular = "mass";
@@ -1316,6 +1287,8 @@ billswill
 
 skeleton
 {
+  Attr = 7;
+  Glyph = 122; /* z */
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
   DefaultDexterity = 10;
@@ -1329,10 +1302,6 @@ skeleton
   SkinColor = rgb16(160, 160, 160);
   EyeColor = rgb16(0, 0, 0);
   ClothColor = rgb16(111, 74, 37);
-  HeadBitmapPos = 96, 96;
-  TorsoBitmapPos = 32, 96;
-  ArmBitmapPos = 64, 96;
-  LegBitmapPos = 0, 80;
   TotalVolume = 10000;
   TotalSize = 150;
   NameSingular = "skeleton";
@@ -1372,6 +1341,7 @@ skeleton
 
   Config WAR_LORD;
   {
+    Attr = 1;
     AttributeBonus = 200;
     Helmet = METEORIC_STEEL helmet(FULL_HELMET);
     Cloak = PHOENIX_FEATHER cloak;
@@ -1410,6 +1380,8 @@ skeleton
 
 goblin
 {
+  Attr = 2;
+  Glyph = 103; /* g */
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
   DefaultDexterity = 10;
@@ -1423,10 +1395,6 @@ goblin
   SkinColor = rgb16(0, 96, 0);
   EyeColor = rgb16(200, 200, 0);
   ClothColor = rgb16(48, 32, 16);
-  HeadBitmapPos = 96, 48;
-  TorsoBitmapPos = 32, 112;
-  ArmBitmapPos = 64, 144;
-  LegBitmapPos = 16, 64;
   TotalVolume = 25000;
   TotalSize = 100;
   NameSingular = "goblin";
@@ -1477,8 +1445,6 @@ goblin
     RightSWeaponSkillHits = 50;
     LeftSWeaponSkillHits = 50;
     NameSingular = "goblin prince";
-    HeadBitmapPos = 112, 288;
-    TorsoBitmapPos = 48, 208;
     HairColor = rgb16(220, 220, 0);
     ClothColor = rgb16(200, 0, 0);
     Inventory = { 2, potion { SecondaryMaterial = ANTIDOTE_LIQUID; Chance = 20; }, Random { Category = RING; Chance = 20; } }
@@ -1507,8 +1473,6 @@ goblin
     IsNameable = false;
     CanBeCloned = false;
     IsPolymorphable = false;
-    HeadBitmapPos = 96, 288;
-    TorsoBitmapPos = 48, 208;
     HairColor = rgb16(220, 220, 0);
     ClothColor = rgb16(200, 0, 0);
     Inventory = { 5, stone { Chance = 50; }, stone { Chance = 50; }, stone { Chance = 50; }, stone { Chance = 50; }, stone { Chance = 50; } }
@@ -1522,6 +1486,8 @@ goblin
 
 mommo
 {
+  Attr = 3;
+  Glyph = 109; /* m */
   DefaultEndurance = 8;
   DefaultMana = 0;
   CanOpen = false;
@@ -1562,7 +1528,6 @@ mommo
     DefaultWisdom = 3;
     DefaultCharisma = 4;
     TotalVolume = 150000;
-    TorsoBitmapPos = 176, 0;
     TotalSize = 100;
     Adjective = "conical";
     HPRequirementForGeneration = 120;
@@ -1582,7 +1547,6 @@ mommo
     DefaultWisdom = 2;
     DefaultCharisma = 3;
     TotalVolume = 300000;
-    TorsoBitmapPos = 192, 0;
     TotalSize = 75;
     Adjective = "flat";
     HPRequirementForGeneration = 80;
@@ -1597,6 +1561,8 @@ mommo
 
 golem
 {
+  Attr = 99;
+  Glyph = 56; /* 8 */
   DefaultArmStrength = 0; /* depends on material */
   DefaultLegStrength = 0; /* depends on material */
   DefaultDexterity = 0; /* depends on material */
@@ -1608,17 +1574,12 @@ golem
   DefaultCharisma = 5;
   DefaultMana = 5;
   TotalVolume = 100000;
-  TorsoBitmapPos = 256, 0;
   TotalSize = 250;
   NameSingular = "golem";
   CanBeGenerated = true;
   Sex = UNDEFINED;
   SkinColor = rgb16(160, 32, 16); /* for flesh golems */
   EyeColor = rgb16(0, 0, 0);
-  HeadBitmapPos = 96, 256;
-  TorsoBitmapPos = 32, 256;
-  ArmBitmapPos = 64, 256;
-  LegBitmapPos = 0, 256;
   CanUseEquipment = false;
   CreateGolemMaterialConfigurations = true;
   IsAbstract = true;
@@ -1678,6 +1639,7 @@ golem
 
 canine
 {
+  Glyph = 100; /* d */
   IsAbstract = true;
   ConsumeFlags = CT_FRUIT|CT_MEAT|CT_LIQUID|CT_PROCESSED|CT_BONE;
   AttackStyle = USE_HEAD;
@@ -1686,6 +1648,7 @@ canine
 
 wolf
 {
+  Attr = 7;
   DefaultArmStrength = 10;
   DefaultAgility = 25;
   DefaultEndurance = 10;
@@ -1695,7 +1658,6 @@ wolf
   DefaultCharisma = 10;
   DefaultMana = 0;
   TotalVolume = 40000;
-  TorsoBitmapPos = 224, 0;
   HostileReplies == "@Dd growls madly.";
   FriendlyReplies == "@Dd growls happily.";
   TotalSize = 100;
@@ -1712,6 +1674,7 @@ wolf
 
 dog
 {
+  Attr = 3;
   DefaultArmStrength = 5;
   DefaultAgility = 15;
   DefaultEndurance = 8;
@@ -1721,7 +1684,6 @@ dog
   DefaultCharisma = 15;
   DefaultMana = 0;
   TotalVolume = 20000;
-  TorsoBitmapPos = 240, 16;
   HostileReplies == "@Dd barks in fury.";
   /* FriendlyReplies overridden */
   TotalSize = 70;
@@ -1769,6 +1731,8 @@ dog
 
 spider
 {
+  Attr = 2;
+  Glyph = 115; /* s */
   DefaultMana = 0;
   BloodMaterial = SPIDER_BLOOD;
   CanOpen = false;
@@ -1797,7 +1761,6 @@ spider
     DefaultWisdom = 3;
     DefaultCharisma = 4;
     Adjective = "large";
-    TorsoBitmapPos = 272, 0;
     BaseBiteStrength = 400;
     CWeaponSkillHits == 50;
     TotalVolume = 500;
@@ -1816,7 +1779,6 @@ spider
     DefaultWisdom = 4;
     DefaultCharisma = 5;
     Adjective = "giant";
-    TorsoBitmapPos = 256, 0;
     BaseBiteStrength = 400;
     CWeaponSkillHits == 50;
     TotalVolume = 5000;
@@ -1828,6 +1790,8 @@ spider
 
 jackal
 {
+  Attr = 3;
+  Glyph = 100;
   DefaultArmStrength = 3;
   DefaultAgility = 12;
   DefaultEndurance = 6;
@@ -1837,7 +1801,6 @@ jackal
   DefaultCharisma = 7;
   DefaultMana = 0;
   TotalVolume = 15000;
-  TorsoBitmapPos = 304, 0;
   HostileReplies == "@Dd howls in fury.";
   FriendlyReplies == "@Dd howls happily.";
   TotalSize = 80;
@@ -1854,6 +1817,8 @@ jackal
 
 ass
 {
+  Attr = 1;
+  Glyph = 97; /* a */
   DefaultArmStrength = 20;
   DefaultAgility = 4;
   DefaultEndurance = 15;
@@ -1863,7 +1828,6 @@ ass
   DefaultCharisma = 5;
   DefaultMana = 0;
   TotalVolume = 40000;
-  TorsoBitmapPos = 288, 0;
   HostileReplies == "@Dd brays angrily.";
   FriendlyReplies == "@Dd brays cheerfully.";
   TotalSize = 150;
@@ -1888,6 +1852,7 @@ ass
 
 communist /* Ivan */
 {
+  Attr = 1;
   DefaultArmStrength = 40;
   DefaultLegStrength = 40;
   DefaultDexterity = 20;
@@ -1903,10 +1868,6 @@ communist /* Ivan */
   ArmSpecialColor = rgb16(160, 0, 0);
   BeltColor = rgb16(32, 32, 32);
   ClothColor = rgb16(64, 56, 24);
-  HeadBitmapPos = 96, 176;
-  TorsoBitmapPos = 32, 144;
-  ArmBitmapPos = 64, 112;
-  LegBitmapPos = 0, 0;
   TotalVolume = 120000;
   TotalSize = 230;
   CanRead = true;
@@ -1970,6 +1931,7 @@ communist /* Ivan */
 
 hunter
 {
+  Attr = 1;
   DefaultArmStrength = 25;
   DefaultLegStrength = 15;
   DefaultDexterity = 15;
@@ -1983,10 +1945,6 @@ hunter
   ClothColor = rgb16(128, 80, 48);
   BeltColor = rgb16(144, 96, 60);
   BootColor = rgb16(90, 50, 10);
-  HeadBitmapPos = 96, 192;
-  TorsoBitmapPos = 32, 192;
-  ArmBitmapPos = 64, 128;
-  LegBitmapPos = 0, 96;
   TotalVolume = 80000;
   TotalSize = 180;
   NameSingular = "hunter";
@@ -2060,6 +2018,7 @@ hunter
 
 bear
 {
+  Glyph = 85; /* U */
   DefaultArmStrength = 50;
   DefaultAgility = 15;
   DefaultEndurance = 20;
@@ -2068,7 +2027,6 @@ bear
   DefaultWisdom = 10;
   DefaultCharisma = 15;
   DefaultMana = 0;
-  TorsoBitmapPos = 336, 0;
   HostileReplies == "@Dd growls madly.";
   FriendlyReplies == "@Dd growls happily.";
   NameSingular = "bear";
@@ -2083,6 +2041,7 @@ bear
 
   Config BLACK_BEAR;
   {
+    Attr = 8;
     Adjective = "black";
     SkinColor = rgb16(80, 80, 80);
     CanBeGenerated = true;
@@ -2093,6 +2052,7 @@ bear
 
   Config GRIZZLY_BEAR;
   {
+    Attr = 3;
     Adjective = "grizzly";
     SkinColor = rgb16(140, 80, 40);
     CanBeGenerated = true;
@@ -2103,6 +2063,7 @@ bear
 
   Config CAVE_BEAR;
   {
+    Attr = 1;
     Adjective = "cave";
     SkinColor = rgb16(170, 130, 90);
     CanBeGenerated = true;
@@ -2113,6 +2074,7 @@ bear
 
   Config POLAR_BEAR;
   {
+    Attr = 15;
     Adjective = "polar";
     SkinColor = rgb16(240, 240, 240);
     TotalVolume = 300000;
@@ -2124,6 +2086,8 @@ bear
 
 dolphin
 {
+  Attr = 12;
+  Glyph = 59; /* ; */
   DefaultArmStrength = 10;
   DefaultAgility = 30;
   DefaultEndurance = 10;
@@ -2136,7 +2100,6 @@ dolphin
   CanOpen = false;
   MoveType = SWIM;
   TotalVolume = 150000;
-  TorsoBitmapPos = 320, 0;
   HostileReplies == "@Dd peeps diabolically to you.";
   FriendlyReplies == "@Dd peeps passionately to you.";
   TotalSize = 300;
@@ -2160,6 +2123,7 @@ dolphin
 
 slave
 {
+  Attr = 3;
   DefaultArmStrength = 25;
   DefaultLegStrength = 25;
   DefaultDexterity = 15;
@@ -2194,6 +2158,7 @@ slave
 
 petrusswife
 {
+  Attr = 3;
   DefaultArmStrength = 7;
   DefaultLegStrength = 7;
   DefaultDexterity = 7;
@@ -2207,9 +2172,6 @@ petrusswife
   Sex = FEMALE;
   ClothColor = rgb16(150, 0, 0);
   BeltColor = rgb16(180, 180, 0);
-  TorsoBitmapPos = 32, 160;
-  ArmBitmapPos = 64, 160;
-  LegBitmapPos = 0, 112;
   TotalVolume = 40000;
   TotalSize = 170;
   CanRead = true;
@@ -2238,21 +2200,18 @@ petrusswife
   Config 1;
   {
     HairColor = rgb16(24, 24, 24);
-    HeadBitmapPos = 112, 0;
     PostFix = "number 1";
   }
 
   Config 2;
   {
     HairColor = rgb16(24, 24, 24);
-    HeadBitmapPos = 112, 16;
     PostFix = "number 2";
   }
 
   Config 3;
   {
     HairColor = rgb16(48, 40, 8);
-    HeadBitmapPos = 112, 0;
     PostFix = "number 3";
   }
 
@@ -2262,27 +2221,25 @@ petrusswife
     DefaultWisdom = 8;
     DefaultCharisma = 85;
     HairColor = rgb16(200, 96, 0);
-    HeadBitmapPos = 112, 32;
     PostFix = "number 4";
   }
 
   Config 5;
   {
     HairColor = rgb16(60, 48, 24);
-    HeadBitmapPos = 112, 48;
     PostFix = "number 5";
   }
 
   Config 6;
   {
     HairColor = rgb16(200, 0, 0);
-    HeadBitmapPos = 112, 64;
     PostFix = "number 6";
   }
 }
 
 housewife
 {
+  Attr = 3;
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
   DefaultDexterity = 15;
@@ -2298,10 +2255,6 @@ housewife
   ArmMainColor = rgb16(100, 100, 100);
   LegMainColor = rgb16(180, 80, 0);
   /* HairColor is random */
-  /* HeadBitmapPos is random */
-  TorsoBitmapPos = 32, 160;
-  ArmBitmapPos = 64, 160;
-  LegBitmapPos = 0, 128;
   TotalVolume = 70000;
   TotalSize = 160;
   CanRead = true;
@@ -2327,6 +2280,7 @@ housewife
 
 femaleslave
 {
+  Attr = 3;
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
   DefaultDexterity = 10;
@@ -2340,10 +2294,6 @@ femaleslave
   Sex = FEMALE;
   SkinColor = rgb16(160, 100, 64);
   HairColor = rgb16(80, 48, 32);
-  HeadBitmapPos = 112, 80;
-  TorsoBitmapPos = 32, 208;
-  ArmBitmapPos = 64, 208;
-  LegBitmapPos = 0, 144;
   TotalVolume = 40000;
   TotalSize = 170;
   Adjective = "female";
@@ -2395,6 +2345,7 @@ femaleslave
 
 librarian
 {
+  Attr = 1;
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
   DefaultDexterity = 5;
@@ -2408,10 +2359,6 @@ librarian
   HairColor = rgb16(200, 200, 200);
   ClothColor = rgb16(48, 48, 48);
   ArmMainColor = rgb16(180, 180, 180);
-  HeadBitmapPos = 96, 224;
-  TorsoBitmapPos = 32, 80;
-  ArmBitmapPos = 64, 16;
-  LegBitmapPos = 0, 0;
   TotalVolume = 80000;
   TotalSize = 170;
   CanRead = true;
@@ -2436,6 +2383,8 @@ librarian
 
 zombie
 {
+  Attr = 2;
+  Glyph = 90; /* Z */
   DefaultArmStrength = 12;
   DefaultLegStrength = 12;
   DefaultDexterity = 3;
@@ -2449,10 +2398,6 @@ zombie
   SkinColor = rgb16(0, 120, 120);
   EyeColor = rgb16(200, 200, 0);
   ClothColor = rgb16(56, 16, 96);
-  HeadBitmapPos = 112, 112;
-  TorsoBitmapPos = 32, 224;
-  ArmBitmapPos = 64, 224;
-  LegBitmapPos = 0, 160;
   TotalVolume = 80000;
   TotalSize = 160;
   NameSingular = "zombie";
@@ -2470,6 +2415,8 @@ zombie
 
 imp
 {
+  Attr = 1;
+  Glyph = 53; /* 5 */
   DefaultPerception = 15;
   DefaultIntelligence = 10;
   DefaultWisdom = 10;
@@ -2478,10 +2425,6 @@ imp
   EyeColor = rgb16(200, 200, 0);
   ClothColor = rgb16(111, 74, 37);
   HairColor = rgb16(100, 0, 0);
-  HeadBitmapPos = 96, 16;
-  TorsoBitmapPos = 48, 112;
-  ArmBitmapPos = 64, 32;
-  LegBitmapPos = 16, 80;
   TotalVolume = 40000;
   TotalSize = 100;
   NameSingular = "imp";
@@ -2504,6 +2447,8 @@ imp
 
 bat
 {
+  Attr = 8;
+  Glyph = 98; /* b */
   DefaultArmStrength = 2;
   DefaultAgility = 40;
   DefaultEndurance = 8;
@@ -2515,7 +2460,6 @@ bat
   StandVerb = "flying";
   CanOpen = false;
   TotalVolume = 1000;
-  TorsoBitmapPos = 464, 0;
   HostileReplies == "@Dd squeaks evilly.";
   FriendlyReplies == "@Dd squeaks happily.";
   TotalSize = 20;
@@ -2536,6 +2480,7 @@ bat
 
 mistress
 {
+  Attr = 1;
   DefaultArmStrength = 20;
   DefaultLegStrength = 20;
   DefaultDexterity = 40;
@@ -2550,10 +2495,6 @@ mistress
   SkinColor = rgb16(255, 212, 192);
   HairColor = rgb16(200, 200, 200);
   ClothColor = rgb16(35, 35, 35);
-  HeadBitmapPos = 112, 240;
-  TorsoBitmapPos = 48, 96;
-  ArmBitmapPos = 80, 80;
-  LegBitmapPos = 16, 32;
   TotalVolume = 50000;
   TotalSize = 180;
   CanRead = true;
@@ -2727,6 +2668,7 @@ mistress
 
 werewolfhuman
 {
+  Attr = 8;
   DefaultArmStrength = 20;
   DefaultLegStrength = 20;
   DefaultDexterity = 20;
@@ -2740,10 +2682,6 @@ werewolfhuman
   TotalVolume = 70000;
   EyeColor = rgb16(160, 0, 0);
   ClothColor = rgb16(114, 84, 52);
-  HeadBitmapPos = 96, 0;
-  TorsoBitmapPos = 48, 0;
-  ArmBitmapPos = 64, 0;
-  LegBitmapPos = 0, 176;
   HostileReplies == "@Dd screams in fury.";
   FriendlyReplies == "@Dd screams in a friendly manner.";
   TotalSize = 170;
@@ -2762,6 +2700,7 @@ werewolfhuman
 
 werewolfwolf
 {
+  Attr = 8;
   DefaultArmStrength = 25;
   DefaultLegStrength = 25;
   DefaultDexterity = 35;
@@ -2776,10 +2715,6 @@ werewolfwolf
   EyeColor = rgb16(200, 200, 0);
   ClothColor = rgb16(114, 84, 52);
   SkinColor = rgb16(100, 100, 100);
-  HeadBitmapPos = 112, 144;
-  TorsoBitmapPos = 48, 0;
-  ArmBitmapPos = 64, 240;
-  LegBitmapPos = 0, 192;
   HostileReplies == "@Dd growls in fury.";
   FriendlyReplies == "@Dd growls cheerfully.";
   TotalSize = 200;
@@ -2799,6 +2734,8 @@ werewolfwolf
 
 kobold
 {
+  Attr = 1;
+  Glyph = 75; /* K */
   DefaultArmStrength = 6;
   DefaultLegStrength = 6;
   DefaultDexterity = 7;
@@ -2814,10 +2751,6 @@ kobold
   HairColor = rgb16(35, 35, 35);
   ClothColor = rgb16(48, 48, 48);
   LegMainColor = rgb16(111, 74, 37);
-  HeadBitmapPos = 112, 208;
-  TorsoBitmapPos = 48, 176;
-  ArmBitmapPos = 64, 176;
-  LegBitmapPos = 16, 112;
   TotalVolume = 30000;
   TotalSize = 90;
   NameSingular = "kobold";
@@ -2893,6 +2826,8 @@ kobold
 
 gibberling
 {
+  Attr = 5;
+  Glyph = 71; /* G */
   DefaultArmStrength = 7;
   DefaultLegStrength = 7;
   DefaultDexterity = 5;
@@ -2907,10 +2842,6 @@ gibberling
   HairColor = rgb16(50, 20, 80);
   ClothColor = rgb16(111, 74, 37);
   EyeColor = rgb16(50, 0, 0);
-  HeadBitmapPos = 112, 96;
-  TorsoBitmapPos = 48, 144;
-  ArmBitmapPos = 80, 144;
-  LegBitmapPos = 16, 128;
   TotalVolume = 30000;
   TotalSize = 90;
   SkinColor = rgb16(100, 100, 200);
@@ -2933,6 +2864,7 @@ gibberling
 
 largecat
 {
+  Glyph = 102; /* f */
   DefaultArmStrength = 4;
   DefaultAgility = 35;
   DefaultEndurance = 10;
@@ -2942,7 +2874,6 @@ largecat
   DefaultCharisma = 20;
   DefaultMana = 0;
   TotalVolume = 15000;
-  TorsoBitmapPos = 496, 0;
   HostileReplies == "@Dd mews.";
   FriendlyReplies == "@Dd purrs.";
   TotalSize = 60;
@@ -2962,6 +2893,7 @@ largecat
 
 largerat
 {
+  Glyph = 114; /* r */
   DefaultArmStrength = 3;
   DefaultAgility = 20;
   DefaultEndurance = 10;
@@ -2972,7 +2904,6 @@ largerat
   DefaultMana = 0;
   CanOpen = false;
   TotalVolume = 4000;
-  TorsoBitmapPos = 512, 0;
   HostileReplies == "The furious @du squeaks.";
   FriendlyReplies == "@Dd squeaks in a friendly manner.";
   TotalSize = 30;
@@ -2992,6 +2923,8 @@ largerat
 
 angel
 {
+  Attr = 15;
+  Glyph = 65; /* A */
   DefaultArmStrength = 25;
   DefaultLegStrength = 25;
   DefaultDexterity = 25;
@@ -3005,7 +2938,6 @@ angel
   IsCharmable = false;
   Sex = FEMALE;
   TotalVolume = 60000;
-  TorsoBitmapPos = 432, 0;
   TotalSize = 200;
   CanRead = true;
   NameSingular = "angel";
@@ -3014,10 +2946,6 @@ angel
   SkinColor = rgb16(200, 200, 200);
   HairColor = rgb16(180, 180, 0);
   EyeColor = rgb16(48, 48, 255);
-  HeadBitmapPos = 112, 256;
-  TorsoBitmapPos = 48, 256;
-  ArmBitmapPos = 80, 256;
-  /* LegBitmapPos is not used */
   CreateDivineConfigurations = true;
   IsAbstract = true;
   /* Equipment initialization overridden */
@@ -3044,6 +2972,7 @@ angel
 
 kamikazedwarf
 {
+  Glyph = 104; /* h */
   DefaultArmStrength = 20;
   DefaultLegStrength = 20;
   DefaultDexterity = 20;
@@ -3054,10 +2983,6 @@ kamikazedwarf
   DefaultWisdom = 5;
   DefaultCharisma = 10;
   DefaultMana = 10;
-  HeadBitmapPos = 112, 160;
-  TorsoBitmapPos = 48, 16;
-  ArmBitmapPos = 80, 0;
-  LegBitmapPos = 0, 208;
   HairColor = rgb16(144, 72, 0);
   BeltColor = rgb16(72, 56, 16);
   TotalVolume = 60000;
@@ -3092,6 +3017,7 @@ kamikazedwarf
 
 mammoth
 {
+  Glyph = 77; /* M */
   DefaultArmStrength = 80;
   DefaultAgility = 20;
   DefaultEndurance = 15;
@@ -3101,7 +3027,6 @@ mammoth
   DefaultCharisma = 10;
   DefaultMana = 0;
   TotalVolume = 2000000;
-  TorsoBitmapPos = 528, 0;
   HostileReplies == "@Dd roars furiously.";
   FriendlyReplies == "@Dd roars kindly.";
   TotalSize = 500;
@@ -3124,6 +3049,7 @@ mammoth
 
 unicorn
 {
+  Glyph = 117; /* u */
   DefaultArmStrength = 15;
   DefaultAgility = 40;
   DefaultEndurance = 10;
@@ -3135,7 +3061,6 @@ unicorn
   HostileReplies == "The furious @du neighs.";
   FriendlyReplies == "The happy @du neighs.";
   TotalVolume = 100000;
-  TorsoBitmapPos = 544, 0;
   TotalSize = 200;
   NameSingular = "unicorn";
   AttackStyle = USE_LEGS|USE_HEAD;
@@ -3177,6 +3102,7 @@ unicorn
 
 genie
 {
+  Glyph = 50; /* 2 */
   DefaultArmStrength = 20;
   DefaultLegStrength = 20; /* not used */
   DefaultDexterity = 25;
@@ -3193,10 +3119,6 @@ genie
   CanRead = true;
   NameSingular = "genie";
   ClothColor = rgb16(100, 100, 160);
-  HeadBitmapPos = 96, 272;
-  TorsoBitmapPos = 32, 272;
-  ArmBitmapPos = 64, 272;
-  /* LegBitmapPos is not used */
   KnownCWeaponSkills == LARGE_SWORDS;
   CWeaponSkillHits == 500;
   RightSWeaponSkillHits = 200;
@@ -3219,6 +3141,7 @@ genie
 
 lion
 {
+  Glyph = 102; /* f */
   DefaultArmStrength = 20;
   DefaultAgility = 25;
   DefaultEndurance = 15;
@@ -3228,7 +3151,6 @@ lion
   DefaultCharisma = 20;
   DefaultMana = 0;
   TotalVolume = 100000;
-  TorsoBitmapPos = 576, 0;
   HostileReplies == "@Dd growls furiously.";
   FriendlyReplies == "@Dd growls happily.";
   TotalSize = 200;
@@ -3247,6 +3169,8 @@ lion
 
 carnivorousplant
 {
+  Attr = 2;
+  Glyph = 80; /* P */
   DefaultArmStrength = 4;
   DefaultAgility = 2;
   DefaultEndurance = 7;
@@ -3257,7 +3181,6 @@ carnivorousplant
   DefaultMana = 0;
   CanOpen = false;
   TotalVolume = 20000;
-  TorsoBitmapPos = 0, 16;
   HostileReplies == "@Dd is silent.";
   FriendlyReplies == "@Dd is silent.";
   TotalSize = 100;
@@ -3288,7 +3211,6 @@ carnivorousplant
   Config GREATER;
   {
     AttributeBonus = 175;
-    TorsoBitmapPos = 96, 16;
     Adjective = "greater carnivorous";
     BaseBiteStrength = 500;
     CWeaponSkillHits == 50;
@@ -3299,7 +3221,6 @@ carnivorousplant
   Config GIANT;
   {
     AttributeBonus = 250;
-    TorsoBitmapPos = 80, 16;
     Adjective = "giant carnivorous";
     BaseBiteStrength = 700;
     CWeaponSkillHits == 100;
@@ -3311,6 +3232,7 @@ carnivorousplant
 
 buffalo
 {
+  Glyph = 66; /* B */
   DefaultArmStrength = 40;
   DefaultAgility = 25;
   DefaultEndurance = 20;
@@ -3320,7 +3242,6 @@ buffalo
   DefaultCharisma = 5;
   DefaultMana = 0;
   TotalVolume = 200000;
-  TorsoBitmapPos = 16,16;
   HostileReplies == "The angry @du snarls.";
   FriendlyReplies == "The friendly @du snarls.";
   TotalSize = 250;
@@ -3344,6 +3265,8 @@ buffalo
 
 snake
 {
+  Attr = 1;
+  Glyph = 83; /* S */
   DefaultArmStrength = 7;
   DefaultAgility = 5;
   DefaultEndurance = 10;
@@ -3353,7 +3276,6 @@ snake
   DefaultCharisma = 5;
   DefaultMana = 0;
   TotalVolume = 10000;
-  TorsoBitmapPos = 384, 0;
   HostileReplies == "@Dd hisses in fury.";
   FriendlyReplies == "@Dd hisses in a friendly manner.";
   TotalSize = 250;
@@ -3378,6 +3300,8 @@ snake
 
 orc
 {
+  Attr = 1;
+  Glyph = 111; /* o */
   DefaultArmStrength = 15;
   DefaultLegStrength = 15;
   DefaultDexterity = 10;
@@ -3393,10 +3317,6 @@ orc
   ClothColor = rgb16(180, 120, 80);
   BeltColor = rgb16(72, 60, 24);
   LegMainColor = rgb16(96, 80, 48);
-  HeadBitmapPos = 112, 192;
-  TorsoBitmapPos = 48, 0;
-  ArmBitmapPos = 80, 32;
-  LegBitmapPos = 0, 240;
   TotalVolume = 90000;
   TotalSize = 180;
   UsesLongArticle = true;
@@ -3432,7 +3352,6 @@ orc
 
   Config SLAUGHTERER;
   {
-    TorsoBitmapPos = 48, 48;
     AttributeBonus = 20;
     Helmet = BRONZE helmet;
     BodyArmor = BRONZE bodyarmor(CHAIN_MAIL);
@@ -3449,8 +3368,6 @@ orc
   Config SQUAD_LEADER;
   {
     HairColor = rgb16(120, 120, 120);
-    HeadBitmapPos = 112, 176;
-    TorsoBitmapPos = 48, 48;
     AttributeBonus = 40;
     Helmet = IRON helmet(FULL_HELMET);
     BodyArmor = IRON bodyarmor(CHAIN_MAIL);
@@ -3469,10 +3386,6 @@ orc
     ClothColor = rgb16(96, 96, 96);
     LegMainColor = rgb16(72, 72, 72);
     LegSpecialColor = rgb16(112, 80, 48);
-    HeadBitmapPos = 112, 176;
-    TorsoBitmapPos = 48, 32;
-    ArmBitmapPos = 80, 16;
-    LegBitmapPos = 0, 224;
     AttributeBonus = 60;
     Helmet = STEEL helmet(FULL_HELMET);
     BodyArmor = STEEL bodyarmor(CHAIN_MAIL);
@@ -3491,10 +3404,6 @@ orc
     ClothColor = rgb16(72, 72, 72);
     LegMainColor = rgb16(48, 48, 48);
     LegSpecialColor = rgb16(96, 64, 32);
-    HeadBitmapPos = 112, 176;
-    TorsoBitmapPos = 48, 32;
-    ArmBitmapPos = 80, 16;
-    LegBitmapPos = 0, 224;
     AttributeBonus = 80;
     Helmet = MITHRIL helmet(FULL_HELMET) { Enchantment = 1; }
     BodyArmor = MITHRIL bodyarmor(CHAIN_MAIL) { Enchantment = 1; }
@@ -3515,10 +3424,6 @@ orc
     ClothColor = rgb16(48, 48, 48);
     LegMainColor = rgb16(32, 32, 32);
     LegSpecialColor = rgb16(80, 48, 16);
-    HeadBitmapPos = 112, 176;
-    TorsoBitmapPos = 48, 32;
-    ArmBitmapPos = 80, 16;
-    LegBitmapPos = 0, 224;
     AttributeBonus = 100;
     Helmet = MITHRIL helmet(FULL_HELMET) { Enchantment = 2; }
     Cloak = ANGEL_HAIR cloak { Enchantment = 2; }
@@ -3568,10 +3473,6 @@ cossack
   DefaultMana = 0;
   BeltColor = rgb16(48, 48, 48);
   ClothColor = rgb16(64, 56, 24);
-  HeadBitmapPos = 112, 224;
-  TorsoBitmapPos = 48, 80;
-  ArmBitmapPos = 64, 16;
-  LegBitmapPos = 0, 96;
   TotalVolume = 70000;
   TotalSize = 190;
   NameSingular = "cossack";
@@ -3618,10 +3519,6 @@ bananagrower
   SkinColor = rgb16(128, 80, 48);
   HairColor = rgb16(80, 48, 32);
   ClothColor = rgb16(56, 48, 20);
-  HeadBitmapPos = 96, 0;
-  TorsoBitmapPos = 32, 0;
-  ArmBitmapPos = 64, 64;
-  LegBitmapPos = 0, 288;
   Inventory == banana { Times = 10; }
   IsCharmable = false; /* AI will go insane if he leaves New Attnam */
   HostileReplies == "\"Banana POWER!\"";
@@ -3650,6 +3547,7 @@ bananagrower
 
 imperialist
 {
+  Attr = 11;
   DefaultArmStrength = 20;
   DefaultLegStrength = 25;
   DefaultDexterity = 15;
@@ -3676,10 +3574,6 @@ imperialist
   RightSWeaponSkillHits = 500;
   LeftSWeaponSkillHits = 500;
   PanicLevel = 10;
-  TorsoBitmapPos = 48, 240;
-  HeadBitmapPos = 96, 208;
-  ArmBitmapPos = 80, 112;
-  LegBitmapPos = 0, 0;
   ClothColor = rgb16(50, 50, 50);
   UsesLongArticle = true;
   Inventory = { 6, stone, stone, stone, stone, stone, holybook(MELLIS); }
@@ -3798,10 +3692,6 @@ smith
   CWeaponSkillHits == 500;
   RightSWeaponSkillHits = 200;
   LeftSWeaponSkillHits = 200;
-  TorsoBitmapPos = 48, 192;
-  HeadBitmapPos = 112, 160;
-  ArmBitmapPos = 64, 64;
-  LegBitmapPos = 0, 96;
   HairColor = rgb16(200, 200, 200);
   ClothColor = rgb16(100, 100, 100);
   CanRead = true;
@@ -3816,6 +3706,8 @@ smith
 
 ostrich
 {
+  Attr = 4;
+  Glyph = 98; /* b */
   DefaultArmStrength = 15;
   DefaultAgility = 30;
   DefaultEndurance = 10;
@@ -3825,7 +3717,6 @@ ostrich
   DefaultCharisma = 7;
   DefaultMana = 0;
   TotalVolume = 120000;
-  TorsoBitmapPos = 64, 16;
   HostileReplies == "@Dd cackles diabolically.";
   FriendlyReplies == "@Dd cackles cheerfully. @Pp likes @sp life.";
   TotalSize = 230;
@@ -3866,10 +3757,6 @@ elder
   SkinColor = rgb16(128, 80, 48);
   HairColor = rgb16(32, 32, 32);
   ClothColor = rgb16(56, 48, 20);
-  HeadBitmapPos = 96, 224;
-  TorsoBitmapPos = 32, 0;
-  ArmBitmapPos = 64, 0;
-  LegBitmapPos = 0, 288;
   IsUnique = true;
   DefaultName = "Kaethos";
   IsCharmable = false;
@@ -3904,6 +3791,7 @@ elder
 
 encourager
 {
+  Attr = 9;
   DefaultArmStrength = 15;
   DefaultLegStrength = 10;
   DefaultDexterity = 10;
@@ -3917,10 +3805,6 @@ encourager
   CapColor = rgb16(64, 64, 64);
   EyeColor = rgb16(140, 100, 70);
   BootColor = rgb16(90, 60, 20);
-  HeadBitmapPos = 96, 240;
-  TorsoBitmapPos = 32, 0;
-  ArmBitmapPos = 64, 0;
-  LegBitmapPos = 16, 208;
   TotalVolume = 90000;
   TotalSize = 170;
   NameSingular = "banana grower encourager";
@@ -3947,6 +3831,8 @@ encourager
 
 chameleon
 {
+  Attr = 2;
+  Glyph = 99; /* c */
   DefaultArmStrength = 4;
   DefaultAgility = 20;
   DefaultEndurance = 12;
@@ -3957,7 +3843,6 @@ chameleon
   DefaultMana = 0;
   CanOpen = false;
   TotalVolume = 4500;
-  TorsoBitmapPos = 16, 0;
   HostileReplies == "The skin of @du is blood red for a moment.";
   FriendlyReplies == "The skin of @du is white for a moment.";
   TotalSize = 30;
@@ -3979,6 +3864,8 @@ chameleon
 
 floatingeye
 {
+  Attr = 4;
+  Glyph = 101; /* e */
   DefaultArmStrength = 1;
   DefaultAgility = 3;
   DefaultEndurance = 6;
@@ -4002,7 +3889,6 @@ floatingeye
   HPRequirementForGeneration = 40;
   DayRequirementForGeneration = 4;
   Frequency = 1500;
-  TorsoBitmapPos = 32, 0;
   SkinColor = rgb16(180,180,180);
   ClothColor = rgb16(0, 0, 160); /* eye color */
   StandVerb = "levitating";
@@ -4023,6 +3909,8 @@ floatingeye
 
 eddy
 {
+  Attr = 4;
+  Glyph = 42; /* * */
   DefaultArmStrength = 1;
   DefaultAgility = 10;
   DefaultEndurance = 3;
@@ -4032,7 +3920,6 @@ eddy
   DefaultCharisma = 1;
   DefaultMana = 10;
   TotalVolume = 150000; /* most of it is in some other dimension */
-  TorsoBitmapPos = 64, 32;
   HostileReplies == "The @du twirls angrily.";
   FriendlyReplies == "The @du twirls faster for a moment.";
   TotalSize = 100;
@@ -4071,6 +3958,8 @@ eddy
 
 mushroom
 {
+  Attr = 1;
+  Glyph = 112; /* p */
   DefaultArmStrength = 4;
   DefaultAgility = 2;
   DefaultEndurance = 10;
@@ -4080,7 +3969,6 @@ mushroom
   DefaultCharisma = 8;
   DefaultMana = 4;
   TotalVolume = 6250;
-  TorsoBitmapPos = 208, 16;
   TotalSize = 40;
   Adjective = "giant";
   NameSingular = "mushroom";
@@ -4108,6 +3996,7 @@ mushroom
 
 magicmushroom
 {
+  Attr = 6;
   DefaultArmStrength = 6;
   DefaultAgility = 3;
   DefaultEndurance = 20;
@@ -4117,7 +4006,6 @@ magicmushroom
   DefaultCharisma = 10;
   DefaultMana = 7;
   TotalVolume = 10000;
-  TorsoBitmapPos = 128, 32;
   TotalSize = 60;
   Adjective = "magical";
   NameSingular = "mushroom";
@@ -4140,10 +4028,7 @@ magicmushroom
 
 darkmage
 {
-  HeadBitmapPos = 112, 304;
-  TorsoBitmapPos = 48, 224;
-  ArmBitmapPos = 80, 64;
-  LegBitmapPos = 16, 160;
+  Attr = 4;
   ClothColor = rgb16(50, 50, 50);
   CanRead = true;
   CanBeGenerated = true;
@@ -4270,6 +4155,7 @@ darkmage
 
   Config ARCH_MAGE;
   {
+    Attr = 12;
     DefaultArmStrength = 9;
     DefaultLegStrength = 9;
     DefaultDexterity = 30;
@@ -4321,6 +4207,8 @@ darkmage
 
 ghost
 {
+  Attr = 4;
+  Glyph = 71; /* G */
   DefaultArmStrength = 5;
   DefaultAgility = 8;
   DefaultEndurance = 8;
@@ -4332,7 +4220,6 @@ ghost
   StandVerb = "hovering";
   Frequency = 5000;
   TotalVolume = 300000;
-  TorsoBitmapPos = 112, 16;
   TotalSize = 100;
   NameSingular = "ghost";
   ClassStates = INFRA_VISION|ESP|GAS_IMMUNITY|LEVITATION;
@@ -4360,6 +4247,7 @@ ghost
 
 twoheadedmoose
 {
+  Glyph = 77; /* M */
   DefaultArmStrength = 25;
   DefaultAgility = 20;
   DefaultEndurance = 15;
@@ -4369,7 +4257,6 @@ twoheadedmoose
   DefaultCharisma = 3;
   DefaultMana = 0;
   TotalVolume = 200000;
-  TorsoBitmapPos = 176, 16;
   HostileReplies == "Both heads of the moose snarl angrily at you.";
   FriendlyReplies == "Both heads of the moose nod at you.";
   TotalSize = 250;
@@ -4392,6 +4279,8 @@ twoheadedmoose
 
 magpie
 {
+  Attr = 4;
+  Glyph = 98; /* b */
   DefaultArmStrength = 2;
   DefaultAgility = 40;
   DefaultEndurance = 8;
@@ -4403,7 +4292,6 @@ magpie
   StandVerb = "flying";
   CanOpen = false;
   TotalVolume = 500;
-  TorsoBitmapPos = 560, 0;
   HostileReplies == "@Dd peeps evilly.";
   FriendlyReplies == "@Dd chirps happily.";
   TotalSize = 20;
@@ -4426,6 +4314,8 @@ magpie
 
 skunk
 {
+  Attr = 4;
+  Glyph = 107; /* k */
   DefaultArmStrength = 6;
   DefaultAgility = 10;
   DefaultEndurance = 9;
@@ -4435,7 +4325,6 @@ skunk
   DefaultCharisma = 4;
   DefaultMana = 0;
   TotalVolume = 10000;
-  TorsoBitmapPos = 128, 0;
   HostileReplies == "@Dd grawls.";
   FriendlyReplies == "@Dd discusses philosophy with you.";
   TotalSize = 50;
@@ -4458,6 +4347,8 @@ skunk
 
 invisiblestalker
 {
+  Attr = 15;
+  Glyph = 73; /* I */
   DefaultArmStrength = 5;
   DefaultAgility = 25;
   DefaultEndurance = 15;
@@ -4467,7 +4358,6 @@ invisiblestalker
   DefaultCharisma = 5;
   DefaultMana = 0;
   TotalVolume = 40000;
-  TorsoBitmapPos = 224, 16;
   FriendlyReplies == "\"Gods are away on business.\"";
   HostileReplies == "\"Misery is the river of the world.\"";
   TotalSize = 170;
@@ -4500,6 +4390,8 @@ largecreature
 
 elpuri
 {
+  Attr = 6;
+  Glyph = 70; /* F */
   DefaultArmStrength = 80;
   DefaultAgility = 25;
   DefaultEndurance = 20;
@@ -4512,7 +4404,6 @@ elpuri
   IsNameable = false;
   IsUnique = true;
   TotalVolume = 1000000;
-  TorsoBitmapPos = 160, 64;
   TotalSize = 250;
   NameSingular = "Master Dark Frog";
   IsPolymorphable = false;
@@ -4541,6 +4432,8 @@ elpuri
 
 genetrixvesana
 {
+  Attr = 6;
+  Glyph = 80; /* P */
   DefaultArmStrength = 16;
   DefaultAgility = 8;
   DefaultEndurance = 30;
@@ -4550,7 +4443,6 @@ genetrixvesana
   DefaultCharisma = 20;
   DefaultMana = 0;
   TotalVolume = 60000;
-  TorsoBitmapPos = 128, 64;
   TotalSize = 250;
   Adjective = "mother carnivorous";
   NameSingular = "plant";
@@ -4585,6 +4477,8 @@ genetrixvesana
 
 hedgehog
 {
+  Attr = 1;
+  Glyph = 120; /* x */
   DefaultArmStrength = 2;
   DefaultAgility = 15;
   DefaultEndurance = 10;
@@ -4594,7 +4488,6 @@ hedgehog
   DefaultCharisma = 6;
   DefaultMana = 0;
   TotalVolume = 5000;
-  TorsoBitmapPos = 112, 0;
   HostileReplies == "@Dd ignores you.";
   FriendlyReplies == "@Dd ignores you.";
   TotalSize = 30;
@@ -4613,13 +4506,14 @@ hedgehog
 
 bunny
 {
+  Attr = 7;
+  Glyph = 82; /* R */
   DefaultEndurance = 16;
   DefaultPerception = 18;
   DefaultIntelligence = 10;
   DefaultWisdom = 6;
   DefaultCharisma = 10;
   DefaultMana = 0;
-  TorsoBitmapPos = 160, 0;
   HostileReplies == "@Dd squeals furiously.";
   FriendlyReplies == "@Dd squeals happily.";
   SkinColor = rgb16(90, 70, 60);
@@ -4641,7 +4535,6 @@ bunny
     Adjective = "young male carnivorous mutant";
     TotalVolume = 20000;
     AttributeBonus = -50;
-    TorsoBitmapPos = 144, 0;
     DefaultArmStrength = 8;
     DefaultAgility = 10;
     TotalSize = 100;
@@ -4652,7 +4545,6 @@ bunny
     Adjective = "young female carnivorous mutant";
     TotalVolume = 17500;
     AttributeBonus = -50;
-    TorsoBitmapPos = 144, 0;
     DefaultArmStrength = 4;
     DefaultAgility = 15;
     TotalSize = 90;
@@ -4662,7 +4554,6 @@ bunny
   {
     Adjective = "adult male carnivorous mutant";
     TotalVolume = 40000;
-    TorsoBitmapPos = 160, 0;
     DefaultArmStrength = 16;
     DefaultAgility = 20;
     TotalSize = 50;
@@ -4672,7 +4563,6 @@ bunny
   {
     Adjective = "adult female carnivorous mutant";
     TotalVolume = 35000;
-    TorsoBitmapPos = 160, 0;
     DefaultArmStrength = 8;
     DefaultAgility = 30;
     TotalSize = 45;
@@ -4681,6 +4571,8 @@ bunny
 
 vladimir
 {
+  Attr = 15;
+  Glyph = 82; /* R */
   DefaultArmStrength = 60;
   DefaultAgility = 30;
   DefaultEndurance = 25;
@@ -4689,7 +4581,6 @@ vladimir
   DefaultWisdom = 7;
   DefaultCharisma = 15;
   DefaultMana = 0;
-  TorsoBitmapPos = 288, 32;
   HostileReplies == "@Dd roars terribly.";
   FriendlyReplies == "@Dd roars cheerfully.";
   SkinColor = rgb16(110, 90, 80);
@@ -4718,6 +4609,8 @@ vladimir
 
 hattifattener
 {
+  Attr = 15;
+  Glyph = 116; /* t */
   DefaultArmStrength = 3;
   DefaultAgility = 10;
   DefaultEndurance = 10;
@@ -4727,7 +4620,6 @@ hattifattener
   DefaultCharisma = 6;
   DefaultMana = 0;
   TotalVolume = 10000;
-  TorsoBitmapPos = 208, 0;
   HostileReplies == "@Dd emits a thousand sparkles of furious electricity.";
   FriendlyReplies == "@Dd looks at you with @sp round, colourless eyes.";
   TotalSize = 80;
@@ -4757,10 +4649,7 @@ hattifattener
 
 necromancer
 {
-  HeadBitmapPos = 112, 128;
-  TorsoBitmapPos = 48, 352;
-  ArmBitmapPos = 80, 96;
-  LegBitmapPos = 16, 160;
+  Attr = 4;
   ClothColor = rgb16(50, 50, 50);
   EyeColor = rgb16(200, 0, 0);
   BeltColor = rgb16(100, 100, 100);
@@ -4851,6 +4740,7 @@ necromancer
 
 sumowrestler
 {
+  Attr = 3;
   DefaultArmStrength = 25;
   DefaultLegStrength = 35;
   DefaultDexterity = 15;
@@ -4868,10 +4758,6 @@ sumowrestler
   SkinColor = rgb16(128, 80, 48);
   HairColor = rgb16(80, 48, 32);
   ClothColor = rgb16(56, 48, 20);
-  HeadBitmapPos = 96, 336;
-  TorsoBitmapPos = 32, 352;
-  ArmBitmapPos = 64, 336;
-  LegBitmapPos = 16, 176;
   IsCharmable = false;
   HostileReplies == "\"SSSUUUMMMMMMOOOOORRRRGGGGGHHHHH!!!! (Mr. Decos said sumo wrestlers always yell like this)\"";
   AttachedGod = SILVA;
@@ -4928,10 +4814,6 @@ tourist
     TotalVolume = 90000;
     TotalSize = 175;
     NameSingular = "male tourist";
-    HeadBitmapPos = 96, 64;
-    TorsoBitmapPos = 32, 368;
-    ArmBitmapPos = 80, 48;
-    LegBitmapPos = 16, 224;
     DefaultMoney = 5000;
     BootColor = rgb16(200, 0, 0);
     ClothColor = rgb16(200, 16, 200);
@@ -4965,10 +4847,6 @@ tourist
     TotalSize = 170;
     Sex = FEMALE;
     NameSingular = "female tourist";
-    HeadBitmapPos = 112, 48;
-    TorsoBitmapPos = 48, 368;
-    ArmBitmapPos = 64, 160;
-    LegBitmapPos = 16, 192;
     BootColor = rgb16(20, 20, 20);
     HairColor = rgb16(60, 48, 24);
     ClothColor = rgb16(50, 200, 50);
@@ -5001,10 +4879,6 @@ tourist
     TotalVolume = 50000;
     TotalSize = 130;
     NameSingular = "child tourist";
-    HeadBitmapPos = 112, 352;
-    TorsoBitmapPos = 32, 384;
-    ArmBitmapPos = 80, 352;
-    LegBitmapPos = 16, 16;
     BootColor = rgb16(200, 200, 200);
     ClothColor = rgb16(200, 200, 200);
     LegMainColor = rgb16(50, 100, 132);
@@ -5024,6 +4898,7 @@ tourist
 
 blinkdog
 {
+  Attr = 6;
   DefaultArmStrength = 8;
   DefaultAgility = 25;
   DefaultEndurance = 8;
@@ -5069,6 +4944,7 @@ veterankamikazedwarf
 
 archangel
 {
+  Attr = 11;
   DefaultArmStrength = 35;
   DefaultLegStrength = 35;
   DefaultDexterity = 35;
@@ -5206,10 +5082,6 @@ tailor
   CWeaponSkillHits == 500;
   RightSWeaponSkillHits = 200;
   LeftSWeaponSkillHits = 200;
-  TorsoBitmapPos = 48, 48;
-  HeadBitmapPos = 96, 0;
-  ArmBitmapPos = 64, 16;
-  LegBitmapPos = 0, 0;
   ClothColor = rgb16(200, 200, 200);
   LegMainColor = rgb16(111, 64, 37);
   CanRead = true;
@@ -5224,6 +5096,7 @@ tailor
 
 mysticfrog
 {
+  Attr = 6;
   DefaultArmStrength = 10;
   DefaultAgility = 25;
   DefaultEndurance = 12;
@@ -5231,7 +5104,6 @@ mysticfrog
   DefaultMana = 40;
   BaseBiteStrength = 1000;
   TotalVolume = 30000;
-  TorsoBitmapPos = 96, 0;
   TotalSize = 50;
   CWeaponSkillHits == 100;
   IsPolymorphable = false;
@@ -5310,7 +5182,6 @@ lobhse
   AutomaticallySeen = true;
   IsImmuneToStickiness = true;
   DefaultName = "Lobh-Se";
-  TorsoBitmapPos = 192, 64;
   TotalVolume = 500000;
   IsCharmable = false;
   IsNameable = false;

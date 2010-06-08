@@ -222,6 +222,8 @@ INST_ADD_MEMBER(material, contentscript<item>);
 template<> void databasecreator<character>::CreateDataBaseMemberMap()
 {
   databasemembermap& Map = GetDataBaseMemberMap();
+  ADD_MEMBER(Glyph);
+  ADD_MEMBER(Attr);
   ADD_MEMBER(DefaultArmStrength);
   ADD_MEMBER(DefaultLegStrength);
   ADD_MEMBER(DefaultDexterity);
@@ -250,15 +252,6 @@ template<> void databasecreator<character>::CreateDataBaseMemberMap()
   ADD_MEMBER(IsUnique);
   ADD_MEMBER(ConsumeFlags);
   ADD_MEMBER(TotalVolume);
-  ADD_MEMBER(HeadBitmapPos);
-  ADD_MEMBER(TorsoBitmapPos);
-  ADD_MEMBER(ArmBitmapPos);
-  ADD_MEMBER(LegBitmapPos);
-  ADD_MEMBER(RightArmBitmapPos);
-  ADD_MEMBER(LeftArmBitmapPos);
-  ADD_MEMBER(RightLegBitmapPos);
-  ADD_MEMBER(LeftLegBitmapPos);
-  ADD_MEMBER(GroinBitmapPos);
   ADD_MEMBER(ClothColor);
   ADD_MEMBER(SkinColor);
   ADD_MEMBER(CapColor);
@@ -624,16 +617,7 @@ truth databasecreator<type>::AnalyzeData(inputfile& SaveFile, const festring& Wo
 
 template<> void databasecreator<character>::CheckDefaults(const festring& Word, character::database& DataBase)
 {
-  if(Word == "ArmBitmapPos")
-    DataBase.RightArmBitmapPos =
-      DataBase.LeftArmBitmapPos =
-      DataBase.ArmBitmapPos;
-  else if(Word == "LegBitmapPos")
-    DataBase.GroinBitmapPos =
-      DataBase.RightLegBitmapPos =
-      DataBase.LeftLegBitmapPos =
-      DataBase.LegBitmapPos;
-  else if(Word == "ClothColor")
+  if(Word == "ClothColor")
     DataBase.CapColor =
       DataBase.TorsoMainColor =
       DataBase.ArmMainColor =
