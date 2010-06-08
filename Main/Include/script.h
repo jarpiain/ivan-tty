@@ -122,7 +122,7 @@ template <class type> struct fastscriptmember : public scriptmemberbase
   virtual void Replace(scriptmemberbase&);
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
-  type Member NO_ALIGNMENT;
+  type Member;
 };
 
 #ifdef VC
