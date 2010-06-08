@@ -414,7 +414,7 @@ int stack::DrawContents(itemvector& ReturnVector, stack* MergeStack,
   if(Flags & NONE_AS_CHOICE)
   {
     int ImageKey = game::AddToItemDrawVector(itemvector());
-    Contents.AddEntry(CONST_S("none"), LIGHT_GRAY, 0, ImageKey);
+    Contents.AddEntry(CONST_S("none"), LIGHT_GRAY, 0);
   }
 
   if(MergeStack)
