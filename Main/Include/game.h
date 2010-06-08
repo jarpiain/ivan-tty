@@ -248,14 +248,14 @@ class game
   static int GetScreenXSize() { return 42; }
   static int GetScreenYSize() { return 26; }
   static v2 CalculateScreenCoordinates(v2);
-  static v2 PositionQuestion(const festring&, v2, positionhandler = 0, positionkeyhandler = 0, truth = true);
+  static v2 PositionQuestion(const festring&, v2, positionhandler = 0, positionkeyhandler = 0);
   static void LookHandler(v2);
   static int AskForKeyPress(const festring&);
   static gamescript* GetGameScript() { return GameScript; }
   static void InitScript();
   static valuemap& GetGlobalValueMap() { return GlobalValueMap; }
   static void InitGlobalValueMap();
-  static void TextScreen(const festring&, col16 = 0xFFFF, truth = true, void (*)(bitmap*) = 0);
+  static void TextScreen(const festring&, col16 = 0xFFFF, truth = true);
   static void SetCursorPos(v2 What) { CursorPos = What; }
   static truth DoZoom() { return Zoom; }
   static void SetDoZoom(truth What) { Zoom = What; }
@@ -350,11 +350,8 @@ class game
   static truth IsXMas();
   static int AddToItemDrawVector(const itemvector&);
   static void ClearItemDrawVector();
-  static void ItemEntryDrawer(bitmap*, v2, uint);
   static int AddToCharacterDrawVector(character*);
   static void ClearCharacterDrawVector();
-  static void CharacterEntryDrawer(bitmap*, v2, uint);
-  static void GodEntryDrawer(bitmap*, v2, uint);
   static itemvectorvector& GetItemDrawVector() { return ItemDrawVector; }
   static charactervector& GetCharacterDrawVector() { return CharacterDrawVector; }
   static truth IsSumoWrestling() { return SumoWrestling; }

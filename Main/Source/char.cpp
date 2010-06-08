@@ -3118,7 +3118,7 @@ void character::TeleportRandomly(truth Intentional)
   {
     if(IsPlayer())
     {
-      v2 Input = game::PositionQuestion(CONST_S("Where do you wish to teleport? [direction keys move cursor, space accepts]"), GetPos(), &game::TeleportHandler, 0, false);
+      v2 Input = game::PositionQuestion(CONST_S("Where do you wish to teleport? [direction keys move cursor, space accepts]"), GetPos(), &game::TeleportHandler, 0);
 
       if(Input == ERROR_V2) // esc pressed
 	Input = GetPos();

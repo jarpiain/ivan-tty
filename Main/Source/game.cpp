@@ -1116,29 +1116,28 @@ void game::CreateTeams()
 
 festring game::StringQuestion(const festring& Topic, col16 Color, festring::sizetype MinLetters, festring::sizetype MaxLetters, truth AllowExit, stringkeyhandler KeyHandler)
 {
-  DrawEverythingNoBlit();
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23)); // pos may be incorrect!
   festring Return;
-  iosystem::StringQuestion(Return, Topic, v2(16, 6), Color, MinLetters, MaxLetters, false, AllowExit, KeyHandler);
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23));
+  iosystem::StringQuestion(Return, Topic, Color, MinLetters, MaxLetters, AllowExit, KeyHandler);
+
+  GetCurrentArea()->SendNewDrawRequest();
+  DrawEverythingNoBlit();
   return Return;
 }
 
 long game::NumberQuestion(const festring& Topic, col16 Color, truth ReturnZeroOnEsc)
 {
+  long Return = iosystem::NumberQuestion(Topic, Color, ReturnZeroOnEsc);
+  GetCurrentArea()->SendNewDrawRequest();
   DrawEverythingNoBlit();
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23));
-  long Return = iosystem::NumberQuestion(Topic, v2(16, 6), Color, false, ReturnZeroOnEsc);
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23));
   return Return;
 }
 
 long game::ScrollBarQuestion(const festring& Topic, long BeginValue, long Step, long Min, long Max, long AbortValue, col16 TopicColor, col16 Color1, col16 Color2, void (*Handler)(long))
 {
-  DrawEverythingNoBlit();
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23));
-  long Return = iosystem::ScrollBarQuestion(Topic, v2(16, 6), BeginValue, Step, Min, Max, AbortValue, TopicColor, Color1, Color2, GetMoveCommandKey(KEY_LEFT_INDEX), GetMoveCommandKey(KEY_RIGHT_INDEX), false, Handler);
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23));
+  long Return = NumberQuestion(Topic, TopicColor, true);
+  if(Return < Min) Return = Min;
+  else if(Return > Max) Return = Max;
+  Return -= (Return - Min) % Step;
   return Return;
 }
 
@@ -1251,10 +1250,13 @@ void game::CreateGods()
 int game::AskForKeyPress(const festring& Topic)
 {
   DrawEverythingNoBlit();
-  FONT->Printf(DOUBLE_BUFFER, v2(16, 8), WHITE, "%s", Topic.CapitalizeCopy().CStr());
+  graphics::MoveCursor(v2(0,0));
+  graphics::PutStrf(WHITE, "%s ", Topic.CapitalizeCopy().CStr());
   graphics::BlitDBToScreen();
   int Key = GET_KEY();
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23));
+
+  GetCurrentArea()->SendNewDrawRequest();
+  DrawEverythingNoBlit();
   return Key;
 }
 
@@ -1262,10 +1264,9 @@ int game::AskForKeyPress(const festring& Topic)
  * KeyHandler is called when the key has NOT been identified as a movement key
  * Both can be deactivated by passing 0 as parameter */
 
-v2 game::PositionQuestion(const festring& Topic, v2 CursorPos, void (*Handler)(v2), positionkeyhandler KeyHandler, truth Zoom)
+v2 game::PositionQuestion(const festring& Topic, v2 CursorPos, void (*Handler)(v2), positionkeyhandler KeyHandler)
 {
   int Key = 0;
-  SetDoZoom(Zoom);
   v2 Return;
   CursorData = RED_CURSOR;
 
@@ -1276,10 +1277,7 @@ v2 game::PositionQuestion(const festring& Topic, v2 CursorPos, void (*Handler)(v
   {
     square* Square = GetCurrentArea()->GetSquare(CursorPos);
 
-    if(!Square->HasBeenSeen() && (!Square->GetCharacter() || !Square->GetCharacter()->CanBeSeenByPlayer()) && !GetSeeWholeMapCheatMode())
-      DOUBLE_BUFFER->Fill(CalculateScreenCoordinates(CursorPos), TILE_V2, BLACK);
-    else
-      GetCurrentArea()->GetSquare(CursorPos)->SendStrongNewDrawRequest();
+    GetCurrentArea()->GetSquare(CursorPos)->SendStrongNewDrawRequest();
 
     if(Key == ' ' || Key == '.')
     {
@@ -1324,16 +1322,16 @@ v2 game::PositionQuestion(const festring& Topic, v2 CursorPos, void (*Handler)(v
     if(CursorPos.Y < GetCamera().Y + 3 || CursorPos.Y >= GetCamera().Y + GetScreenYSize() - 3)
       UpdateCameraY(CursorPos.Y);
 
-    FONT->Printf(DOUBLE_BUFFER, v2(16, 8), WHITE, "%s", Topic.CStr());
+    graphics::MoveCursor(v2(0,0));
+    graphics::PutStrf(WHITE, "%s ", Topic.CapitalizeCopy().CStr());
     SetCursorPos(CursorPos);
     DrawEverything();
     Key = GET_KEY();
   }
 
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23));
-  igraph::BlitBackGround(v2(RES.X - 96, RES.Y - 96), v2(80, 80));
-  SetDoZoom(false);
   SetCursorPos(v2(-1, -1));
+  GetCurrentArea()->SendNewDrawRequest();
+  DrawEverythingNoBlit();
   return Return;
 }
 
@@ -1409,11 +1407,9 @@ void game::InitGlobalValueMap()
   }
 }
 
-void game::TextScreen(const festring& Text, col16 Color, truth GKey, void (*BitmapEditor)(bitmap*))
+void game::TextScreen(const festring& Text, col16 Color, truth GKey)
 {
-  globalwindowhandler::DisableControlLoops();
-  iosystem::TextScreen(Text, Color, GKey, BitmapEditor);
-  globalwindowhandler::EnableControlLoops();
+  iosystem::TextScreen(Text, Color, GKey);
 }
 
 /* ... all the keys that are acceptable
@@ -1432,7 +1428,8 @@ int game::KeyQuestion(const festring& Message, int DefaultAnswer, int KeyNumber,
 
   va_end(Arguments);
   DrawEverythingNoBlit();
-  FONT->Printf(DOUBLE_BUFFER, v2(16, 8), WHITE, "%s", Message.CStr());
+  graphics::MoveCursor(v2(0,0));
+  graphics::PutStrf(WHITE, "%s ", Message.CStr());
   graphics::BlitDBToScreen();
   int Return = 0;
 
@@ -1452,7 +1449,8 @@ int game::KeyQuestion(const festring& Message, int DefaultAnswer, int KeyNumber,
   }
 
   delete [] Key;
-  igraph::BlitBackGround(v2(16, 6), v2(GetScreenXSize() << 4, 23));
+  GetCurrentArea()->SendNewDrawRequest();
+  DrawEverythingNoBlit();
   return Return;
 }
 
@@ -1572,9 +1570,7 @@ int game::CalculateRoughDirection(v2 Vector)
 
 int game::Menu(bitmap* BackGround, v2 Pos, const festring& Topic, const festring& sMS, col16 Color, const festring& SmallText1, const festring& SmallText2)
 {
-  globalwindowhandler::DisableControlLoops();
   int Return = iosystem::Menu(BackGround, Pos, Topic, sMS, Color, SmallText1, SmallText2);
-  globalwindowhandler::EnableControlLoops();
   return Return;
 }
 
@@ -2541,78 +2537,10 @@ v2 ItemDisplacement[3][3] =
   { v2(-4, -4), v2(0, 0), v2(4, 4) }
 };
 
-void game::ItemEntryDrawer(bitmap* Bitmap, v2 Pos, uint I)
-{
-  blitdata B = { Bitmap,
-		 { 0, 0 },
-		 { 0, 0 },
-		 { TILE_SIZE, TILE_SIZE },
-		 { NORMAL_LUMINANCE },
-		 TRANSPARENT_COLOR,
-		 ALLOW_ANIMATE };
-
-  itemvector ItemVector = ItemDrawVector[I];
-  int Amount = Min<int>(ItemVector.size(), 3);
-
-  for(int c = 0; c < Amount; ++c)
-  {
-    v2 Displacement = ItemDisplacement[Amount - 1][c];
-
-    if(!ItemVector[0]->HasNormalPictureDirection())
-      Displacement.X = -Displacement.X;
-
-    B.Dest = Pos + Displacement;
-
-    if(ItemVector[c]->AllowAlphaEverywhere())
-      B.CustomData |= ALLOW_ALPHA;
-
-    ItemVector[c]->Draw(B);
-    B.CustomData &= ~ALLOW_ALPHA;
-  }
-
-  if(ItemVector.size() > 3)
-  {
-    B.Src.X = 0;
-    B.Src.Y = 16;
-    B.Dest = ItemVector[0]->HasNormalPictureDirection() ? Pos + v2(11, -2) : Pos + v2(-2, -2);
-    B.Flags = 0;
-    igraph::GetSymbolGraphic()->NormalMaskedBlit(B);
-  }
-}
-
 int game::AddToCharacterDrawVector(character* What)
 {
   CharacterDrawVector.push_back(What);
   return CharacterDrawVector.size() - 1;
-}
-
-void game::CharacterEntryDrawer(bitmap* Bitmap, v2 Pos, uint I)
-{
-  if(CharacterDrawVector[I])
-  {
-    blitdata B = { Bitmap,
-		   { 0, 0 },
-		   { Pos.X, Pos.Y },
-		   { TILE_SIZE, TILE_SIZE },
-		   { NORMAL_LUMINANCE },
-		   TRANSPARENT_COLOR,
-		   ALLOW_ANIMATE|ALLOW_ALPHA };
-
-    CharacterDrawVector[I]->DrawBodyParts(B);
-  }
-}
-
-void game::GodEntryDrawer(bitmap* Bitmap, v2 Pos, uint I)
-{
-  blitdata B = { Bitmap,
-		 { I << 4, 0 },
-		 { Pos.X, Pos.Y },
-		 { TILE_SIZE, TILE_SIZE },
-		 { 0 },
-		 TRANSPARENT_COLOR,
-		 0 };
-
-  igraph::GetSymbolGraphic()->NormalMaskedBlit(B);
 }
 
 character* game::GetSumo()
