@@ -18,6 +18,7 @@
 ITEM(meleeweapon, item)
 {
  public:
+  virtual int GetGlyph() const { return '('; }
   meleeweapon() { }
   meleeweapon(const meleeweapon&);
   virtual ~meleeweapon();
@@ -178,6 +179,7 @@ ITEM(saalthul, meleeweapon)
 ITEM(armor, item)
 {
  public:
+  virtual int GetGlyph() const { return '['; }
   virtual long GetPrice() const;
   virtual void AddInventoryEntry(const character*, festring&, int, truth) const;
   virtual void Save(outputfile&) const;
@@ -276,6 +278,7 @@ ITEM(belt, armor)
 ITEM(ring, item)
 {
  public:
+  virtual int GetGlyph() const { return '='; }
   virtual truth IsRing(const character*) const { return true; }
   virtual truth IsInCorrectSlot(int) const;
  protected:
@@ -285,6 +288,7 @@ ITEM(ring, item)
 ITEM(amulet, item)
 {
  public:
+  virtual int GetGlyph() const { return '\"'; }
   virtual truth IsAmulet(const character*) const { return true; }
   virtual truth IsInCorrectSlot(int) const;
  protected:

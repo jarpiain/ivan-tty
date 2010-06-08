@@ -22,6 +22,7 @@
 ITEM(materialcontainer, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   materialcontainer() { }
   materialcontainer(const materialcontainer&);
   virtual ~materialcontainer();
@@ -68,6 +69,7 @@ ITEM(banana, materialcontainer)
   virtual void SignalSpoil(material*);
   virtual truth IsBanana() const { return true; }
   virtual material* RemoveSecondaryMaterial();
+  virtual int GetGlyph() const { return '%'; }
  protected:
   int TimesUsed;
   int Charges;
@@ -87,6 +89,7 @@ ITEM(holybanana, banana)
 ITEM(lantern, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   virtual void SignalSquarePositionChange(int);
   virtual truth AllowAlphaEverywhere() const { return true; }
   virtual int GetSpecialFlags() const;
@@ -106,6 +109,7 @@ ITEM(lantern, item)
 ITEM(can, materialcontainer)
 {
  public:
+  virtual int GetGlyph() const { return '!'; }
   virtual item* BetterVersion() const;
   virtual void DipInto(liquid*, character*);
   virtual truth IsDippable(const character*) const { return !SecondaryMaterial; }
@@ -122,6 +126,8 @@ ITEM(can, materialcontainer)
 
 ITEM(lump, item)
 {
+ public:
+  virtual int GetGlyph() const { return '%'; }
  protected:
   virtual void AddPostFix(festring& String) const { AddLumpyPostFix(String); }
   virtual truth ShowMaterial() const { return false; }
@@ -131,6 +137,7 @@ ITEM(lump, item)
 ITEM(potion, materialcontainer)
 {
  public:
+  virtual int GetGlyph() const { return '!'; }
   virtual item* BetterVersion() const;
   virtual void DipInto(liquid*, character*);
   virtual liquid* CreateDipLiquid();
@@ -150,6 +157,7 @@ ITEM(potion, materialcontainer)
 ITEM(bananapeels, item)
 {
  public:
+  virtual int GetGlyph() const { return '%'; }
   virtual item* BetterVersion() const;
   virtual truth HasBetterVersion() const { return true; }
   virtual void StepOnEffect(character*);
@@ -161,6 +169,7 @@ ITEM(bananapeels, item)
 ITEM(brokenbottle, item)
 {
  public:
+  virtual int GetGlyph() const { return '!'; }
   virtual truth IsBroken() const { return true; }
   virtual item* BetterVersion() const;
   virtual truth HasBetterVersion() const { return true; }
@@ -172,6 +181,7 @@ ITEM(brokenbottle, item)
 ITEM(ivan_scroll, item)
 {
  public:
+  virtual int GetGlyph() const { return '?'; }
   virtual truth CanBeRead(character*) const;
   virtual truth IsReadable(const character*) const { return true; }
   virtual truth ReceiveDamage(character*, int, int, int);
@@ -191,6 +201,8 @@ ITEM(scrollofcharging, ivan_scroll)
 
 ITEM(nut, item)
 {
+ public:
+  virtual int GetGlyph() const { return '%'; }
 };
 
 ITEM(leftnutofpetrus, nut)
@@ -204,11 +216,14 @@ ITEM(leftnutofpetrus, nut)
 ITEM(bone, item)
 {
  public:
+  virtual int GetGlyph() const { return '('; }
   virtual truth DogWillCatchAndConsume(const character*) const;
 };
 
 ITEM(loaf, item)
 {
+ public:
+  virtual int GetGlyph() const { return '%'; }
  protected:
   virtual void AddPostFix(festring& String) const { AddLumpyPostFix(String); }
   virtual truth ShowMaterial() const { return false; }
@@ -227,6 +242,7 @@ ITEM(copyofleftnutofpetrus, nut)
 ITEM(wand, item)
 {
  public:
+  virtual int GetGlyph() const { return '/'; }
   virtual truth Apply(character*);
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
@@ -256,6 +272,7 @@ ITEM(scrollofchangematerial, ivan_scroll)
 ITEM(avatarofvalpurus, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   virtual void Be() { }
   virtual truth IsTheAvatar() const { return true; }
   virtual truth IsConsumable() const { return false; }
@@ -263,21 +280,27 @@ ITEM(avatarofvalpurus, item)
 
 ITEM(kiwi, item)
 {
+ public:
+  virtual int GetGlyph() const { return '%'; }
 };
 
 ITEM(pineapple, item)
 {
+ public:
+  virtual int GetGlyph() const { return '%'; }
 };
 
 ITEM(palmbranch, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   virtual truth IsShield(const character*) const { return true; }
 };
 
 ITEM(backpack, materialcontainer)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   virtual truth Apply(character*);
   virtual truth IsAppliable(const character*) const { return true; }
   virtual truth ReceiveDamage(character*, int, int, int);
@@ -291,6 +314,7 @@ ITEM(backpack, materialcontainer)
 ITEM(holybook, item)
 {
  public:
+  virtual int GetGlyph() const { return ':'; }
   virtual truth CanBeRead(character*) const;
   virtual truth IsReadable(const character*) const { return true; }
   virtual truth ReceiveDamage(character*, int, int, int);
@@ -302,11 +326,14 @@ ITEM(holybook, item)
 
 ITEM(fiftymillionroubles, item)
 {
+ public:
+  virtual int GetGlyph() const { return '$'; }
 };
 
 ITEM(oillamp, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   oillamp();
   oillamp(const oillamp&);
   virtual void Save(outputfile&) const;
@@ -322,6 +349,7 @@ ITEM(oillamp, item)
 ITEM(stone, item)
 {
  public:
+  virtual int GetGlyph() const { return '$'; }
   virtual long GetTruePrice() const;
  protected:
   virtual truth WeightIsIrrelevant() const { return true; }
@@ -336,6 +364,7 @@ ITEM(scrolloftaming, ivan_scroll)
 ITEM(mine, materialcontainer)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   mine() : Active(false) { }
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
@@ -365,6 +394,7 @@ ITEM(mine, materialcontainer)
 ITEM(key, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   virtual truth Apply(character*);
   virtual truth IsAppliable(const character*) const { return true; }
   virtual truth CanOpenDoors() const { return true; }
@@ -374,6 +404,7 @@ ITEM(key, item)
 ITEM(headofelpuri, item) // can't wear equipment, so not "head"
 {
  public:
+  virtual int GetGlyph() const { return '%'; }
   virtual truth IsHeadOfElpuri() const { return true; }
   virtual truth IsConsumable() const { return false; }
   virtual void Be() { }
@@ -382,6 +413,7 @@ ITEM(headofelpuri, item) // can't wear equipment, so not "head"
 ITEM(whistle, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   virtual truth Apply(character*);
   virtual truth IsAppliable(const character*) const { return true; }
   virtual void BlowEffect(character*);
@@ -406,6 +438,7 @@ ITEM(itemcontainer, item)
  public:
   itemcontainer();
   itemcontainer(const itemcontainer&);
+  virtual int GetGlyph() const { return '~'; }
   virtual ~itemcontainer();
   virtual truth Open(character*);
   virtual truth IsOpenable(const character*) const { return true; }
@@ -449,6 +482,7 @@ ITEM(itemcontainer, item)
 ITEM(beartrap, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   beartrap();
   beartrap(const beartrap&);
   virtual ~beartrap();
@@ -495,6 +529,7 @@ ITEM(beartrap, item)
 ITEM(stethoscope, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   virtual truth Apply(character*);
   virtual truth IsAppliable(const character*) const { return true; };
 };
@@ -513,6 +548,8 @@ ITEM(scrollofenchantarmor, ivan_scroll)
 
 ITEM(skull, item)
 {
+ public:
+  virtual int GetGlyph() const { return '%'; }
 };
 
 ITEM(scrollofrepair, ivan_scroll)
@@ -533,6 +570,7 @@ ITEM(encryptedscroll, ivan_scroll)
 ITEM(horn, item)
 {
  public:
+  virtual int GetGlyph() const { return '('; }
   horn() : LastUsed(0) { }
   virtual void Load(inputfile&);
   virtual void Save(outputfile&) const;
@@ -546,6 +584,7 @@ ITEM(horn, item)
 ITEM(carrot, item)
 {
  public:
+  virtual int GetGlyph() const { return '%'; }
   virtual truth BunnyWillCatchAndConsume(const character*) const;
  protected:
   virtual col16 GetMaterialColorB(int) const;
@@ -554,6 +593,7 @@ ITEM(carrot, item)
 ITEM(charmlyre, item)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   charmlyre();
   virtual truth Apply(character*);
   virtual truth IsAppliable(const character*) const { return true; }
@@ -573,6 +613,8 @@ ITEM(scrollofdetectmaterial, ivan_scroll)
 
 ITEM(stick, item)
 {
+ public:
+  virtual int GetGlyph() const { return '('; }
  protected:
   virtual void AddPostFix(festring& String) const { AddLumpyPostFix(String); }
   virtual truth ShowMaterial() const { return false; }
