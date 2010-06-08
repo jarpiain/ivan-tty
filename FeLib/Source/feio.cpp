@@ -61,6 +61,7 @@ void iosystem::TextScreen(const festring& Text, col16 Color, truth GKey)
 
   if(GKey)
     GET_KEY();
+  attroff(Bright | Blink);
 }
 
 /* Returns amount of chars cSF in string sSH */

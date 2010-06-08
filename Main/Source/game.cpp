@@ -1774,7 +1774,6 @@ int game::CompareLightToInt(col24 L, col24 Int)
 
 void game::SetStandardListAttributes(felist& List)
 {
-  List.SetPos(v2(26, 42));
   List.SetWidth(652);
   List.SetFlags(DRAW_BACKGROUND_AFTERWARDS);
   List.SetUpKey(GetMoveCommandKey(KEY_UP_INDEX));
