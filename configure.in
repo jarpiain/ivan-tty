@@ -1,0 +1,20 @@
+AC_INIT
+AC_CONFIG_SRCDIR([Main/Source/main.cpp])
+
+AM_PROG_AS 
+AC_CANONICAL_TARGET
+AM_INIT_AUTOMAKE(ivan,0.50)
+AC_PROG_CC
+
+AC_PROG_CXX
+
+CFLAGS="$CFLAGS "
+LIBS="$LIBS -lncurses"
+CPPFLAGS="$SDL_CFLAGS -DLINUX -DLOCAL_STATE_DIR=\\\"@localstatedir@/ivan\\\" -DDATADIR=\\\"$datadir\\\" -DGCC"
+
+AC_PROG_INSTALL
+
+AC_PROG_RANLIB
+
+AC_CONFIG_FILES([Makefile FeLib/Makefile FeLib/Include/Makefile FeLib/Source/Makefile Script/Makefile Main/Makefile Main/Include/Makefile Main/Source/Makefile])
+AC_OUTPUT
