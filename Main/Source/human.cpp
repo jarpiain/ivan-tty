@@ -1537,65 +1537,39 @@ v2 humanoid::GetEquipmentPanelPos(int I) const // convert to array
   return v2(24, 12);
 }
 
-void humanoid::DrawSilhouette(truth AnimationDraw) const
+// Definitions for the ASCII art damage display
+struct BodyPartData { char ch; int row; int col; };
+BodyPart data bpd[] = {
+ { '|', 1, 1 }, // torso
+ { 'o', 0, 1 }, // head
+ { '/', 1, 0 }, // right hand
+ { '\\', 1, 2 }, // left hand
+ { 'v', 2, 1 }, // groin
+ { '/', 3, 0 }, // right leg
+ { '\\', 3, 2 } // left leg
+};
+
+int BodyPartColors[] = { LIGHT_GRAY, RED, BRED, YELLOW, WHITE };
+
+void humanoid::DrawSilhouette(truth tr) const
 {
-  int c;
-  blitdata B1 = { DOUBLE_BUFFER,
-		  { 0, 0 },
-		  { 0, 0 },
-		  { TILE_SIZE, TILE_SIZE },
-		  { ivanconfig::GetContrastLuminance() },
-		  TRANSPARENT_COLOR,
-		  ALLOW_ANIMATE };
-
-  v2 Where(RES.X - SILHOUETTE_SIZE.X - 39, 53);
-  const int Equipments = GetEquipments();
-
-  if(CanUseEquipment())
-    for(c = 0; c < Equipments; ++c)
-      if(GetBodyPartOfEquipment(c) && EquipmentIsAllowed(c))
-      {
-	v2 Pos = Where + GetEquipmentPanelPos(c);
-
-	if(!AnimationDraw)
-	  DOUBLE_BUFFER->DrawRectangle(Pos + v2(-1, -1), Pos + TILE_V2, DARK_GRAY);
-
-	item* Equipment = GetEquipment(c);
-
-	if(Equipment && (!AnimationDraw))
-	{
-	  igraph::BlitBackGround(Pos, TILE_V2);
-	  B1.Dest = Pos;
-
-	  if(Equipment->AllowAlphaEverywhere())
-	    B1.CustomData |= ALLOW_ALPHA;
-
-	  Equipment->Draw(B1);
-	  B1.CustomData &= ~ALLOW_ALPHA;
-	}
-      }
-
-  if(!AnimationDraw)
+  int PanelPosX = game::GetScreenXSize() + 10;
+  int PanelPosY = 0;
+  for(int c = 0; c < BodyParts; ++c)
   {
-    blitdata B2 = { DOUBLE_BUFFER,
-		    { 0, 0 },
-		    { Where.X + 8, Where.Y },
-		    { SILHOUETTE_SIZE.X, SILHOUETTE_SIZE.Y },
-		    { 0 },
-		    0,
-		    0 };
+    bodypart* BodyPart = GetBodyPart(c);
+    BodyPartData* dat = bpd + c;
 
-    for(int c = 0; c < BodyParts; ++c)
+    int attr = 0;
+    if(BodyPart)
     {
-      bodypart* BodyPart = GetBodyPart(c);
-
-      if(BodyPart)
-      {
-	int Type = BodyPart->IsUsable() ? SILHOUETTE_NORMAL : SILHOUETTE_INTER_LACED;
-	bitmap* Cache = igraph::GetSilhouetteCache(c, BodyPart->GetConditionColorIndex(), Type);
-	Cache->NormalMaskedBlit(B2);
-      }
+      int blink = !BodyPart->IsUsable();
+      int idx = BodyPart->GetConditionColorIndex();
+      attr = BodyPartColors[idx] | (blink ? BLINK : 0);
     }
+
+    graphics::MoveCursor(v2(PanelPosX + dat->col, PanelPosY + dat->row));
+    graphics::PutStrf(attr, "%c", dat->ch);
   }
 }
 
@@ -1981,14 +1955,11 @@ void humanoid::EditExperience(int Identifier, double Value, double Speed)
     ABORT("Illegal humanoid attribute %d experience edit request!", Identifier);
 }
 
-int humanoid::DrawStats(truth AnimationDraw) const
+int humanoid::DrawStats(truth tr) const
 {
-  DrawSilhouette(AnimationDraw);
+  DrawSilhouette(tr);
 
-  if(AnimationDraw)
-    return 15;
-
-  int PanelPosX = RES.X - 96, PanelPosY = 15;
+  int PanelPosX = game::GetScreenXSize(), PanelPosY = 0;
   PrintAttribute("AStr", ARM_STRENGTH, PanelPosX, PanelPosY++);
   PrintAttribute("LStr", LEG_STRENGTH, PanelPosX, PanelPosY++);
   PrintAttribute("Dex", DEXTERITY, PanelPosX, PanelPosY++);

@@ -554,7 +554,7 @@ class character : public entity, public id
   virtual truth EditAttribute(int, int);
   virtual void EditExperience(int, double, double);
   truth RawEditAttribute(double&, int) const;
-  void DrawPanel(truth) const;
+  void DrawPanel() const;
   virtual int DrawStats(truth) const = 0;
   virtual int GetCarryingStrength() const = 0;
   static truth DamageTypeAffectsInventory(int);

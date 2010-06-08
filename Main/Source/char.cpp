@@ -4113,96 +4113,111 @@ truth character::RawEditAttribute(double& Experience, int Amount) const
   return true;
 }
 
-void character::DrawPanel(truth AnimationDraw) const
+void character::DrawPanel() const
 {
-  if(AnimationDraw)
-  {
-    DrawStats(true);
-    return;
-  }
-
-  igraph::BlitBackGround(v2(19 + (game::GetScreenXSize() << 4), 0), v2(RES.X - 19 - (game::GetScreenXSize() << 4), RES.Y));
-  igraph::BlitBackGround(v2(16, 45 + (game::GetScreenYSize() << 4)), v2(game::GetScreenXSize() << 4, 9));
-  FONT->Printf(DOUBLE_BUFFER, v2(16, 45 + (game::GetScreenYSize() << 4)), WHITE, "%s", GetPanelName().CStr());
   game::UpdateAttributeMemory();
-  int PanelPosX = RES.X - 96;
+  int PanelPosX = game::GetScreenXSize();
   int PanelPosY = DrawStats(false);
   PrintAttribute("End", ENDURANCE, PanelPosX, PanelPosY++);
   PrintAttribute("Per", PERCEPTION, PanelPosX, PanelPosY++);
   PrintAttribute("Int", INTELLIGENCE, PanelPosX, PanelPosY++);
   PrintAttribute("Wis", WISDOM, PanelPosX, PanelPosY++);
   PrintAttribute("Cha", CHARISMA, PanelPosX, PanelPosY++);
-  FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Siz  %d", GetSize());
-  FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10),
-	       IsInBadCondition() ? RED : WHITE, "HP %d/%d", GetHP(), GetMaxHP());
-  ++PanelPosY;
-  FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Gold: %ld", GetMoney());
+  graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+  graphics::PutStrf(WHITE, "Siz %d", GetSize());
+  graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+  graphics::PutStrf(IsInBadCondition() ? RED : WHITE, "HP %d/%d", GetHP(), GetMaxHP());
+  graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+  graphics::PutStrf(WHITE, "Gold: %ld", GetMoney());
   ++PanelPosY;
 
   if(game::IsInWilderness())
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Worldmap");
+  {
+    graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+    graphics::PutStrf(WHITE, "Worldmap");
+  }
   else
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "%s", game::GetCurrentDungeon()->GetShortLevelDescription(game::GetCurrentLevelIndex()).CapitalizeCopy().CStr());
+  {
+    graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+    int lev = game::GetCurrentLevelIndex();
+    graphics::PutStrf(WHITE, "%s", game::GetCurrentDungeon()->GetShortLevelDescription(lev).CStr());
+  }
 
   ivantime Time;
   game::GetTime(Time);
-  FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Day %d", Time.Day);
-  FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Time %d:%s%d", Time.Hour, Time.Min < 10 ? "0" : "", Time.Min);
-  FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Turn %ld", game::GetTurn());
-
-  ++PanelPosY;
+  graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+  graphics::PutStrf(WHITE, "Day: %d", Time.Day);
+  graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+  graphics::PutStrf(WHITE, "Time %d:%02d", Time.Hour, Time.Min);
+  graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+  graphics::PutStrf(WHITE, "Turn %ld", game::GetTurn());
 
   if(GetAction())
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "%s", festring(GetAction()->GetDescription()).CapitalizeCopy().CStr());
+  {
+    graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+    graphics::PutStrf(WHITE, "%s", festring(GetAction()->GetDescription()).CapitalizeCopy().CStr());
+  }
+
+  graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
 
   for(int c = 0; c < STATES; ++c)
-    if(!(StateData[c].Flags & SECRET) && StateIsActivated(1 << c) && (1 << c != HASTE || !StateIsActivated(SLOW)) && (1 << c != SLOW || !StateIsActivated(HASTE)))
-      FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), (1 << c) & EquipmentState || TemporaryStateCounter[c] == PERMANENT ? BLUE : WHITE, "%s", StateData[c].Description);
+    if(!(StateData[c].Flags & SECRET) && StateIsActivated(1 << c)
+       && (1 << c != HASTE || !StateIsActivated(SLOW))
+       && (1 << c != SLOW || !StateIsActivated(HASTE)))
+    {
+      int Color = ((1 << c) & EquipmentState || TemporaryStateCounter[c] == PERMAMENT)
+                  ? BLUE
+		  : WHITE;
+      graphics::PutStrf(Color, "%s ", State[c].Description);
+    }
 
   /* Make this more elegant!!! */
 
   if(GetHungerState() == STARVING)
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), RED, "Starving");
+    graphics::PutStrf(RED, "Starving ");
   else if(GetHungerState() == VERY_HUNGRY)
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), BLUE, "Very hungry");
+    graphics::PutStrf(BLUE, "Very hungry ");
   else if(GetHungerState() == HUNGRY)
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), BLUE, "Hungry");
-  else  if(GetHungerState() == SATIATED)
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Satiated");
+    graphics::PutStrf(BLUE, "Hungry ");
+  else if(GetHungerState() == SATIATED)
+    graphics::PutStrf(WHITE, "Satiated ");
   else if(GetHungerState() == BLOATED)
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Bloated");
+    graphics::PutStrf(WHITE, "Bloated ");
   else if(GetHungerState() == OVER_FED)
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Overfed!");
+    graphics::PutStrf(WHITE, "Overfed! ");
 
   switch(GetBurdenState())
   {
    case OVER_LOADED:
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), RED, "Overload!");
+    graphics::PutStrf(RED, "Overload! ");
     break;
    case STRESSED:
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), BLUE, "Stressed");
+    graphics::PutStrf(BLUE, "Stressed ");
     break;
    case BURDENED:
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), BLUE, "Burdened");
+    graphics::PutStrf(BLUE, "Burdened ");
   }
 
   switch(GetTirednessState())
   {
    case FAINTING:
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), RED, "Fainting");
+    graphics::PutStrf(RED, "Fainting ");
     break;
    case EXHAUSTED:
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, "Exhausted");
+    graphics::PutStrf(WHITE, "Exhausted ");
     break;
   }
 
   if(game::PlayerIsRunning())
   {
-    FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, GetRunDescriptionLine(0));
+    graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
+    graphics::PutStrf(WHITE, "%s ", GetRunDescriptionLine(0));
     const char* SecondLine = GetRunDescriptionLine(1);
 
     if(strlen(SecondLine))
-      FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY++ * 10), WHITE, SecondLine);
+    {
+      graphics::PutStrf(WHITE, "%s", SecondLine);
+    }
   }
 }
 
@@ -9223,13 +9238,12 @@ void character::PrintAttribute(const char* Desc, int I, int PanelPosX, int Panel
   String.Resize(5);
   String << Attribute;
   String.Resize(8);
-  FONT->Printf(DOUBLE_BUFFER, v2(PanelPosX, PanelPosY * 10), C, String.CStr());
+  graphics::MoveCursor(v2(PanelPosX, PanelPosY));
+  graphics::PutStrf(WHITE, "%s", String.CStr());
 
   if(Attribute != NoBonusAttribute)
   {
     int Where = PanelPosX + (String.GetSize() + 1 << 3);
-    FONT->Printf(DOUBLE_BUFFER, v2(Where, PanelPosY * 10), LIGHT_GRAY,
-		 "%d", NoBonusAttribute);
   }
 }
 
