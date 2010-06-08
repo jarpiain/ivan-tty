@@ -1539,7 +1539,7 @@ v2 humanoid::GetEquipmentPanelPos(int I) const // convert to array
 
 // Definitions for the ASCII art damage display
 struct BodyPartData { char ch; int row; int col; };
-BodyPart data bpd[] = {
+BodyPartData bpd[] = {
  { '|', 1, 1 }, // torso
  { 'o', 0, 1 }, // head
  { '/', 1, 0 }, // right hand
