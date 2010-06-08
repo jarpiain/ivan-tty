@@ -35,7 +35,7 @@ TRAP(web, trap)
   virtual void UnStick() { TrapData.VictimID = 0; }
   virtual void UnStick(int I) { TrapData.BodyParts &= ~(1 << I); }
   void SetStrength(int What) { Strength = What; }
-  virtual void Draw(blitdata&) const;
+  virtual void Draw() const;
   truth IsStuckToBodyPart(int) const;
   virtual void ReceiveDamage(character*, int, int, int);
   virtual void Destroy();

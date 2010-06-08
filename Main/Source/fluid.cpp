@@ -277,12 +277,6 @@ void fluid::AddFluidInfo(const fluid* Fluid, festring& String)
 void fluid::SetMotherItem(item* What)
 {
   MotherItem = What;
-
-  if(UseImage())
-  {
-    Image.Picture->InitRandMap();
-    Image.Picture->CalculateRandMap();
-  }
 }
 
 /* Ensures the gear pictures are correct after this. ShadowPos is the armor's
@@ -293,32 +287,25 @@ void fluid::SetMotherItem(item* What)
 
 truth fluid::imagedata::Fade()
 {
-  return ShadowPos != ERROR_V2 ? Picture->Fade(AlphaSum, AlphaAverage, 1) : false;
+  return false;
 }
 
 fluid::imagedata::imagedata(truth Load) : Picture(0), AlphaSum(0), ShadowPos(ERROR_V2)
 {
-  if(!Load)
-  {
-    Picture = new bitmap(TILE_V2, TRANSPARENT_COLOR);
-    Picture->ActivateFastFlag();
-    Picture->CreateAlphaMap(0);
-  }
 }
 
 fluid::imagedata::~imagedata()
 {
-  delete Picture;
 }
 
 void fluid::imagedata::Save(outputfile& SaveFile) const
 {
-  SaveFile << Picture << AlphaSum << ShadowPos << (int)SpecialFlags;
+  SaveFile << AlphaSum << ShadowPos << (int)SpecialFlags;
 }
 
 void fluid::imagedata::Load(inputfile& SaveFile)
 {
-  SaveFile >> Picture >> AlphaSum >> ShadowPos >> (int&)SpecialFlags;
+  SaveFile >> AlphaSum >> ShadowPos >> (int&)SpecialFlags;
 }
 
 /* Shadow and this->ShadowPos specify the location of the raw image of
@@ -330,7 +317,7 @@ void fluid::imagedata::Load(inputfile& SaveFile)
 
 void fluid::imagedata::AddLiquidToPicture(const rawbitmap* Shadow, long Pixels, long AlphaSuggestion, col16 Color, pixelpredicate PixelPredicate)
 {
-  if(ShadowPos == ERROR_V2)
+  /*if(ShadowPos == ERROR_V2)
     return;
 
   DripTimer = 0;
@@ -404,7 +391,7 @@ void fluid::imagedata::AddLiquidToPicture(const rawbitmap* Shadow, long Pixels, 
     }
   }
 
-  AlphaAverage = Picture->CalculateAlphaAverage();
+  AlphaAverage = Picture->CalculateAlphaAverage();*/
 }
 
 /* Remakes all images. Usually decreases, and never increases, the liquid's
@@ -430,12 +417,6 @@ void fluid::Redistribute()
 
 void fluid::imagedata::Clear(truth InitRandMap)
 {
-  Picture->ClearToColor(TRANSPARENT_COLOR);
-  Picture->FillAlpha(0);
-  AlphaSum = 0;
-
-  if(InitRandMap)
-    Picture->InitRandMap();
 }
 
 material* fluid::RemoveMaterial(material*)

@@ -31,6 +31,7 @@ EXTENDED_SYSTEM_SPECIALIZATIONS(material)(0, 0, 0, "material");
 #include "game.h"
 #include "whandler.h"
 #include "rain.h"
+#include "graphics.h"
 
 #include "materia.cpp"
 #include "materias.cpp"

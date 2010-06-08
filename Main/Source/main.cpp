@@ -45,7 +45,6 @@ int Main(int argc, char **argv)
   game::InitLuxTable();
   ivanconfig::Initialize();
   igraph::Init();
-  globalwindowhandler::SetQuitMessageHandler(game::HandleQuitMessage);
   msgsystem::Init();
   protosystem::Initialize();
 

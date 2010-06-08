@@ -70,7 +70,7 @@ class stack
   stack(square*, entity*, ulong = 0);
   ~stack();
   void Load(inputfile&);
-  void Draw(const character*, blitdata&, int) const;
+  void Draw(const character*, int) const;
   void AddItem(item*, truth = true);
   void RemoveItem(stackslot*);
   item* GetItem(int) const;

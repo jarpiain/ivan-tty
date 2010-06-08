@@ -74,7 +74,7 @@ void rain::Draw(blitdata& BlitData) const
   for(c = 0; c < Drops; ++c)
     if(Drop[c].MaxAge)
     {
-      ulong Age = ushort(GET_TICK()) - Drop[c].StartTick;
+      ulong Age = ushort(0) - Drop[c].StartTick;
 
       if(Age > Drop[c].MaxAge)
       {
@@ -89,8 +89,6 @@ void rain::Draw(blitdata& BlitData) const
 	Drop[c].MaxAge = 0;
 	continue;
       }
-
-      BlitData.Bitmap->AlphaPutPixel(DropPos + BlitData.Dest, Color, BlitData.Luminance, 255);
     }
 
   this->Drops = Drops;
@@ -98,7 +96,7 @@ void rain::Draw(blitdata& BlitData) const
 
 void rain::RandomizeDropPos(int I) const
 {
-  Drop[I].StartTick = GET_TICK() - (RAND() & 3);
+  Drop[I].StartTick =  -(RAND() & 3);
   v2 Pos;
 
   if(Speed.X && (!Speed.Y || RAND() & 1))

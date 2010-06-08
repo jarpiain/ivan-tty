@@ -20,16 +20,11 @@ smoke::smoke(gas* Gas, lsquare* LSquareUnder) : entity(HAS_BE), Next(0), Gas(Gas
   Gas->SetMotherEntity(this);
   Picture.resize(16);
   packcol16 Color = Gas->GetColor();
-  bitmap Temp(TILE_V2, TRANSPARENT_COLOR);
-  Temp.ActivateFastFlag();
   int Frame[16];
   int Flags[16];
 
   for(int c = 0; c < 16; ++c)
   {
-    Picture[c] = new bitmap(TILE_V2, TRANSPARENT_COLOR);
-    Picture[c]->ActivateFastFlag();
-    Picture[c]->CreateAlphaMap(Alpha);
     truth Correct = false;
 
     while(!Correct)
@@ -45,9 +40,6 @@ smoke::smoke(gas* Gas, lsquare* LSquareUnder) : entity(HAS_BE), Next(0), Gas(Gas
 	  break;
 	}
     }
-
-    igraph::GetRawGraphic(GR_EFFECT)->MaskedBlit(&Temp, v2(Frame[c] << 4, 32), ZERO_V2, TILE_V2, &Color);
-    Temp.NormalBlit(Picture[c], Flags[c]);
   }
 
   LSquareUnder->SignalSmokeAlphaChange(Alpha);
@@ -55,9 +47,6 @@ smoke::smoke(gas* Gas, lsquare* LSquareUnder) : entity(HAS_BE), Next(0), Gas(Gas
 
 smoke::~smoke()
 {
-  for(uint c = 0; c < Picture.size(); ++c)
-    delete Picture[c];
-
   delete Gas;
 }
 
@@ -75,9 +64,6 @@ void smoke::Be()
       return;
     }
 
-    for(int c = 0; c < 16; ++c)
-      Picture[c]->FillAlpha(Alpha);
-
     Gas->SetVolume(Gas->GetVolume() - Gas->GetVolume() / 50);
   }
 
@@ -87,20 +73,22 @@ void smoke::Be()
     Gas->BreatheEffect(Char);
 }
 
-void smoke::Draw(blitdata& BlitData) const
+void smoke::Draw(truth Current) const
 {
-  Picture[(GET_TICK() >> 1) & 3]->AlphaLuminanceBlit(BlitData);
+  int Glyph = '#';
+  int Attr = Gas->GetAttr();
+  graphics::PutChar(Glyph, Attr);
 }
 
 void smoke::Save(outputfile& SaveFile) const
 {
-  SaveFile << Picture << Gas << Alpha;
+  SaveFile << Gas << Alpha;
 }
 
 void smoke::Load(inputfile& SaveFile)
 {
   LSquareUnder = static_cast<lsquare*>(game::GetSquareInLoad());
-  SaveFile >> Picture >> Gas >> Alpha;
+  SaveFile >> Gas >> Alpha;
   Gas->SetMotherEntity(this);
 }
 
@@ -128,9 +116,6 @@ void smoke::Merge(gas* OtherGas)
   Gas->EditVolume(OtherGas->GetVolume());
   LSquareUnder->SignalSmokeAlphaChange(OtherGas->GetAlpha() - Alpha);
   Alpha = OtherGas->GetAlpha();
-
-  for(int c = 0; c < 16; ++c)
-    Picture[c]->FillAlpha(Alpha);
 
   delete OtherGas;
 }
