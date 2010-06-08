@@ -29,6 +29,8 @@ GWTERRAIN(ocean, gwterrain)
   virtual const char* ScoreEntry() const;
   virtual truth IsFatalToStay() const { return true; }
   virtual int GetWalkability() const;
+  virtual int GetGlyph() const { return '~'; }
+  virtual int GetAttr() const { return BLUE; }
 };
 
 GWTERRAIN(glacier, gwterrain)
@@ -37,6 +39,8 @@ GWTERRAIN(glacier, gwterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetPriority() const { return 90; }
+  virtual int GetGlyph() const { return '.'; }
+  virtual int GetAttr() const { return CYAN; }
 };
 
 GWTERRAIN(desert, gwterrain)
@@ -45,6 +49,8 @@ GWTERRAIN(desert, gwterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetPriority() const { return 20; }
+  virtual int GetGlyph() const { return '.'; }
+  virtual int GetAttr() const { return YELLOW; }
 };
 
 GWTERRAIN(snow, gwterrain)
@@ -53,6 +59,8 @@ GWTERRAIN(snow, gwterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetPriority() const { return 80; }
+  virtual int GetGlyph() const { return '.'; }
+  virtual int GetAttr() const { return WHITE; }
 };
 
 GWTERRAIN(jungle, gwterrain)
@@ -61,6 +69,8 @@ GWTERRAIN(jungle, gwterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetPriority() const { return 50; }
+  virtual int GetGlyph() const { return '&'; }
+  virtual int GetAttr() const { return GREEN; }
 };
 
 GWTERRAIN(leafyforest, gwterrain)
@@ -68,6 +78,8 @@ GWTERRAIN(leafyforest, gwterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetPriority() const { return 60; }
+  virtual int GetGlyph() const { return '%'; }
+  virtual int GetAttr() const { return GREEN; }
 };
 
 GWTERRAIN(evergreenforest, gwterrain)
@@ -77,6 +89,8 @@ GWTERRAIN(evergreenforest, gwterrain)
   virtual v2 GetBitmapPos(int) const;
   virtual truth UsesLongArticle() const { return true; }
   virtual int GetPriority() const { return 70; }
+  virtual int GetGlyph() const { return '^'; }
+  virtual int GetAttr() const { return GREEN; }
 };
 
 GWTERRAIN(steppe, gwterrain)
@@ -85,6 +99,8 @@ GWTERRAIN(steppe, gwterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetPriority() const { return 30; }
+  virtual int GetGlyph() const { return '.'; }
+  virtual int GetAttr() const { return GREEN; }
 };
 
 OWTERRAIN(attnam, owterrain)
@@ -93,6 +109,8 @@ OWTERRAIN(attnam, owterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetAttachedDungeon() const;
+  virtual int GetGlyph() const { return '\\'; }
+  virtual int GetAttr() const { return WHITE; }
 };
 
 OWTERRAIN(elpuricave, owterrain)
@@ -101,6 +119,8 @@ OWTERRAIN(elpuricave, owterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetAttachedDungeon() const;
+  virtual int GetGlyph() const { return '>'; }
+  virtual int GetAttr() const { return YELLOW; }
 };
 
 OWTERRAIN(newattnam, owterrain)
@@ -109,6 +129,8 @@ OWTERRAIN(newattnam, owterrain)
   virtual const char* GetNameStem() const;
   virtual v2 GetBitmapPos(int) const;
   virtual int GetAttachedDungeon() const;
+  virtual int GetGlyph() const { return '\\'; }
+  virtual int GetAttr() const { return YELLOW; }
 };
 
 OWTERRAIN(underwatertunnel, owterrain)
@@ -118,6 +140,8 @@ OWTERRAIN(underwatertunnel, owterrain)
   virtual v2 GetBitmapPos(int) const;
   virtual int GetAttachedDungeon() const;
   virtual truth UsesLongArticle() const { return true; }
+  virtual int GetGlyph() const { return '>'; }
+  virtual int GetAttr() const { return YELLOW; }
 };
 
 OWTERRAIN(underwatertunnelexit, owterrain)
@@ -128,6 +152,8 @@ OWTERRAIN(underwatertunnelexit, owterrain)
   virtual int GetAttachedDungeon() const;
   virtual truth UsesLongArticle() const { return true; }
   virtual int GetAttachedArea() const { return 2; }
+  virtual int GetGlyph() const { return '>'; }
+  virtual int GetAttr() const { return YELLOW; }
 };
 
 #endif

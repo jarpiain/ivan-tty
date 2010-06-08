@@ -17,14 +17,20 @@
 
 OLTERRAIN(wall, olterrain)
 {
+ public:
+  virtual int GetGlyph() const { return '#'; }
 };
 
 OLTERRAIN(decoration, olterrain)
 {
+ public:
+  virtual int GetGlyph() const { return '~'; }
 };
 
 GLTERRAIN(solidterrain, glterrain)
 {
+ public:
+  virtual int GetGlyph() const { return '.'; }
 };
 
 OLTERRAIN(door, olterrain)
@@ -52,6 +58,7 @@ OLTERRAIN(door, olterrain)
   virtual int GetWalkability() const;
   virtual int GetTheoreticalWalkability() const;
   virtual void BeDestroyed();
+  virtual int GetGlyph() const { if(Opened) return '\''; else return '+'; }
  protected:
   virtual void PostConstruct();
   virtual truth AddAdjective(festring&, truth) const;
@@ -69,6 +76,7 @@ OLTERRAIN(door, olterrain)
 OLTERRAIN(stairs, olterrain)
 {
  public:
+  virtual int GetGlyph() const { return '>'; }
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
   virtual truth Enter(truth) const;
@@ -85,6 +93,8 @@ OLTERRAIN(stairs, olterrain)
 
 OLTERRAIN(portal, stairs)
 {
+ public:
+  virtual int GetGlyph() const { return '\\'; }
  protected:
   virtual v2 GetBitmapPos(int) const;
 };
@@ -92,6 +102,7 @@ OLTERRAIN(portal, stairs)
 OLTERRAIN(altar, olterrain)
 {
  public:
+  virtual int GetGlyph() const { return '_'; }
   virtual truth AcceptsOffers() const { return true; }
   virtual void StepOn(character*);
   virtual void BeKicked(character*, int, int);
@@ -105,12 +116,14 @@ OLTERRAIN(altar, olterrain)
 OLTERRAIN(throne, decoration)
 {
  public:
+  virtual int GetGlyph() const { return '_'; }
   virtual truth SitOn(character*);
 };
 
 OLTERRAIN(olterraincontainer, olterrain)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   olterraincontainer();
   virtual ~olterraincontainer();
   virtual truth Open(character*);
@@ -131,6 +144,7 @@ OLTERRAIN(olterraincontainer, olterrain)
 OLTERRAIN(fountain, olterrain)
 {
  public:
+  virtual int GetGlyph() const { return '{'; }
   virtual ~fountain();
   virtual truth SitOn(character*);
   virtual truth Drink(character*);
@@ -170,6 +184,7 @@ OLTERRAIN(brokendoor, door)
 GLTERRAIN(liquidterrain, glterrain)
 {
  public:
+  virtual int GetGlyph() const { return '~'; }
   virtual const char* SurviveMessage() const;
   virtual const char* MonsterSurviveMessage() const;
   virtual const char* DeathMessage() const;
@@ -187,11 +202,14 @@ GLTERRAIN(liquidterrain, glterrain)
 
 OLTERRAIN(boulder, olterrain)
 {
+ public:
+  virtual int GetGlyph() const { return ';'; }
 };
 
 OLTERRAIN(sign, olterrain)
 {
  public:
+  virtual int GetGlyph() const { return ';'; }
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
   virtual void SetText(const festring& What) { Text = What; }
@@ -205,6 +223,7 @@ OLTERRAIN(sign, olterrain)
 OLTERRAIN(earth, olterrain)
 {
  public:
+  virtual int GetGlyph() const { return '#'; }
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
  protected:
@@ -216,6 +235,7 @@ OLTERRAIN(earth, olterrain)
 OLTERRAIN(monsterportal, olterrain)
 {
  public:
+  virtual int GetGlyph() const { return '\\'; }
   monsterportal();
  protected:
   virtual v2 GetBitmapPos(int) const;
