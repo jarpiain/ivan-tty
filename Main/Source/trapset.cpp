@@ -28,6 +28,7 @@ SYSTEM_SPECIALIZATIONS(trap)
 #include "char.h"
 #include "message.h"
 #include "lsquare.h"
+#include "graphics.h"
 
 #include "trap.cpp"
 #include "traps.cpp"

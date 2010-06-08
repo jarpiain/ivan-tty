@@ -161,7 +161,9 @@ void web::AddTrapName(festring& String, int) const
 
 void web::Draw() const
 {
-  trap::Draw();
+  int Glyph = '^';
+  int Attr = WHITE;
+  graphics::PutChar(Glyph, Attr);
 }
 
 truth web::IsStuckToBodyPart(int I) const
