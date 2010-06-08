@@ -271,8 +271,8 @@ class lsquare : public square
   glterrain* GLTerrain;
   olterrain* OLTerrain;
   stack* Stack;
-  truth Memorized;
-  truth FowMemorized;
+  mutable truth Memorized;
+  mutable truth FowMemorized;
   char* Engraved;
   glterrain** GroundBorderPartnerTerrain;
   ulong GroundBorderPartnerInfo;

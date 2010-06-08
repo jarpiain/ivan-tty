@@ -42,7 +42,7 @@ lsquare::lsquare(level* LevelUnder, v2 Pos)
 : square(LevelUnder, Pos),
   Fluid(0), Smoke(0), Rain(0), Trap(0),
   GLTerrain(0), OLTerrain(0),
-  Memorized(0), FowMemorized(0),
+  Memorized(' '), FowMemorized(' '),
   Engraved(0),
   GroundBorderPartnerTerrain(0),
   GroundBorderPartnerInfo(0),
@@ -76,8 +76,6 @@ lsquare::~lsquare()
     delete ToDel;
   }
 
-  Memorized = 0;
-  FowMemorized = 0;
   delete [] GroundBorderPartnerTerrain;
   delete [] OverBorderPartnerTerrain;
 
@@ -243,6 +241,9 @@ void lsquare::Draw(v2 Grid) const
       }
     }
 
+    graphics::MoveCursor(Grid);
+    int Drawn = inch() & A_CHARTEXT;
+    Memorized = Drawn;
     Flags &= ~STRONG_NEW_DRAW_REQUEST;
   }
 }
@@ -1098,10 +1099,10 @@ void lsquare::SignalSeen(ulong Tick)
     }
   }
 
-  if(!Memorized)
+  /*if(!Memorized)
     CreateMemorized();
 
-  UpdateMemorized();
+  UpdateMemorized();*/
   UpdateMemorizedDescription();
 
   if(Character)
@@ -1113,6 +1114,7 @@ void lsquare::DrawMemorized(v2 Grid) const
   LastSeen = 0;
   Flags &= ~STRONG_NEW_DRAW_REQUEST;
   graphics::MoveCursor(Grid);
+  graphics::PutChar(Memorized, DARK_GRAY);
 
   const character* C = Character;
 
@@ -1120,7 +1122,11 @@ void lsquare::DrawMemorized(v2 Grid) const
   {
     C->Draw(true);
   }
-  else if(FowMemorized)
+  else
+  {
+    graphics::PutChar(Memorized, DARK_GRAY);
+  }
+  /*else if(FowMemorized)
   {
     // XXX wrong
     DrawStaticContents();
@@ -1129,7 +1135,7 @@ void lsquare::DrawMemorized(v2 Grid) const
   {
     // clear
     graphics::PutChar(' ', WHITE);
-  }
+  }*/
 }
 
 void lsquare::DrawMemorizedCharacter(blitdata& BlitData) const
@@ -2272,7 +2278,7 @@ void lsquare::CalculateSunLightLuminance(ulong SeenBitMask)
 
 void lsquare::CreateMemorized()
 {
-  Memorized = FowMemorized = 1;
+  Memorized = FowMemorized = ' ';
 }
 
 truth lsquare::AcidRain(const beamdata& Beam)
@@ -2324,8 +2330,8 @@ truth lsquare::DetectMaterial(const material* Material) const
 
 void lsquare::Reveal(ulong Tick, truth IgnoreDarkness)
 {
-  if(!Memorized)
-    CreateMemorized();
+  //if(!Memorized)
+  //  CreateMemorized();
 
   LastSeen = Tick;
 
@@ -2350,8 +2356,8 @@ void lsquare::Reveal(ulong Tick, truth IgnoreDarkness)
 
 void lsquare::DestroyMemorized()
 {
-  Memorized = 0;
-  FowMemorized = 0;
+  Memorized = ' ';
+  FowMemorized = ' ';
 }
 
 void lsquare::SwapMemorized(lsquare* Square)
