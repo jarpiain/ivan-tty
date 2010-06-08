@@ -2237,21 +2237,6 @@ void arm::UpdatePictures()
   UpdateWieldedPicture();
 }
 
-void bodypart::Draw(blitdata& BlitData) const
-{
-  const bitmap* P = GraphicData.Picture[0];
-
-  if(BlitData.CustomData & ALLOW_ALPHA)
-    P->AlphaPriorityBlit(BlitData);
-  else
-    P->MaskedPriorityBlit(BlitData);
-
-  if(Fluid && ShowFluids())
-    DrawFluids(BlitData);
-
-  DrawArmor(BlitData);
-}
-
 void leg::AddAttackInfo(felist& List) const
 {
   festring Entry = CONST_S("   kick attack");

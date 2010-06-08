@@ -44,8 +44,6 @@ EXTENDED_SYSTEM_SPECIALIZATIONS(character)(0, 0, 0, "character");
 #include "room.h"
 #include "felist.h"
 #include "graphics.h"
-#include "bitmap.h"
-#include "rawbit.h"
 #include "miscitem.h"
 #include "confdef.h"
 #include "traps.h"

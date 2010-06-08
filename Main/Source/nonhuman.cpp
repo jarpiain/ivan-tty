@@ -1034,7 +1034,6 @@ void magicmushroom::GetAICommand()
 void mushroom::SetSpecies(int What)
 {
   Species = What;
-  UpdatePictures();
 }
 
 truth twoheadedmoose::Hit(character* Enemy, v2 HitPos, int Direction, truth ForceHit)

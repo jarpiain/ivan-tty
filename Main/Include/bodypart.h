@@ -21,6 +21,7 @@ class sweaponskill;
 ITEM(bodypart, item)
 {
  public:
+  virtual int GetGlyph() const { return '%'; }
   friend class corpse;
   bodypart() : Master(0) { }
   virtual void Save(outputfile&) const;
@@ -85,7 +86,6 @@ ITEM(bodypart, item)
   virtual truth DamageArmor(character*, int, int) { return false; }
   truth CanBeSevered(int) const;
   virtual truth EditAllAttributes(int) { return false; }
-  virtual void Draw(blitdata&) const;
   void SetSparkleFlags(int);
   virtual int GetSpecialFlags() const;
   virtual truth IsRepairable(const character*) const;
@@ -453,6 +453,7 @@ ITEM(leftleg, leg)
 ITEM(corpse, item)
 {
  public:
+  virtual int GetGlyph() const { return '%'; }
   corpse() { }
   corpse(const corpse&);
   virtual ~corpse();

@@ -22,9 +22,6 @@ int humanoid::GetCarryingStrength() const { return Max(GetAttribute(LEG_STRENGTH
 void humanoid::CalculateBodyParts() { BodyParts = HUMANOID_BODYPARTS; }
 void humanoid::CalculateAllowedWeaponSkillCategories() { AllowedWeaponSkillCategories = WEAPON_SKILL_CATEGORIES; }
 
-v2 farmer::GetHeadBitmapPos() const { return v2(96, (4 + (RAND() & 1)) << 4); }
-v2 farmer::GetRightArmBitmapPos() const { return v2(64, (RAND() & 1) << 4); }
-
 void guard::SetWayPoints(const fearray<packv2>& What) { ArrayToVector(What, WayPoints); }
 
 const char* oree::FirstPersonBiteVerb() const { return "vomit acidous blood at"; }
@@ -1683,23 +1680,6 @@ truth humanoid::HandleNoBodyPart(int I)
   }
 }
 
-v2 humanoid::GetBodyPartBitmapPos(int I, truth) const
-{
-  switch(I)
-  {
-   case TORSO_INDEX: return GetTorsoBitmapPos();
-   case HEAD_INDEX: return GetHeadBitmapPos();
-   case RIGHT_ARM_INDEX: return GetRightArmBitmapPos();
-   case LEFT_ARM_INDEX: return GetLeftArmBitmapPos();
-   case GROIN_INDEX: return GetGroinBitmapPos();
-   case RIGHT_LEG_INDEX: return GetRightLegBitmapPos();
-   case LEFT_LEG_INDEX: return GetLeftLegBitmapPos();
-  }
-
-  ABORT("Weird bodypart BitmapPos request for a humanoid!");
-  return v2();
-}
-
 col16 humanoid::GetBodyPartColorB(int I, truth) const
 {
   switch(I)
@@ -2224,48 +2204,6 @@ truth angel::AttachBodyPartsOfFriendsNear()
   }
   else
     return false;
-}
-
-void humanoid::DrawBodyParts(blitdata& BlitData) const
-{
-  bitmap* TileBuffer = igraph::GetTileBuffer();
-  bitmap* RealBitmap = BlitData.Bitmap;
-  blitdata B = { TileBuffer,
-		 { BlitData.Dest.X, BlitData.Dest.Y },
-		 { 0, 0 },
-		 { TILE_SIZE, TILE_SIZE },
-		 { 0 },
-		 TRANSPARENT_COLOR,
-		 BlitData.CustomData };
-
-  RealBitmap->NormalBlit(B);
-  TileBuffer->FillPriority(0);
-  B.Src.X = B.Src.Y = 0;
-  B.Luminance = BlitData.Luminance;
-
-  for(int c = 0; c < BodyParts; ++c)
-  {
-    bodypart* BodyPart = GetBodyPart(DrawOrder[c]);
-
-    if(BodyPart)
-    {
-      B.Dest = GetDrawDisplacement(c);
-      BodyPart->Draw(B);
-    }
-  }
-
-  B.Dest.X = B.Dest.Y = 0;
-  arm* LeftArm = GetLeftArm();
-
-  if(LeftArm)
-    LeftArm->DrawWielded(B);
-
-  arm* RightArm = GetRightArm();
-
-  if(RightArm)
-    RightArm->DrawWielded(B);
-
-  TileBuffer->FastBlit(RealBitmap, BlitData.Dest);
 }
 
 v2 kamikazedwarf::GetDrawDisplacement(int I) const
@@ -4858,34 +4796,6 @@ void playerkind::PostConstruct()
   EyeColor = MakeRGB16(R + RAND_N(41), G + RAND_N(41), B + RAND_N(41));
   Talent = RAND_N(TALENTS);
   Weakness = RAND_N(TALENTS);
-}
-
-v2 playerkind::GetHeadBitmapPos() const
-{
-  int Sum = GetAttribute(INTELLIGENCE, false) + GetAttribute(WISDOM, false);
-
-  if(Sum >= 60)
-    return v2(96, 480);
-  else if(Sum >= 40)
-    return v2(96, 464);
-  else
-    return v2(96, 416);
-}
-
-v2 playerkind::GetRightArmBitmapPos() const
-{
-  if(GetRightArm()->GetAttribute(ARM_STRENGTH, false) >= 20)
-    return v2(64, 448);
-  else
-    return v2(64, 416);
-}
-
-v2 playerkind::GetLeftArmBitmapPos() const
-{
-  if(GetLeftArm()->GetAttribute(ARM_STRENGTH, false) >= 20)
-    return v2(64, 448);
-  else
-    return v2(64, 416);
 }
 
 int playerkind::GetNaturalSparkleFlags() const

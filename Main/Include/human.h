@@ -107,7 +107,6 @@ CHARACTER(humanoid, character)
   virtual void Load(inputfile&);
   virtual void SignalEquipmentAdd(int);
   virtual void SignalEquipmentRemoval(int);
-  virtual void DrawBodyParts(blitdata&) const;
   virtual truth CanUseStethoscope(truth) const;
   virtual truth IsUsingArms() const;
   virtual truth IsUsingLegs() const;
@@ -237,7 +236,6 @@ CHARACTER(petrus, humanoid)
 
 CHARACTER(farmer, humanoid)
 {
- public:
 };
 
 CHARACTER(guard, humanoid)

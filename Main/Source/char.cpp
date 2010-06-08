@@ -25,7 +25,7 @@
 
 struct statedata
 {
-  char* Description;
+  const char* Description;
   int Flags;
   void (character::*PrintBeginMessage)() const;
   void (character::*PrintEndMessage)() const;
@@ -3375,7 +3375,6 @@ item* character::SevereBodyPart(int BodyPartIndex, truth ForceDisappearance, sta
   {
     BodyPart->SetOwnerDescription("of " + GetName(INDEFINITE));
     BodyPart->SetIsUnique(LeftOversAreUnique());
-    UpdateBodyPartPicture(BodyPartIndex, true);
     BodyPart->RemoveFromSlot();
     BodyPart->RandomizePosition();
     CalculateAttributeBonuses();
@@ -3747,13 +3746,6 @@ void character::RestoreBodyParts()
       CreateBodyPart(c);
 }
 
-void character::UpdatePictures()
-{
-  if(!PictureUpdatesAreForbidden())
-    for(int c = 0; c < BodyParts; ++c)
-      UpdateBodyPartPicture(c, false);
-}
-
 bodypart* character::MakeBodyPart(int I) const
 {
   if(I == TORSO_INDEX)
@@ -3776,9 +3768,6 @@ bodypart* character::CreateBodyPart(int I, int SpecialFlags)
   SetBodyPart(I, BodyPart);
   BodyPart->InitSpecialAttributes();
 
-  if(!(SpecialFlags & NO_PIC_UPDATE))
-    UpdateBodyPartPicture(I, false);
-
   if(!IsInitializing())
   {
     CalculateBattleInfo();
@@ -3787,36 +3776,6 @@ bodypart* character::CreateBodyPart(int I, int SpecialFlags)
   }
 
   return BodyPart;
-}
-
-v2 character::GetBodyPartBitmapPos(int I, truth) const
-{
-  if(I == TORSO_INDEX)
-    return GetTorsoBitmapPos();
-  else
-  {
-    ABORT("Weird bodypart BitmapPos request for a character!");
-    return v2();
-  }
-}
-
-void character::UpdateBodyPartPicture(int I, truth Severed)
-{
-  bodypart* BP = GetBodyPart(I);
-
-  if(BP)
-  {
-    BP->SetBitmapPos(GetBodyPartBitmapPos(I, Severed));
-    BP->GetMainMaterial()->SetSkinColor(GetBodyPartColorA(I, Severed));
-    BP->GetMainMaterial()->SetSkinColorIsSparkling(GetBodyPartSparkleFlags(I) & SPARKLING_A);
-    BP->SetMaterialColorB(GetBodyPartColorB(I, Severed));
-    BP->SetMaterialColorC(GetBodyPartColorC(I, Severed));
-    BP->SetMaterialColorD(GetBodyPartColorD(I, Severed));
-    BP->SetSparkleFlags(GetBodyPartSparkleFlags(I));
-    BP->SetSpecialFlags(GetSpecialBodyPartFlags(I));
-    BP->SetWobbleData(GetBodyPartWobbleData(I));
-    BP->UpdatePictures();
-  }
 }
 
 void character::LoadDataBaseStats()
@@ -3910,9 +3869,6 @@ void character::Initialize(int NewConfig, int SpecialFlags)
   {
     if(!(SpecialFlags & NO_EQUIPMENT))
       CreateInitialEquipment((SpecialFlags & NO_EQUIPMENT_PIC_UPDATE) >> 1);
-
-    if(!(SpecialFlags & NO_PIC_UPDATE))
-      UpdatePictures();
 
     CalculateAll();
     RestoreHP();
@@ -5000,7 +4956,6 @@ void character::AttachBodyPart(bodypart* BodyPart)
     BodyPart->ResetSpoiling();
 
   BodyPart->ResetPosition();
-  BodyPart->UpdatePictures();
   CalculateAttributeBonuses();
   CalculateBattleInfo();
   SendNewDrawRequest();
@@ -5093,7 +5048,6 @@ truth character::IsWarm() const
 
 void character::BeginInvisibility()
 {
-  UpdatePictures();
   SendNewDrawRequest();
   SignalPossibleTransparencyChange();
 }
@@ -5112,7 +5066,6 @@ void character::BeginESP()
 
 void character::EndInvisibility()
 {
-  UpdatePictures();
   SendNewDrawRequest();
   SignalPossibleTransparencyChange();
 }
@@ -5129,55 +5082,28 @@ void character::EndESP()
     GetArea()->SendNewDrawRequest();
 }
 
-void character::Draw(blitdata& BlitData) const
+void character::Draw(truth Current) const
 {
-  col24 L = BlitData.Luminance;
-
   if(PLAYER->IsEnabled()
      && ((PLAYER->StateIsActivated(ESP)
-	  && GetAttribute(INTELLIGENCE) >= 5
-	  && (PLAYER->GetPos() - GetPos()).GetLengthSquare() <= PLAYER->GetESPRangeSquare())
-	 || (PLAYER->StateIsActivated(INFRA_VISION) && IsWarm())))
-    BlitData.Luminance = ivanconfig::GetContrastLuminance();
-
-  DrawBodyParts(BlitData);
-  BlitData.Luminance = ivanconfig::GetContrastLuminance();
-  BlitData.Src.Y = 16;
-  const int SquareIndex = BlitData.CustomData & SQUARE_INDEX_MASK;
-
-  if(GetTeam() == PLAYER->GetTeam() && !IsPlayer()
-     && SquareIndex == GetTameSymbolSquareIndex())
-  {
-    BlitData.Src.X = 32;
-    igraph::GetSymbolGraphic()->LuminanceMaskedBlit(BlitData);
+     && GetAttribute(INTELLIGENCE) >= 5
+     && (PLAYER->GetPos() - GetPos()).GetLengthSquare() <= PLAYER->GetESPRangeSquare())
+         || (PLAYER->StateIsActivated(INFRA_VISION) && IsWarm()))) {
+    Current = true;
   }
+  
+  int glyph = GetGlyph();
+  int attr = GetAttr();
+  if(attr == 99)
+    attr = GetTorso()->GetMainMaterial()->GetAttr();
 
-  if(IsFlying() && SquareIndex == GetFlySymbolSquareIndex())
-  {
-    BlitData.Src.X = 128;
-    igraph::GetSymbolGraphic()->LuminanceMaskedBlit(BlitData);
-  }
-
-  if(IsSwimming() && SquareIndex == GetSwimmingSymbolSquareIndex())
-  {
-    BlitData.Src.X = 240;
-    igraph::GetSymbolGraphic()->LuminanceMaskedBlit(BlitData);
-  }
-
-  if(GetAction() && GetAction()->IsUnconsciousness()
-     && SquareIndex == GetUnconsciousSymbolSquareIndex())
-  {
-    BlitData.Src.X = 224;
-    igraph::GetSymbolGraphic()->LuminanceMaskedBlit(BlitData);
-  }
-
-  BlitData.Src.X = BlitData.Src.Y = 0;
-  BlitData.Luminance = L;
+  graphics::PutChar(glyph, attr);
+  // TODO: represent Tame, Fly, Swim, Unconscious state
 }
 
-void character::DrawBodyParts(blitdata& BlitData) const
+void character::DrawBodyParts(truth Current) const
 {
-  GetTorso()->Draw(BlitData);
+  GetTorso()->Draw(Current);
 }
 
 void character::PrintBeginTeleportMessage() const
@@ -5471,8 +5397,6 @@ truth character::EditAttribute(int Identifier, int Value)
 	CalculateBodyPartMaxHPs();
       else if(IsPlayer() && Identifier == PERCEPTION)
 	game::SendLOSUpdateRequest();
-      else if(IsPlayerKind() && (Identifier == INTELLIGENCE || Identifier == WISDOM || Identifier == CHARISMA))
-	UpdatePictures();
 
       CalculateBattleInfo();
     }
@@ -5714,7 +5638,6 @@ character* character::Duplicate(ulong Flags)
 
   Char->CalculateAll();
   Char->CalculateEmitation();
-  Char->UpdatePictures();
   Char->Flags &= ~(C_INITIALIZING|C_IN_NO_MSG_MODE);
   return Char;
 }
@@ -6075,8 +5998,6 @@ void character::SignalSpoilLevelChange()
 {
   if(GetMotherEntity())
     GetMotherEntity()->SignalSpoilLevelChange(0);
-  else
-    UpdatePictures();
 }
 
 void character::AddOriginalBodyPartID(int I, ulong What)
@@ -6775,9 +6696,6 @@ truth character::EditAllAttributes(int Amount)
     UpdateESPLOS();
   }
 
-  if(IsPlayerKind())
-    UpdatePictures();
-
   return MayEditMore;
 }
 
@@ -7337,9 +7255,6 @@ void character::SetConfig(int NewConfig, int SpecialFlags)
   databasecreator<character>::InstallDataBase(this, NewConfig);
   CalculateAll();
   CheckIfSeen();
-
-  if(!(SpecialFlags & NO_PIC_UPDATE))
-    UpdatePictures();
 }
 
 truth character::IsOver(const item* Item) const
@@ -7573,9 +7488,6 @@ void character::EditExperience(int Identifier, double Value, double Speed)
       UpdateESPLOS();
     }
 
-    if(IsPlayerKind())
-      UpdatePictures();
-
     break;
    case WISDOM:
     if(IsPlayer())
@@ -7585,9 +7497,6 @@ void character::EditExperience(int Identifier, double Value, double Speed)
       else
 	PlayerMsg = "You feel like having done something unwise.";
     }
-
-    if(IsPlayerKind())
-      UpdatePictures();
 
     break;
    case CHARISMA:
@@ -7611,9 +7520,6 @@ void character::EditExperience(int Identifier, double Value, double Speed)
 	else
 	  NPCMsg = "%s looks less attractive.";
     }
-
-    if(IsPlayerKind())
-      UpdatePictures();
 
     break;
    case MANA:
@@ -9077,7 +8983,7 @@ truth character::TryToTalkAboutScience()
       AddRandomScienceName(Science);
   }
 
-  switch((RAND() + GET_TICK()) % 10)
+  switch(RAND() % 10)
   {
    case 0:
     ADD_MESSAGE("You have a rather pleasant chat about %s with %s.", Science.CStr(), CHAR_DESCRIPTION(DEFINITE));

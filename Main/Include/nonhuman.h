@@ -149,7 +149,6 @@ CHARACTER(dolphin, nonhumanoid)
 {
  protected:
   virtual int GetSpecialBodyPartFlags(int) const;
-  virtual void SpecialTurnHandler() { UpdatePictures(); }
 };
 
 CHARACTER(bat, nonhumanoid)
@@ -225,7 +224,6 @@ CHARACTER(chameleon, nonhumanoid)
   virtual truth SpecialEnemySightedReaction(character*);
  protected:
   virtual col16 GetSkinColor() const;
-  virtual void SpecialTurnHandler() { UpdatePictures(); }
 };
 
 CHARACTER(floatingeye, nonhumanoid)
@@ -415,7 +413,6 @@ CHARACTER(vladimir, largecreature)
  public:
   virtual truth MustBeRemovedFromBone() const;
   virtual col16 GetSkinColor() const;
-  virtual void SpecialTurnHandler() { UpdatePictures(); }
 };
 
 CHARACTER(hattifattener, nonhumanoid)

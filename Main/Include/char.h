@@ -624,8 +624,8 @@ class character : public entity, public id
   void PrintEndPoisonedMessage() const;
   truth IsWarm() const;
   void CalculateEquipmentState();
-  void Draw(blitdata&) const;
-  virtual void DrawBodyParts(blitdata&) const;
+  void Draw(truth) const;
+  virtual void DrawBodyParts(truth) const;
   god* GetMasterGod() const;
   void PoisonedHandler();
   void PrintBeginTeleportMessage() const;
@@ -722,7 +722,6 @@ class character : public entity, public id
   truth IsInBadCondition() const { return HP * 3 < MaxHP; }
   truth IsInBadCondition(int HP) const { return HP * 3 < MaxHP; }
   int GetCondition() const;
-  void UpdatePictures();
   truth CanHeal() const;
   void SetGoingTo(v2);
   int GetRelation(const character*) const;
@@ -1022,7 +1021,6 @@ class character : public entity, public id
   virtual int GetBodyPartSparkleFlags(int) const;
   virtual long GetBodyPartSize(int, int) const;
   virtual long GetBodyPartVolume(int) const;
-  void UpdateBodyPartPicture(int I, truth);
   int ChooseBodyPartToReceiveHit(double, double);
   virtual void CreateBodyParts(int);
   virtual material* CreateBodyPartMaterial(int, long) const;
