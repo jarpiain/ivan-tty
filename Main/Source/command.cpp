@@ -640,10 +640,7 @@ truth commandsystem::Look(character* Char)
 {
   festring Msg;
 
-  if(!game::IsInWilderness())
-    Msg = CONST_S("Direction keys move cursor, ESC exits, 'i' examines items, 'c' examines a character.");
-  else
-    Msg = CONST_S("Direction keys move cursor, ESC exits, 'c' examines a character.");
+  Msg = CONST_S("Direction keys move cursor, ESC exits, examine with 'i' and 'c'.");
 
   game::PositionQuestion(Msg, Char->GetPos(), &game::LookHandler, &game::LookKeyHandler);
   return false;
