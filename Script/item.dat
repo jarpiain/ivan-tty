@@ -1085,7 +1085,7 @@ brokenbottle /* cannot contain anything, so NOT bottle-> */
   DamageFlags = PIERCE;
 }
 
-scroll
+ivan_scroll
 {
   Category = SCROLL;
   DefaultMainVolume = 250;

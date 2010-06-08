@@ -56,7 +56,7 @@ col16 carrot::GetMaterialColorB(int) const { return MakeRGB16(80, 100, 16); }
 
 col16 charmlyre::GetMaterialColorB(int) const { return MakeRGB16(150, 130, 110); }
 
-truth scroll::CanBeRead(character* Reader) const
+truth ivan_scroll::CanBeRead(character* Reader) const
 {
   return Reader->CanRead() || game::GetSeeWholeMapCheatMode();
 }
@@ -391,7 +391,7 @@ truth backpack::ReceiveDamage(character* Damager, int Damage, int Type, int)
   return false;
 }
 
-truth scroll::ReceiveDamage(character*, int Damage, int Type, int)
+truth ivan_scroll::ReceiveDamage(character*, int Damage, int Type, int)
 {
   if(Type & FIRE && Damage
      && GetMainMaterial()->GetInteractionFlags() & CAN_BURN

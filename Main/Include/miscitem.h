@@ -169,7 +169,7 @@ ITEM(brokenbottle, item)
   virtual truth IsDangerous(const character*) const;
 };
 
-ITEM(scroll, item)
+ITEM(ivan_scroll, item)
 {
  public:
   virtual truth CanBeRead(character*) const;
@@ -177,13 +177,13 @@ ITEM(scroll, item)
   virtual truth ReceiveDamage(character*, int, int, int);
 };
 
-ITEM(scrollofteleportation, scroll)
+ITEM(scrollofteleportation, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
 };
 
-ITEM(scrollofcharging, scroll)
+ITEM(scrollofcharging, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
@@ -214,7 +214,7 @@ ITEM(loaf, item)
   virtual truth ShowMaterial() const { return false; }
 };
 
-ITEM(scrollofwishing, scroll)
+ITEM(scrollofwishing, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
@@ -247,7 +247,7 @@ ITEM(wand, item)
   int TimesUsed;
 };
 
-ITEM(scrollofchangematerial, scroll)
+ITEM(scrollofchangematerial, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
@@ -327,7 +327,7 @@ ITEM(stone, item)
   virtual truth WeightIsIrrelevant() const { return true; }
 };
 
-ITEM(scrolloftaming, scroll)
+ITEM(scrolloftaming, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
@@ -499,13 +499,13 @@ ITEM(stethoscope, item)
   virtual truth IsAppliable(const character*) const { return true; };
 };
 
-ITEM(scrollofenchantweapon, scroll)
+ITEM(scrollofenchantweapon, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
 };
 
-ITEM(scrollofenchantarmor, scroll)
+ITEM(scrollofenchantarmor, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
@@ -515,13 +515,13 @@ ITEM(skull, item)
 {
 };
 
-ITEM(scrollofrepair, scroll)
+ITEM(scrollofrepair, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
 };
 
-ITEM(encryptedscroll, scroll)
+ITEM(encryptedscroll, ivan_scroll)
 {
  public:
   virtual void Be() { }
@@ -565,7 +565,7 @@ ITEM(charmlyre, item)
   ulong LastUsed;
 };
 
-ITEM(scrollofdetectmaterial, scroll)
+ITEM(scrollofdetectmaterial, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
@@ -579,13 +579,13 @@ ITEM(stick, item)
   virtual truth WeightIsIrrelevant() const { return true; }
 };
 
-ITEM(scrollofhardenmaterial, scroll)
+ITEM(scrollofhardenmaterial, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
 };
 
-ITEM(scrollofgolemcreation, scroll)
+ITEM(scrollofgolemcreation, ivan_scroll)
 {
  public:
   virtual void FinishReading(character*);
