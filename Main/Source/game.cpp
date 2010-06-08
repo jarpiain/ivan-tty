@@ -112,7 +112,7 @@ time_t game::GameBegan;
 const char* const game::Alignment[] = { "L++", "L+", "L", "L-", "N+", "N=", "N-", "C+", "C", "C-", "C--" };
 god** game::God;
 
-const int game::MoveNormalCommandKey[] = { KEY_HOME, KEY_UP, KEY_PAGE_UP, KEY_LEFT, KEY_RIGHT, KEY_END, KEY_DOWN, KEY_PAGE_DOWN, '.' };
+const int game::MoveNormalCommandKey[] =   { 'y','k','u','h','l','b','j','n','.' };
 const int game::MoveAbnormalCommandKey[] = { '7','8','9','u','o','j','k','l','.' };
 
 const v2 game::MoveVector[] = { v2(-1, -1), v2(0, -1), v2(1, -1), v2(-1, 0), v2(1, 0), v2(-1, 1), v2(0, 1), v2(1, 1), v2(0, 0) };
