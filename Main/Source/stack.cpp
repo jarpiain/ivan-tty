@@ -450,7 +450,6 @@ int stack::DrawContents(itemvector& ReturnVector, stack* MergeStack,
   game::SetStandardListAttributes(Contents);
   Contents.SetPageLength(12);
   Contents.RemoveFlags(BLIT_AFTERWARDS);
-  Contents.SetEntryDrawer(game::ItemEntryDrawer);
 
   if(!(Flags & NO_SELECT))
     Contents.AddFlags(SELECTABLE);

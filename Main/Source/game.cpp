@@ -2309,7 +2309,6 @@ void game::DisplayMassacreList(const massacremap& MassacreMap, const char* Reaso
   SetStandardListAttributes(List);
   List.SetPageLength(15);
   List.AddFlags(SELECTABLE);
-  List.SetEntryDrawer(CharacterEntryDrawer);
   List.AddDescription(CONST_S(""));
   festring SideTopic;
 
@@ -2989,7 +2988,6 @@ truth game::PolymorphControlKeyHandler(int Key, festring& String)
     List.AddFlags(SELECTABLE);
     protosystem::CreateEverySeenCharacter(CharacterDrawVector);
     std::sort(CharacterDrawVector.begin(), CharacterDrawVector.end(), NameOrderer);
-    List.SetEntryDrawer(CharacterEntryDrawer);
     std::vector<festring> StringVector;
     uint c;
 

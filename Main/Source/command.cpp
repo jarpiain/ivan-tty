@@ -666,7 +666,6 @@ truth commandsystem::WhatToEngrave(character* Char)
 truth commandsystem::Pray(character* Char)
 {
   felist Panthenon(CONST_S("To Whom you want to address your prayers?"));
-  Panthenon.SetEntryDrawer(game::GodEntryDrawer);
   int Known[GODS];
   int Index = 0;
   int DivineMaster = Char->GetLSquareUnder()->GetDivineMaster();
@@ -1300,7 +1299,6 @@ truth commandsystem::SecretKnowledge(character* Char)
       }
 
     protosystem::CreateEveryCharacter(Character);
-    List.SetEntryDrawer(game::CharacterEntryDrawer);
 
     switch(Chosen)
     {
@@ -1379,7 +1377,6 @@ truth commandsystem::SecretKnowledge(character* Char)
   {
     itemvectorvector& Item = game::GetItemDrawVector();
     protosystem::CreateEveryItem(Item);
-    List.SetEntryDrawer(game::ItemEntryDrawer);
     List.SetPageLength(20);
 
     switch(Chosen)

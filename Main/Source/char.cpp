@@ -3620,8 +3620,7 @@ void character::PrintInfo() const
 
     if((EquipmentEasilyRecognized(c) || game::WizardModeIsActive()) && Equipment)
     {
-      int ImageKey = game::AddToItemDrawVector(itemvector(1, Equipment));
-      Info.AddEntry(festring(GetEquipmentName(c)) + ": " + Equipment->GetName(INDEFINITE), LIGHT_GRAY, 0, ImageKey, true);
+      Info.AddEntry(festring(GetEquipmentName(c)) + ": " + Equipment->GetName(INDEFINITE), LIGHT_GRAY, true);
     }
   }
 
@@ -3630,7 +3629,6 @@ void character::PrintInfo() const
   else
   {
     game::SetStandardListAttributes(Info);
-    Info.SetEntryDrawer(game::ItemEntryDrawer);
     Info.Draw();
   }
 
@@ -4168,7 +4166,7 @@ void character::DrawPanel() const
       int Color = ((1 << c) & EquipmentState || TemporaryStateCounter[c] == PERMAMENT)
                   ? BLUE
 		  : WHITE;
-      graphics::PutStrf(Color, "%s ", State[c].Description);
+      graphics::PutStrf(Color, "%s ", StateData[c].Description);
     }
 
   /* Make this more elegant!!! */
@@ -6168,7 +6166,7 @@ truth character::SelectFromPossessions(itemvector& ReturnVector, const festring&
   truth InventoryPossible = GetStack()->SortedItems(this, Sorter);
 
   if(InventoryPossible)
-    List.AddEntry(CONST_S("choose from inventory"), LIGHT_GRAY, 20, game::AddToItemDrawVector(itemvector()));
+    List.AddEntry(CONST_S("choose from inventory"), LIGHT_GRAY, 20);
 
   truth Any = false;
   itemvector Item;
@@ -6184,8 +6182,7 @@ truth character::SelectFromPossessions(itemvector& ReturnVector, const festring&
       Item.push_back(BodyPart);
       Entry.Empty();
       BodyPart->AddName(Entry, UNARTICLED);
-      int ImageKey = game::AddToItemDrawVector(itemvector(1, BodyPart));
-      List.AddEntry(Entry, LIGHT_GRAY, 20, ImageKey, true);
+      List.AddEntry(Entry, LIGHT_GRAY, 20, true);
       Any = true;
     }
   }
@@ -6202,8 +6199,7 @@ truth character::SelectFromPossessions(itemvector& ReturnVector, const festring&
       Entry.Resize(20);
       Equipment->AddInventoryEntry(this, Entry, 1, true);
       AddSpecialEquipmentInfo(Entry, c);
-      int ImageKey = game::AddToItemDrawVector(itemvector(1, Equipment));
-      List.AddEntry(Entry, LIGHT_GRAY, 20, ImageKey, true);
+      List.AddEntry(Entry, LIGHT_GRAY, 20, true);
       Any = true;
     }
   }
@@ -6212,7 +6208,6 @@ truth character::SelectFromPossessions(itemvector& ReturnVector, const festring&
   {
     game::SetStandardListAttributes(List);
     List.SetFlags(SELECTABLE|DRAW_BACKGROUND_AFTERWARDS);
-    List.SetEntryDrawer(game::ItemEntryDrawer);
     game::DrawEverythingNoBlit();
     int Chosen = List.Draw();
     game::ClearItemDrawVector();
@@ -8492,20 +8487,18 @@ truth character::EquipmentScreen(stack* MainStack, stack* SecStack)
       {
 	Equipment->AddInventoryEntry(this, Entry, 1, true);
 	AddSpecialEquipmentInfo(Entry, c);
-	int ImageKey = game::AddToItemDrawVector(itemvector(1, Equipment));
-	List.AddEntry(Entry, LIGHT_GRAY, 20, ImageKey, true);
+	List.AddEntry(Entry, LIGHT_GRAY, 20, true);
       }
       else
       {
 	Entry << (GetBodyPartOfEquipment(c) ? "-" : "can't use");
-	List.AddEntry(Entry, LIGHT_GRAY, 20, game::AddToItemDrawVector(itemvector()));
+	List.AddEntry(Entry, LIGHT_GRAY, 20);
       }
     }
 
     game::DrawEverythingNoBlit();
     game::SetStandardListAttributes(List);
     List.SetFlags(SELECTABLE|DRAW_BACKGROUND_AFTERWARDS);
-    List.SetEntryDrawer(game::ItemEntryDrawer);
     Chosen = List.Draw();
     game::ClearItemDrawVector();
 
