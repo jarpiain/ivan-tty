@@ -12,11 +12,6 @@
 
 #include <iostream>
 
-#ifdef __DJGPP__
-#include <go32.h>
-#include <sys/farptr.h>
-#endif
-
 #include "game.h"
 #include "database.h"
 #include "feio.h"
@@ -36,15 +31,6 @@ int Main(int argc, char **argv)
     std::cout << "Iter Vehemens ad Necem version " << IVAN_VERSION << std::endl;
     return 0;
   }
-
-#ifdef __DJGPP__
-
-  /* Saves numlock state and toggles it off */
-
-  char ShiftByteState = _farpeekb(_dos_ds, 0x417);
-  _farpokeb(_dos_ds, 0x417, 0);
-
-#endif /* __DJGPP__ */
 
   femath::SetSeed(time(0));
   game::InitGlobalValueMap();
@@ -113,15 +99,6 @@ int Main(int argc, char **argv)
 	break;
       }
      case 4:
-
-#ifdef __DJGPP__
-
-      /* Loads numlock state */
-
-      _farpokeb(_dos_ds, 0x417, ShiftByteState);
-
-#endif
-
       return 0;
     }
   }

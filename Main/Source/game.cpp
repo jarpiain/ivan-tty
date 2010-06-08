@@ -13,12 +13,8 @@
 #include <algorithm>
 #include <cstdarg>
 
-#if defined(LINUX) || defined(__DJGPP__)
+#if defined(LINUX)
 #include <sys/stat.h>
-#endif
-
-#ifdef WIN32
-#include <direct.h>
 #endif
 
 #include "whandler.h"
@@ -231,24 +227,8 @@ truth game::Init(const festring& Name)
   else
     PlayerName = Name;
 
-#ifdef WIN32
-  _mkdir("Save");
-#endif
-
-#ifdef __DJGPP__
-  mkdir("Save", S_IWUSR);
-#endif
-
 #ifdef LINUX
   mkdir(GetSaveDir().CStr(), S_IRWXU|S_IRWXG);
-#endif
-
-#ifdef WIN32
-  _mkdir("Bones");
-#endif
-
-#ifdef __DJGPP__
-  mkdir("Bones", S_IWUSR);
 #endif
 
   LOSTick = 2;
@@ -901,11 +881,6 @@ festring game::SaveName(const festring& Base)
   for(festring::sizetype c = 0; c < SaveName.GetSize(); ++c)
     if(SaveName[c] == ' ')
       SaveName[c] = '_';
-
-#if defined(WIN32) || defined(__DJGPP__)
-  if(SaveName.GetSize() > 13)
-    SaveName.Resize(13);
-#endif
 
   return SaveName;
 }
@@ -2109,10 +2084,6 @@ festring game::GetHomeDir()
   Dir << getenv("HOME") << '/';
   return Dir;
 #endif
-
-#if defined(WIN32) || defined(__DJGPP__)
-  return "";
-#endif
 }
 
 festring game::GetSaveDir()
@@ -2122,10 +2093,6 @@ festring game::GetSaveDir()
   Dir << getenv("HOME") << "/IvanSave/";
   return Dir;
 #endif
-
-#if defined(WIN32) || defined(__DJGPP__)
-  return "Save/";
-#endif
 }
 
 festring game::GetGameDir()
@@ -2133,20 +2100,12 @@ festring game::GetGameDir()
 #ifdef LINUX
   return DATADIR "/ivan/";
 #endif
-
-#if defined(WIN32) || defined(__DJGPP__)
-  return "";
-#endif
 }
 
 festring game::GetBoneDir()
 {
 #ifdef LINUX
   return LOCAL_STATE_DIR "/Bones/";
-#endif
-
-#if defined(WIN32) || defined(__DJGPP__)
-  return "Bones/";
 #endif
 }
 

@@ -67,10 +67,6 @@ struct homedata
 outputfile& operator<<(outputfile&, const homedata*);
 inputfile& operator>>(inputfile&, homedata*&);
 
-#ifdef VC
-#pragma pack(1)
-#endif
-
 struct configid
 {
   configid() { }
@@ -79,10 +75,6 @@ struct configid
   int Type NO_ALIGNMENT;
   int Config NO_ALIGNMENT;
 };
-
-#ifdef VC
-#pragma pack()
-#endif
 
 outputfile& operator<<(outputfile&, const configid&);
 inputfile& operator>>(inputfile&, configid&);

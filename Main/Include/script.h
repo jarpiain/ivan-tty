@@ -110,10 +110,6 @@ template <class type> inline scriptmember<type>& scriptmember<type>::operator=(c
   return *this;
 }
 
-#ifdef VC
-#pragma pack(1)
-#endif
-
 template <class type> struct fastscriptmember : public scriptmemberbase
 {
   fastscriptmember() { }
@@ -124,10 +120,6 @@ template <class type> struct fastscriptmember : public scriptmemberbase
   virtual void Load(inputfile&);
   type Member;
 };
-
-#ifdef VC
-#pragma pack()
-#endif
 
 class script
 {
