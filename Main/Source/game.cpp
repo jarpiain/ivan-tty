@@ -271,7 +271,6 @@ truth game::Init(const festring& Name)
       SetIsRunning(true);
       InWilderness = true;
       iosystem::TextScreen(CONST_S("Generating game...\n\nThis may take some time, please wait."), WHITE, false);
-      igraph::CreateBackGround(GRAY_FRACTAL);
       NextCharacterID = 1;
       NextItemID = 1;
       NextTrapID = 1;
@@ -669,62 +668,27 @@ truth game::OnScreen(v2 Pos)
   return Pos.X >= 0 && Pos.Y >= 0 && Pos.X >= Camera.X && Pos.Y >= Camera.Y && Pos.X < GetCamera().X + GetScreenXSize() && Pos.Y < GetCamera().Y + GetScreenYSize();
 }
 
-void game::DrawEverythingNoBlit(truth AnimationDraw)
+void game::DrawEverythingNoBlit()
 {
+  if(felist::NeedRedraw())
+  {
+    GetCurrentArea()->SendNewDrawRequest();
+  }
   if(LOSUpdateRequested && Player->IsEnabled())
     if(!IsInWilderness())
       GetCurrentLevel()->UpdateLOS();
     else
       GetWorldMap()->UpdateLOS();
 
-  if(OnScreen(CursorPos))
-    if(!IsInWilderness() || CurrentWSquareMap[CursorPos.X][CursorPos.Y]->GetLastSeen() || GetSeeWholeMapCheatMode())
-      CurrentArea->GetSquare(CursorPos)->SendStrongNewDrawRequest();
-    else
-      DOUBLE_BUFFER->Fill(CalculateScreenCoordinates(CursorPos), TILE_V2, 0);
-
-  GetCurrentArea()->Draw(AnimationDraw);
-  Player->DrawPanel(AnimationDraw);
+  Player->DrawPanel();
+  GetCurrentArea()->Draw();
 
   msgsystem::Draw();
 
   if(OnScreen(CursorPos))
   {
     v2 ScreenCordinates = CalculateScreenCoordinates(CursorPos);
-    blitdata B = { DOUBLE_BUFFER,
-		   { 0, 0 },
-		   { ScreenCordinates.X, ScreenCordinates.Y },
-		   { TILE_SIZE, TILE_SIZE },
-		   { 0 },
-		   TRANSPARENT_COLOR,
-		   ALLOW_ANIMATE|ALLOW_ALPHA };
-
-    if(!IsInWilderness() && !GetSeeWholeMapCheatMode())
-    {
-      lsquare* Square = CurrentLSquareMap[CursorPos.X][CursorPos.Y];
-
-      if(Square->GetLastSeen() != GetLOSTick())
-	Square->DrawMemorized(B);
-    }
-
-    if(DoZoom())
-    {
-      B.Src = B.Dest;
-      B.Dest.X = RES.X - 96;
-      B.Dest.Y = RES.Y - 96;
-      B.Stretch = 5;
-      DOUBLE_BUFFER->StretchBlit(B);
-    }
-
     igraph::DrawCursor(ScreenCordinates, CursorData);
-  }
-
-  if(Player->IsEnabled())
-  {
-    v2 Pos = Player->GetPos();
-
-    if(OnScreen(Pos))
-      igraph::DrawCursor(CalculateScreenCoordinates(Pos), Player->GetCursorData());
   }
 }
 

@@ -16,7 +16,6 @@
 #include <map>
 #include <vector>
 #include <ctime>
-#include <cstring>
 
 #include "femath.h"
 #include "festring.h"
@@ -194,7 +193,7 @@ class game
   static void UpdateCameraY(int);
   static int GetCurrentLevelIndex() { return CurrentLevelIndex; }
   static int GetMoveCommandKeyBetweenPoints(v2, v2);
-  static void DrawEverythingNoBlit(truth = false);
+  static void DrawEverythingNoBlit();
   static god* GetGod(int I) { return God[I]; }
   static const char* GetAlignment(int I) { return Alignment[I]; }
   static void ApplyDivineTick();
@@ -245,8 +244,8 @@ class game
   static int GetDirectionForVector(v2);
   static const char* GetVerbalPlayerAlignment();
   static void CreateGods();
-  static int GetScreenXSize() { return 42; }
-  static int GetScreenYSize() { return 26; }
+  static int GetScreenXSize() { return 60; } // was: 42
+  static int GetScreenYSize() { return 20; } // was: 26
   static v2 CalculateScreenCoordinates(v2);
   static v2 PositionQuestion(const festring&, v2, positionhandler = 0, positionkeyhandler = 0);
   static void LookHandler(v2);
@@ -257,8 +256,6 @@ class game
   static void InitGlobalValueMap();
   static void TextScreen(const festring&, col16 = 0xFFFF, truth = true);
   static void SetCursorPos(v2 What) { CursorPos = What; }
-  static truth DoZoom() { return Zoom; }
-  static void SetDoZoom(truth What) { Zoom = What; }
   static int KeyQuestion(const festring&, int, int, ...);
   static v2 LookKeyHandler(v2, int);
   static v2 NameKeyHandler(v2, int);
@@ -435,7 +432,6 @@ class game
   static gamescript* GameScript;
   static valuemap GlobalValueMap;
   static v2 CursorPos;
-  static truth Zoom;
   static truth Generating;
   static dangermap DangerMap;
   static int NextDangerIDType;
@@ -555,7 +551,7 @@ inline int game::CompareLights(col24 L1, col24 L2)
 
 inline v2 game::CalculateScreenCoordinates(v2 Pos)
 {
-  return v2((Pos.X - Camera.X + 1) << 4, (Pos.Y - Camera.Y + 2) << 4);
+  return v2(Pos.X - Camera.X, Pos.Y - Camera.Y);
 }
 
 #endif
