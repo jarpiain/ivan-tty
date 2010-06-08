@@ -102,9 +102,6 @@ class igraph
   static const rawbitmap* GetRawGraphic(int I) { return RawGraphic[I]; }
   static const int* GetBodyBitmapValidityMap(int);
   static bitmap* GetFlagBuffer() { return FlagBuffer; }
-  static const bitmap* GetMenuGraphic() { return Menu; }
-  static void LoadMenu();
-  static void UnLoadMenu();
   static bitmap* GetSilhouetteCache(int I1, int I2, int I3) { return SilhouetteCache[I1][I2][I3]; }
   static const bitmap* GetBackGround() { return BackGround; }
   static void BlitBackGround(v2, v2);
@@ -124,7 +121,6 @@ class igraph
   static uchar RollBuffer[256];
   static bitmap* FlagBuffer;
   static int** BodyBitmapValidityMap;
-  static bitmap* Menu;
   static bitmap* SilhouetteCache[HUMANOID_BODYPARTS][CONDITION_COLORS][SILHOUETTE_TYPES];
   static rawbitmap* ColorizeBuffer[2];
   static bitmap* Cursor[CURSOR_TYPES];

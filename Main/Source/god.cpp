@@ -381,7 +381,6 @@ truth god::TryToAttachBodyPart(character* Char)
 	{
 	  BodyPart = Char->GenerateRandomBodyPart();
 	  BodyPart->ChangeMainMaterial(MaterialVector[c]->SpawnMore());
-	  Char->UpdatePictures();
 	  festring MadeOf;
 
 	  if(!MaterialVector[c]->IsSameAs(Char->GetTorso()->GetMainMaterial()))
