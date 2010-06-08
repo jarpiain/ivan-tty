@@ -33,6 +33,8 @@ class wterrain
   void AddName(festring&, int) const;
   festring GetName(int) const;
   virtual const char* GetNameStem() const = 0;
+  virtual int GetGlyph() const = 0;
+  virtual int GetAttr() const = 0;
  protected:
   virtual truth UsesLongArticle() const { return false; }
   virtual v2 GetBitmapPos(int) const = 0;
@@ -58,15 +60,12 @@ class gwterrain : public wterrain, public gterrain
  public:
   typedef gwterrainprototype prototype;
   virtual void Save(outputfile&) const;
-  void Draw(blitdata&) const;
+  void Draw() const;
   virtual int GetPriority() const = 0;
   virtual int GetEntryDifficulty() const { return 10; }
   virtual const prototype* GetProtoType() const = 0;
   int GetType() const { return GetProtoType()->GetIndex(); }
-  void CalculateNeighbourBitmapPoses();
   virtual int GetWalkability() const;
- protected:
-  std::pair<v2, int> Neighbour[8];
 };
 
 class owterrainprototype
@@ -88,7 +87,7 @@ class owterrain : public wterrain, public oterrain
  public:
   typedef owterrainprototype prototype;
   virtual void Save(outputfile&) const;
-  void Draw(blitdata&) const;
+  void Draw() const;
   virtual const prototype* GetProtoType() const = 0;
   int GetType() const { return GetProtoType()->GetIndex(); }
   virtual int GetAttachedDungeon() const { return 0; }

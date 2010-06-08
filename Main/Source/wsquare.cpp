@@ -36,23 +36,18 @@ void wsquare::Load(inputfile& SaveFile)
   CalculateLuminance();
 }
 
-void wsquare::Draw(blitdata& BlitData)
+void wsquare::Draw(v2 Grid)
 {
   if(Flags & NEW_DRAW_REQUEST)
   {
-    BlitData.Luminance = ivanconfig::ApplyContrastTo(Luminance);
-    GWTerrain->Draw(BlitData);
-
-    if(OWTerrain)
-      OWTerrain->Draw(BlitData);
+    graphics::MoveCursor(Grid);
 
     if(Character && Character->CanBeSeenByPlayer())
-    {
-      BlitData.Luminance = ivanconfig::GetContrastLuminance();
-      BlitData.CustomData = Character->GetSquareIndex(Pos)
-			    |ALLOW_ANIMATE|ALLOW_ALPHA;
-      Character->Draw(BlitData);
-    }
+      Character->Draw(true);
+    else if(OWTerrain)
+      OWTerrain->Draw();
+    else
+      GWTerrain->Draw();
 
     Flags &= ~STRONG_NEW_DRAW_REQUEST;
   }

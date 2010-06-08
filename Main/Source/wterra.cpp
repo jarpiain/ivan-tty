@@ -53,25 +53,18 @@ festring wterrain::GetName(int Case) const
   return Name;
 }
 
-void gwterrain::Draw(blitdata& BlitData) const
+void gwterrain::Draw() const
 {
-  BlitData.Src = GetBitmapPos(0);
-  igraph::GetWTerrainGraphic()->LuminanceBlit(BlitData);
-
-  for(int c = 0; c < 8 && Neighbour[c].second; ++c)
-  {
-    BlitData.Src = Neighbour[c].first;
-    igraph::GetWTerrainGraphic()->LuminanceMaskedBlit(BlitData);
-  }
-
-  BlitData.Src.X = BlitData.Src.Y = 0;
+  int Glyph = GetGlyph();
+  int Attr = GetAttr();
+  graphics::PutChar(Glyph, Attr);
 }
 
-void owterrain::Draw(blitdata& BlitData) const
+void owterrain::Draw() const
 {
-  BlitData.Src = GetBitmapPos(0);
-  igraph::GetWTerrainGraphic()->LuminanceMaskedBlit(BlitData);
-  BlitData.Src.X = BlitData.Src.Y = 0;
+  int Glyph = GetGlyph();
+  int Attr = GetAttr();
+  graphics::PutChar(Glyph, Attr);
 }
 
 void wterrain::Load(inputfile&)
@@ -107,38 +100,6 @@ truth DrawOrderer(const std::pair<v2, int>& Pair1,
 		  const std::pair<v2, int>& Pair2)
 {
   return Pair1.second < Pair2.second;
-}
-
-void gwterrain::CalculateNeighbourBitmapPoses()
-{
-  int Index = 0;
-  v2 Pos = GetPos();
-  worldmap* WorldMap = GetWorldMap();
-  int Priority = GetPriority();
-
-  for(int d = 0; d < 8; ++d)
-  {
-    wsquare* NeighbourSquare = WorldMap->GetNeighbourWSquare(Pos, d);
-
-    if(NeighbourSquare)
-    {
-      gwterrain* DoNeighbour = NeighbourSquare->GetGWTerrain();
-      int NeighbourPriority = DoNeighbour->GetPriority();
-
-      if(NeighbourPriority > Priority)
-      {
-	Neighbour[Index].first = DoNeighbour->GetBitmapPos(0)
-				 - (game::GetMoveVector(d) << 4);
-	Neighbour[Index].second = NeighbourPriority;
-	++Index;
-      }
-    }
-  }
-
-  std::sort(Neighbour, Neighbour + Index, DrawOrderer);
-
-  if(Index < 8)
-    Neighbour[Index].second = 0;
 }
 
 truth owterrain::Enter(truth DirectionUp) const

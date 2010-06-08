@@ -113,7 +113,6 @@ void worldmap::Load(inputfile& SaveFile)
       Map[x][y]->Load(SaveFile);
     }
 
-  CalculateNeighbourBitmapPoses();
   SaveFile >> Continent >> PlayerGroup;
 }
 
@@ -299,7 +298,6 @@ void worldmap::Generate()
     SetEntryPos(UNDER_WATER_TUNNEL_EXIT, TunnelExit);
     PLAYER->PutTo(NewAttnamPos);
     CalculateLuminances();
-    CalculateNeighbourBitmapPoses();
     break;
   }
 
@@ -642,8 +640,6 @@ void worldmap::CalculateLuminances()
 
 void worldmap::CalculateNeighbourBitmapPoses()
 {
-  for(ulong c = 0; c < XSizeTimesYSize; ++c)
-    Map[0][c]->GetGWTerrain()->CalculateNeighbourBitmapPoses();
 }
 
 wsquare* worldmap::GetNeighbourWSquare(v2 Pos, int I) const

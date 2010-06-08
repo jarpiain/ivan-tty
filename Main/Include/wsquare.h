@@ -28,7 +28,7 @@ class wsquare : public square
   virtual ~wsquare();
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
-  void Draw(blitdata&);
+  void Draw(v2);
   void SetGWTerrain(gwterrain*);
   void SetOWTerrain(owterrain*);
   gwterrain* GetGWTerrain() const { return GWTerrain; }
