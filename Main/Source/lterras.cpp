@@ -107,12 +107,8 @@ truth door::Close(character* Closer)
   return true;
 }
 
-void altar::Draw(blitdata& BlitData) const
+void altar::Draw(blitdata&) const
 {
-  olterrain::Draw(BlitData);
-  BlitData.Src.X = GetConfig() << 4;
-  igraph::GetSymbolGraphic()->LuminanceMaskedBlit(BlitData);
-  BlitData.Src.X = BlitData.Src.Y = 0;
 }
 
 void door::BeKicked(character* Kicker, int KickDamage, int)

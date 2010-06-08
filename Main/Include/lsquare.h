@@ -124,7 +124,7 @@ class lsquare : public square
   void UpdateMemorizedDescription(truth = false);
   truth BeKicked(character*, item*, bodypart*, double, double, int, int, truth, truth);
   int GetDivineMaster() const;
-  void Draw(blitdata&) const;
+  void Draw(v2) const;
   void UpdateMemorized();
   truth CanBeDug() const;
   virtual gterrain* GetGTerrain() const { return GLTerrain; }
@@ -154,8 +154,8 @@ class lsquare : public square
   truth TryKey(item*, character*);
   void SignalSeen(ulong);
   void CalculateLuminance();
-  void DrawStaticContents(blitdata&) const;
-  void DrawMemorized(blitdata&) const;
+  void DrawStaticContents() const;
+  void DrawMemorized(v2) const;
   void DrawMemorizedCharacter(blitdata&) const;
   void SendMemorizedUpdateRequest();
   lsquare* GetNeighbourLSquare(int) const;
@@ -218,7 +218,7 @@ class lsquare : public square
   void DisplayFluidInfo(festring&) const;
   void RemoveFluid(fluid*);
   fluid* AddFluid(liquid*);
-  void DrawStacks(blitdata&) const;
+  void DrawStacks() const;
   truth FluidIsVisible() const { return SmokeAlphaSum < 175; }
   void RemoveRain(rain*);
   void AddRain(liquid*, v2, int, truth);
@@ -261,13 +261,7 @@ class lsquare : public square
   void ChangeLuminance(col24&, col24);
   void RemoveLuminance(col24&);
   void CalculateEmitation();
-  void UpdateStaticContentCache(col24) const;
-  mutable struct staticcontentcache
-  {
-    staticcontentcache() : Bitmap(0), Luminance(0) { }
-    bitmap* Bitmap;
-    col24 Luminance;
-  } StaticContentCache;
+  truth NeighborsHaveItems() const;
   fluid* Fluid;
   smoke* Smoke;
   rain* Rain;

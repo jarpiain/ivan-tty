@@ -1269,16 +1269,10 @@ void item::CheckFluidGearPictures(v2 ShadowPos, int SpecialFlags, truth BodyArmo
 
 void item::DrawFluidGearPictures(blitdata& BlitData, int SpecialFlags) const
 {
-  if(Fluid)
-    for(const fluid* F = Fluid[0]; F; F = F->Next)
-      F->DrawGearPicture(BlitData, SpecialFlags);
 }
 
 void item::DrawFluidBodyArmorPictures(blitdata& BlitData, int SpecialFlags) const
 {
-  if(Fluid)
-    for(const fluid* F = Fluid[0]; F; F = F->Next)
-      F->DrawBodyArmorPicture(BlitData, SpecialFlags);
 }
 
 void item::DrawFluids(blitdata& BlitData) const

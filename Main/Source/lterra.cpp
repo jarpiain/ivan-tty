@@ -385,16 +385,8 @@ v2 glterrain::GetBorderBitmapPos(v2 BasePos, int I) const
     return BasePos;
 }
 
-void glterrain::Draw(blitdata& BlitData) const
+void glterrain::Draw() const
 {
-  if(UseBorderTiles())
-  {
-    GraphicData.Picture[0]->LuminanceMaskedBlit(BlitData);
-  }
-  else
-  {
-    GraphicData.Picture[0]->LuminanceBlit(BlitData);
-  }
 }
 
 v2 olterrain::GetBorderBitmapPos(v2 BasePos, int I) const
@@ -423,16 +415,8 @@ v2 olterrain::GetBorderBitmapPos(v2 BasePos, int I) const
     return BasePos;
 }
 
-void olterrain::Draw(blitdata& BlitData) const
+void olterrain::Draw() const
 {
-  if(UseBorderTiles())
-  {
-    GraphicData.Picture[0]->AlphaLuminanceBlit(BlitData);
-  }
-  else
-  {
-    GraphicData.Picture[0]->AlphaLuminanceBlit(BlitData);
-  }
 }
 
 void lterrain::SignalRustLevelChange()

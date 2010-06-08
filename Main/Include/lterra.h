@@ -181,7 +181,7 @@ class glterrain : public lterrain, public gterrain
   DATA_BASE_VALUE(int, BorderTilePriority);
   virtual int GetAttachedGod() const;
   virtual int GetTheoreticalWalkability() const { return DataBase->Walkability; }
-  void Draw(blitdata&) const;
+  void Draw() const;
  protected:
   virtual void InstallDataBase(int);
   virtual int GetGraphicsContainerIndex() const;
@@ -315,7 +315,7 @@ class olterrain : public lterrain, public oterrain
   void SetConfig(int, int = 0);
   god* GetMasterGod() const;
   virtual truth IsTransparent() const;
-  virtual void Draw(blitdata&) const;
+  virtual void Draw() const;
   virtual int GetTheoreticalWalkability() const { return DataBase->Walkability; }
   virtual void BeDestroyed() { Break(); }
   virtual void ReceiveAcid(material*, long);

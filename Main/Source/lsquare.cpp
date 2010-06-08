@@ -76,9 +76,6 @@ lsquare::~lsquare()
     delete ToDel;
   }
 
-  delete Memorized;
-  delete FowMemorized;
-  delete StaticContentCache.Bitmap;
   delete [] GroundBorderPartnerTerrain;
   delete [] OverBorderPartnerTerrain;
 
@@ -162,178 +159,85 @@ void lsquare::UpdateMemorized()
 {
   if(Flags & MEMORIZED_UPDATE_REQUEST)
   {
-    if(!IsDark() || CanBeFeltByPlayer())
-    {
-      blitdata B = { Memorized,
-		     { 0, 0 },
-		     { 0, 0 },
-		     { TILE_SIZE, TILE_SIZE },
-		     { NORMAL_LUMINANCE },
-		     TRANSPARENT_COLOR,
-		     ALLOW_ALPHA };
-
-      DrawStaticContents(B);
-      Memorized->FastBlit(FowMemorized);
-      B.Bitmap = FowMemorized;
-      B.Flags = 0;
-      B.MaskColor = 0;
-      igraph::GetFOWGraphic()->NormalMaskedBlit(B);
-    }
-    else
-    {
-      Memorized->ClearToColor(0);
-      igraph::GetFOWGraphic()->FastBlit(FowMemorized);
-    }
-
-    if(!StaticContentCache.Bitmap)
-    {
-      StaticContentCache.Bitmap = new bitmap(TILE_V2);
-      StaticContentCache.Bitmap->ActivateFastFlag();
-    }
-
-    UpdateStaticContentCache(Luminance);
     Flags &= ~MEMORIZED_UPDATE_REQUEST;
   }
 }
 
-void lsquare::UpdateStaticContentCache(col24 Luminance) const
+// XXX hack
+truth lsquare::NeighborsHaveItems() const
 {
-  blitdata B = { StaticContentCache.Bitmap,
-		 { 0, 0 },
-		 { 0, 0 },
-		 { TILE_SIZE, TILE_SIZE },
-		 { Luminance },
-		 0,
-		 0 };
-
-  Memorized->LuminanceBlit(B);
-  StaticContentCache.Luminance = Luminance;
+  for(int i = 0; i < 4; i++)
+  {
+    stack* s = GetStackOfAdjacentSquare(i);
+    if(!s) continue;
+    if(s->GetVisibleSideItems(PLAYER, 3 - i)) return true;
+  }
+  return false;
 }
 
-void lsquare::DrawStaticContents(blitdata& BlitData) const
+void lsquare::DrawStaticContents() const
 {
-  if(BlitData.CustomData & ALLOW_ANIMATE && Memorized && !game::GetSeeWholeMapCheatMode())
+  if(Trap)
   {
-    if(StaticContentCache.Luminance != BlitData.Luminance)
-      UpdateStaticContentCache(BlitData.Luminance);
-
-    StaticContentCache.Bitmap->FastBlit(BlitData.Bitmap, BlitData.Dest);
-    return;
+    for(const trap* T = Trap; T; T = T->Next)
+      T->Draw();
   }
-
-  if(!OLTerrain || OLTerrain->ShowThingsUnder())
-    GLTerrain->Draw(BlitData);
-
-  int c;
-  int GroundPartners = GroundBorderPartnerInfo >> 24 & 15;
-
-  for(c = 0; c < GroundPartners; ++c)
+  else if(Stack->GetVisibleItems(PLAYER) || NeighborsHaveItems())
   {
-    BlitData.CustomData |= 8 - (GroundBorderPartnerInfo >> ((c << 1) + c) & 7);
-    GroundBorderPartnerTerrain[c]->Draw(BlitData);
-    BlitData.CustomData &= ~SQUARE_INDEX_MASK;
+    DrawStacks();
   }
-
-  truth StackDrawn = false;
-
-  if(OLTerrain && !IsFlyable())
+  else if(OLTerrain)
   {
-    if(OLTerrain->IsTransparent() && OLTerrain->ShowThingsUnder())
-    {
-      StackDrawn = true;
-      DrawStacks(BlitData);
-    }
-
-    OLTerrain->Draw(BlitData);
+    OLTerrain->Draw();
   }
-
-  for(const fluid* F = Fluid; F; F = F->Next)
-    F->SimpleDraw(BlitData);
-
-  if(OLTerrain && IsFlyable())
-    OLTerrain->Draw(BlitData);
-
-  if(!StackDrawn && Flags & IS_TRANSPARENT)
-    DrawStacks(BlitData);
-
-  for(const trap* T = Trap; T; T = T->Next)
-    T->Draw(BlitData);
-
-  int OverPartners = OverBorderPartnerInfo >> 24 & 15;
-
-  for(c = 0; c < OverPartners; ++c)
+  else if(Fluid)
   {
-    BlitData.CustomData |= 8 - (OverBorderPartnerInfo >> ((c << 1) + c) & 7);
-    OverBorderPartnerTerrain[c]->Draw(BlitData);
-    BlitData.CustomData &= ~SQUARE_INDEX_MASK;
+    // XXX Draw only first fluid in the list
+    for(const fluid* F = Fluid; F; F = 0)
+      F->SimpleDraw(GLTerrain->GetGlyph());
+  }
+  else
+  {
+    GLTerrain->Draw();
   }
 }
 
-void lsquare::Draw(blitdata& BlitData) const
+void lsquare::Draw(v2 Grid) const
 {
   if(Flags & NEW_DRAW_REQUEST)
   {
+    graphics::MoveCursor(Grid);
+
     if(!IsDark() || game::GetSeeWholeMapCheatMode())
     {
-      if(game::GetSeeWholeMapCheatMode() == SHOW_MAP_IN_UNIFORM_LIGHT
-	 || (game::GetSeeWholeMapCheatMode()
-	     && !(Flags & IS_TRANSPARENT)))
-	BlitData.Luminance = ivanconfig::GetContrastLuminance();
-      else
-	BlitData.Luminance = ivanconfig::ApplyContrastTo(Luminance);
-
-      DrawStaticContents(BlitData);
-
-      if(Character && (Character->CanBeSeenByPlayer() || game::GetSeeWholeMapCheatMode()))
+      if(Character && (Character->CanBeSeenByPlayer()
+         || game::GetSeeWholeMapCheatMode()))
       {
-	BlitData.CustomData |= Character->GetSquareIndex(Pos);
-
-	if(Character->IsFlying())
-	{
-	  for(const smoke* S = Smoke; S; S = S->Next)
-	    S->Draw(BlitData);
-
-	  Character->Draw(BlitData);
-	}
-	else
-	{
-	  Character->Draw(BlitData);
-
-	  for(const smoke* S = Smoke; S; S = S->Next)
-	    S->Draw(BlitData);
-	}
-
-	BlitData.CustomData &= ~SQUARE_INDEX_MASK;
+        Character->Draw(true);
+      }
+      else if(Smoke)
+      {
+        for(const smoke* S = Smoke; S; S = S->Next)
+          S->Draw(true);
       }
       else
-	for(const smoke* S = Smoke; S; S = S->Next)
-	  S->Draw(BlitData);
-
-      for(const rain* R = Rain; R; R = R->Next)
-	if(R->IsEnabled())
-	  R->Draw(BlitData);
+      {
+        DrawStaticContents();
+      }
     }
     else if(CanBeFeltByPlayer())
     {
-      col24 L = Luminance;
-      game::CombineLights(L, DIM_LUMINANCE);
-      BlitData.Luminance = ivanconfig::ApplyContrastTo(L);
-      DrawStaticContents(BlitData);
-
-      for(const rain* R = Rain; R; R = R->Next)
-	if(R->IsEnabled())
-	  R->Draw(BlitData);
+      DrawStaticContents();
     }
     else
     {
-      DOUBLE_BUFFER->Fill(BlitData.Dest, BlitData.Border, 0);
-
       if(Character && Character->CanBeSeenByPlayer())
       {
-	BlitData.CustomData |= Character->GetSquareIndex(Pos);
-	BlitData.Luminance = ivanconfig::GetContrastLuminance();
-	Character->Draw(BlitData);
-	BlitData.CustomData &= ~SQUARE_INDEX_MASK;
+        Character->Draw(true);
+      }
+      else
+      {
+        graphics::ClearGrid();
       }
     }
 
@@ -586,7 +490,6 @@ void lsquare::Save(outputfile& SaveFile) const
   SaveFile << GLTerrain << OLTerrain;
   SaveFile << Emitter << SunEmitter;
   SaveFile << Emitation << Engraved << Luminance;
-  SaveFile << SmokeAlphaSum << (uchar)Flags << Memorized;
   SaveFile << SecondarySunLightEmitation;
   SaveFile << (uchar)RoomIndex;
   SaveFile << SunLightLuminance;
@@ -604,7 +507,6 @@ void lsquare::Load(inputfile& SaveFile)
   SaveFile >> GLTerrain >> OLTerrain;
   SaveFile >> Emitter >> SunEmitter;
   SaveFile >> Emitation >> Engraved >> Luminance;
-  SaveFile >> SmokeAlphaSum >> (uchar&)Flags >> Memorized;
   Flags &= INSIDE|DESCRIPTION_CHANGE; //only these flags are loaded
   Flags |= MEMORIZED_UPDATE_REQUEST;
   SecondarySunLightEmitation = ReadType<col24>(SaveFile);
@@ -615,22 +517,6 @@ void lsquare::Load(inputfile& SaveFile)
   LoadLinkedList(SaveFile, Rain);
   LoadLinkedList(SaveFile, Trap);
   CalculateIsTransparent();
-
-  if(Memorized)
-  {
-    FowMemorized = new bitmap(TILE_V2);
-    FowMemorized->ActivateFastFlag();
-    Memorized->FastBlit(FowMemorized);
-    blitdata B = { FowMemorized,
-		   { 0, 0 },
-		   { 0, 0 },
-		   { TILE_SIZE, TILE_SIZE },
-		   { 0 },
-		   0,
-		   0 };
-
-    igraph::GetFOWGraphic()->NormalMaskedBlit(B);
-  }
 }
 
 void lsquare::CalculateLuminance()
@@ -1137,34 +1023,6 @@ void lsquare::ChangeOLTerrainAndUpdateLights(olterrain* NewTerrain)
 
 void lsquare::DrawParticles(long Color, truth DrawHere)
 {
-  if(GetPos().X < game::GetCamera().X
-     || GetPos().Y < game::GetCamera().Y
-     || GetPos().X >= game::GetCamera().X + game::GetScreenXSize()
-     || GetPos().Y >= game::GetCamera().Y + game::GetScreenYSize()
-     || !CanBeSeenByPlayer(true)
-     || Color == TRANSPARENT_COLOR)
-    return;
-
-  clock_t StartTime = clock();
-
-  if(DrawHere)
-    game::DrawEverythingNoBlit();
-
-  if(Color & RANDOM_COLOR)
-    Color = MakeRGB16(60 + RAND() % 190, 60 + RAND() % 190, 60 + RAND() % 190);
-
-  v2 Pos = game::CalculateScreenCoordinates(GetPos());
-
-  for(int c = 0; c < 10; ++c)
-    DOUBLE_BUFFER->PutPixel(Pos + v2(1 + RAND() % 14, 1 + RAND() % 14), Color);
-
-  Flags |= STRONG_NEW_DRAW_REQUEST; // Clean the pixels from the screen afterwards
-
-  if(DrawHere)
-  {
-    graphics::BlitDBToScreen();
-    while(clock() - StartTime < 0.02 * CLOCKS_PER_SEC);
-  }
 }
 
 truth lsquare::DipInto(item* Thingy, character* Dipper)
@@ -1246,40 +1104,32 @@ void lsquare::SignalSeen(ulong Tick)
     Character->CheckIfSeen();
 }
 
-void lsquare::DrawMemorized(blitdata& BlitData) const
+void lsquare::DrawMemorized(v2 Grid) const
 {
   LastSeen = 0;
   Flags &= ~STRONG_NEW_DRAW_REQUEST;
-  BlitData.Luminance = ivanconfig::GetContrastLuminance();
-
-  if(FowMemorized)
-    FowMemorized->LuminanceBlit(BlitData);
-  else
-    DOUBLE_BUFFER->Fill(BlitData.Dest, BlitData.Border, 0);
+  graphics::MoveCursor(Grid);
 
   const character* C = Character;
 
   if(C && C->CanBeSeenByPlayer())
   {
-    BlitData.CustomData |= C->GetSquareIndex(Pos);
-    C->Draw(BlitData);
-    BlitData.CustomData &= ~SQUARE_INDEX_MASK;
+    C->Draw(true);
+  }
+  else if(FowMemorized)
+  {
+    // XXX wrong
+    DrawStaticContents();
+  }
+  else
+  {
+    // clear
+    graphics::PutChar(' ', WHITE);
   }
 }
 
 void lsquare::DrawMemorizedCharacter(blitdata& BlitData) const
 {
-  BlitData.Luminance = ivanconfig::GetContrastLuminance();
-
-  if(FowMemorized)
-    FowMemorized->LuminanceBlit(BlitData);
-  else
-    DOUBLE_BUFFER->Fill(BlitData.Dest, BlitData.Border, 0);
-
-  BlitData.CustomData |= Character->GetSquareIndex(Pos);
-  Character->Draw(BlitData);
-  BlitData.CustomData &= ~SQUARE_INDEX_MASK;
-  Flags |= STRONG_NEW_DRAW_REQUEST;
 }
 
 truth lsquare::IsDangerous(const character* Who) const
@@ -1356,75 +1206,6 @@ void lsquare::AddItem(item* Item)
 
 v2 lsquare::DrawLightning(v2 StartPos, long Color, int Direction, truth DrawHere)
 {
-  if(GetPos().X < game::GetCamera().X
-     || GetPos().Y < game::GetCamera().Y
-     || GetPos().X >= game::GetCamera().X + game::GetScreenXSize()
-     || GetPos().Y >= game::GetCamera().Y + game::GetScreenYSize()
-     || !CanBeSeenByPlayer(true))
-    switch(Direction)
-    {
-     case 1: return v2(RAND() & 15, 15);
-     case 3: return v2(15, RAND() & 15);
-     case 4: return v2(0, RAND() & 15);
-     case 6: return v2(RAND() & 15, 0);
-     default: return StartPos;
-    }
-
-  clock_t StartTime = clock();
-  bitmap Empty(TILE_V2, TRANSPARENT_COLOR);
-  Empty.ActivateFastFlag();
-
-  if(Color & RANDOM_COLOR)
-    Color = MakeRGB16(60 + RAND() % 190, 60 + RAND() % 190, 60 + RAND() % 190);
-
-  if(Direction != YOURSELF)
-  {
-    while(!Empty.CreateLightning(StartPos, game::GetMoveVector(Direction), 16, Color));
-    v2 EndPos(0, 0);
-
-    switch(Direction)
-    {
-     case 0: EndPos = v2(0, 0); break;
-     case 1: EndPos = v2(RAND() & 15, 0); StartPos = v2(EndPos.X, 15); break;
-     case 2: EndPos = v2(15, 0); break;
-     case 3: EndPos = v2(0, RAND() & 15); StartPos = v2(15, EndPos.Y); break;
-     case 4: EndPos = v2(15, RAND() & 15); StartPos = v2(0, EndPos.Y); break;
-     case 5: EndPos = v2(0, 15); break;
-     case 6: EndPos = v2(RAND() & 15, 15); StartPos = v2(EndPos.X, 0); break;
-     case 7: EndPos = v2(15, 15); break;
-    }
-
-    while(!Empty.CreateLightning(EndPos, -game::GetMoveVector(Direction), NO_LIMIT, Color));
-  }
-  else
-  {
-    static v2 Dir[4] = { v2(0, -1), v2(-1, 0), v2(1, 0), v2(0, 1) };
-
-    for(int d = 0; d < 4; ++d)
-      while(!Empty.CreateLightning(StartPos + Dir[d], ZERO_V2, 10, Color));
-  }
-
-  if(DrawHere)
-    game::DrawEverythingNoBlit();
-
-  blitdata B = { DOUBLE_BUFFER,
-		 { 0, 0 },
-		 { 0, 0 },
-		 { TILE_SIZE, TILE_SIZE },
-		 { 0 },
-		 TRANSPARENT_COLOR,
-		 0 };
-
-  B.Dest = game::CalculateScreenCoordinates(GetPos());
-  Empty.NormalMaskedBlit(B);
-  Flags |= STRONG_NEW_DRAW_REQUEST;
-
-  if(DrawHere)
-  {
-    graphics::BlitDBToScreen();
-    while(clock() - StartTime < 0.02 * CLOCKS_PER_SEC);
-  }
-
   return StartPos;
 }
 
@@ -2160,17 +1941,17 @@ void lsquare::SpillFluid(character* Spiller, liquid* Liquid, truth ForceHit, tru
     delete Liquid;
 }
 
-void lsquare::DrawStacks(blitdata& BlitData) const
+void lsquare::DrawStacks() const
 {
-  Stack->Draw(PLAYER, BlitData, CENTER);
-
-  for(int c = 0; c < 4; ++c)
-  {
-    stack* Stack = GetStackOfAdjacentSquare(c);
-
-    if(Stack)
-      Stack->Draw(PLAYER, BlitData, 3 - c);
-  }
+  if(Stack->GetItems())
+    Stack->Draw(PLAYER, CENTER);
+  else
+    for(int c = 0; c < 4; ++c)
+    {
+      stack* Stack = GetStackOfAdjacentSquare(c);
+      if(Stack)
+        Stack->Draw(PLAYER, 3 - c);
+    }
 }
 
 void lsquare::RemoveRain(rain* ToBeRemoved)
@@ -2487,10 +2268,6 @@ void lsquare::CalculateSunLightLuminance(ulong SeenBitMask)
 
 void lsquare::CreateMemorized()
 {
-  Memorized = new bitmap(TILE_V2);
-  Memorized->ActivateFastFlag();
-  FowMemorized = new bitmap(TILE_V2);
-  FowMemorized->ActivateFastFlag();
 }
 
 truth lsquare::AcidRain(const beamdata& Beam)
@@ -2568,8 +2345,6 @@ void lsquare::Reveal(ulong Tick, truth IgnoreDarkness)
 
 void lsquare::DestroyMemorized()
 {
-  delete Memorized;
-  delete FowMemorized;
   Memorized = 0;
   FowMemorized = 0;
 }
@@ -2590,7 +2365,7 @@ truth lsquare::Necromancy(const beamdata& Beam)
 
 lsquare* lsquare::GetRandomAdjacentSquare() const
 {
-  lsquare* OK[8];
+  lsquare* Ok[8];
   int Index = 0;
 
   for(int c = 0; c < 8; ++c)
@@ -2598,11 +2373,11 @@ lsquare* lsquare::GetRandomAdjacentSquare() const
     lsquare* Square = NeighbourLSquare[c];
 
     if(Square)
-      OK[Index++] = Square;
+      Ok[Index++] = Square;
   }
 
   if(Index)
-    return OK[RAND_N(Index)];
+    return Ok[RAND_N(Index)];
   else
     return 0;
 }
