@@ -67,14 +67,11 @@ void area::SendNewDrawRequest()
   const int YMin = Max(game::GetCamera().Y, 0);
   const int XMax = Min(XSize, game::GetCamera().X + game::GetScreenXSize());
   const int YMax = Min(YSize, game::GetCamera().Y + game::GetScreenYSize());
+  graphics::ClearScreen();
 
   for(int x = XMin; x < XSize && x < XMax; ++x)
     for(int y = YMin; y < YMax; ++y)
       Map[x][y]->SendStrongNewDrawRequest();
-
-  /*igraph::GetBackGround()->FastBlit(DOUBLE_BUFFER);
-  DOUBLE_BUFFER->DrawRectangle(14, 30, 17 + (game::GetScreenXSize() << 4), 33 + (game::GetScreenYSize() << 4), DARK_GRAY, true);
-  DOUBLE_BUFFER->Fill(16, 32, game::GetScreenXSize() << 4, game::GetScreenYSize() << 4, BLACK);*/
 }
 
 square* area::GetNeighbourSquare(v2 Pos, int I) const
