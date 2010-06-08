@@ -26,7 +26,7 @@ square* stack::GetSquareUnder() const
 
 /* Modifies the square index bits of BlitData.CustomData */
 
-void stack::Draw(const character* Viewer, blitdata& BlitData,
+void stack::Draw(const character* Viewer,
 		 int RequiredSquarePosition) const
 {
   if(!Items)
@@ -39,9 +39,7 @@ void stack::Draw(const character* Viewer, blitdata& BlitData,
     if(i->GetSquarePosition() == RequiredSquarePosition
        && (i->CanBeSeenBy(Viewer) || game::GetSeeWholeMapCheatMode()))
     {
-      BlitData.CustomData |= i->GetSquareIndex(StackPos);
-      i->Draw(BlitData);
-      BlitData.CustomData &= ~SQUARE_INDEX_MASK;
+      if(!VisibleItems) i->Draw(true);
       ++VisibleItems;
     }
 
@@ -51,21 +49,7 @@ void stack::Draw(const character* Viewer, blitdata& BlitData,
 
     if(PlusSymbol || Dangerous)
     {
-      col24 L = BlitData.Luminance;
-      BlitData.Luminance = ivanconfig::GetContrastLuminance();
-      BlitData.Src.Y = 16;
-
-      if(PlusSymbol)
-	igraph::GetSymbolGraphic()->LuminanceMaskedBlit(BlitData);
-
-      if(Dangerous)
-      {
-	BlitData.Src.X = 160;
-	igraph::GetSymbolGraphic()->LuminanceMaskedBlit(BlitData);
-      }
-
-      BlitData.Src.X = BlitData.Src.Y = 0; /// check
-      BlitData.Luminance = L;
+      // draw underline for multiple, ^ for dangerous
     }
   }
 }
@@ -90,8 +74,9 @@ void stack::AddItem(item* ToBeAdded, truth RunRoomEffects)
     if(RunRoomEffects && GetLSquareUnder()->GetRoom())
       GetLSquareUnder()->GetRoom()->AddItemEffect(ToBeAdded);
 
-    SquareUnder->SendNewDrawRequest();
-    SquareUnder->SendMemorizedUpdateRequest();
+    // FIXME premature drawing
+    // SquareUnder->SendNewDrawRequest()
+    // SquareUnder->SendMemorizedUpdateRequest()
   }
 }
 
@@ -457,9 +442,9 @@ int stack::DrawContents(itemvector& ReturnVector, stack* MergeStack,
   if(Flags & REMEMBER_SELECTED)
     Contents.SetSelected(GetSelected());
 
-  game::DrawEverythingNoBlit(); //doesn't prevent mirage puppies
+  //game::DrawEverythingNoBlit(); //doesn't prevent mirage puppies
   int Chosen = Contents.Draw();
-  game::ClearItemDrawVector();
+  //game::ClearItemDrawVector();
 
   if(Chosen & FELIST_ERROR_BIT)
   {
@@ -524,10 +509,10 @@ void stack::AddContentsToList(felist& Contents, const character* Viewer,
     if(DrawDesc)
     {
       if(!Contents.IsEmpty())
-	Contents.AddEntry(CONST_S(""), WHITE, 0, NO_IMAGE, false);
+	Contents.AddEntry(CONST_S(""), WHITE, 0, false);
 
-      Contents.AddEntry(Desc, WHITE, 0, NO_IMAGE, false);
-      Contents.AddEntry(CONST_S(""), WHITE, 0, NO_IMAGE, false);
+      Contents.AddEntry(Desc, WHITE, 0, false);
+      Contents.AddEntry(CONST_S(""), WHITE, 0, false);
       DrawDesc = false;
     }
 
@@ -537,14 +522,14 @@ void stack::AddContentsToList(felist& Contents, const character* Viewer,
     {
       LastCategory = Item->GetCategory();
       Contents.AddEntry(item::GetItemCategoryName(LastCategory),
-			LIGHT_GRAY, 0, NO_IMAGE, false);
+			LIGHT_GRAY, 0, false);
     }
 
     Entry.Empty();
     Item->AddInventoryEntry(Viewer, Entry, PileVector[p].size(),
 			    !(Flags & NO_SPECIAL_INFO));
     int ImageKey = game::AddToItemDrawVector(PileVector[p]);
-    Contents.AddEntry(Entry, LIGHT_GRAY, 0, ImageKey);
+    Contents.AddEntry(Entry, LIGHT_GRAY, 0);
   }
 }
 

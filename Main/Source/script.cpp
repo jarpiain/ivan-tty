@@ -436,9 +436,6 @@ template <class type> type* contentscripttemplate<type>::BasicInstantiate(int Sp
       Instance->ChangeSecondaryMaterial(SecondaryMaterial->Instantiate(), SpecialFlags|NO_PIC_UPDATE);
   }
 
-  if(!(SpecialFlags & NO_PIC_UPDATE))
-    Instance->UpdatePictures();
-
   return Instance;
 }
 

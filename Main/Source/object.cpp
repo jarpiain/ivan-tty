@@ -191,7 +191,7 @@ truth object::RandomizeSparklePos(v2& SparklePos, v2 BPos, int& SparkleTime, ulo
     ValidityArraySize = 256;
   }
 
-  SparklePos = igraph::GetRawGraphic(GraphicsContainerIndex)->RandomizeSparklePos(ValidityArray, PossibleSparkleBuffer, BPos, TILE_V2, ValidityArraySize, GetSparkleFlags());
+  //SparklePos = igraph::GetRawGraphic(GraphicsContainerIndex)->RandomizeSparklePos(ValidityArray, PossibleSparkleBuffer, BPos, TILE_V2, ValidityArraySize, GetSparkleFlags());
 
   if(SparklePos != ERROR_V2)
   {
