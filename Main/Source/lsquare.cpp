@@ -76,6 +76,8 @@ lsquare::~lsquare()
     delete ToDel;
   }
 
+  Memorized = 0;
+  FowMemorized = 0;
   delete [] GroundBorderPartnerTerrain;
   delete [] OverBorderPartnerTerrain;
 
@@ -488,6 +490,7 @@ void lsquare::Save(outputfile& SaveFile) const
   Stack->Save(SaveFile); // This must be before square::Save! (Note: This comment is years old. It's probably obsolete)
   square::Save(SaveFile);
   SaveFile << GLTerrain << OLTerrain;
+  SaveFile << Memorized;
   SaveFile << Emitter << SunEmitter;
   SaveFile << Emitation << Engraved << Luminance;
   SaveFile << SecondarySunLightEmitation;
@@ -505,6 +508,7 @@ void lsquare::Load(inputfile& SaveFile)
   Stack->SetMotherSquare(this);
   square::Load(SaveFile);
   SaveFile >> GLTerrain >> OLTerrain;
+  SaveFile >> Memorized;
   SaveFile >> Emitter >> SunEmitter;
   SaveFile >> Emitation >> Engraved >> Luminance;
   Flags &= INSIDE|DESCRIPTION_CHANGE; //only these flags are loaded
@@ -2268,6 +2272,7 @@ void lsquare::CalculateSunLightLuminance(ulong SeenBitMask)
 
 void lsquare::CreateMemorized()
 {
+  Memorized = FowMemorized = 1;
 }
 
 truth lsquare::AcidRain(const beamdata& Beam)
