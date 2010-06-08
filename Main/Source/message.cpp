@@ -29,7 +29,6 @@ v2 msgsystem::Begin, msgsystem::End;
 truth msgsystem::Enabled = true;
 truth msgsystem::BigMessageMode = false;
 truth msgsystem::MessagesChanged = true;
-bitmap* msgsystem::QuickDrawCache = 0;
 int msgsystem::LastMessageLines;
 
 void msgsystem::AddMessage(const char* Format, ...)
@@ -129,27 +128,13 @@ void msgsystem::Draw()
   truth WasInBigMessageMode = BigMessageMode;
   LeaveBigMessageMode();
 
-  if(MessagesChanged)
+  /*if(MessagesChanged)
   {
     MessageHistory.QuickDraw(QuickDrawCache, 8);
     MessagesChanged = false;
-  }
-
-  v2 Size = QuickDrawCache->GetSize();
-  int Y = RES.Y - 122;
-  blitdata B = { DOUBLE_BUFFER,
-		 { 0, 0 },
-		 { 13, Y },
-		 { Size.X, Size.Y },
-		 { 0 },
-		 0,
-		 0 };
-
-  QuickDrawCache->NormalBlit(B);
-  igraph::BlitBackGround(v2(13, Y), v2(1, 1));
-  igraph::BlitBackGround(v2(12 + Size.X, Y), v2(1, 1));
-  igraph::BlitBackGround(v2(13, Y + Size.Y - 1), v2(1, 1));
-  igraph::BlitBackGround(v2(12 + Size.X, Y + Size.Y - 1), v2(1, 1));
+  }*/
+  
+  MessageHistory.QuickDraw(20, 0, 75, 4);
 
   if(WasInBigMessageMode)
     EnterBigMessageMode();
@@ -211,8 +196,6 @@ void msgsystem::LeaveBigMessageMode()
 
 void msgsystem::Init()
 {
-  QuickDrawCache = new bitmap(v2((game::GetScreenXSize() << 4) + 6, 106));
-  QuickDrawCache->ActivateFastFlag();
   game::SetStandardListAttributes(MessageHistory);
   MessageHistory.AddFlags(INVERSE_MODE);
 }

@@ -20,7 +20,6 @@
 class felist;
 class outputfile;
 class inputfile;
-class bitmap;
 class festring;
 
 class msgsystem
@@ -50,7 +49,6 @@ class msgsystem
   static truth Enabled;
   static truth BigMessageMode;
   static truth MessagesChanged;
-  static bitmap* QuickDrawCache;
   static int LastMessageLines;
 };
 
