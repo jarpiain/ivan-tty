@@ -214,18 +214,7 @@ void game::InitScript()
 
 truth game::Init(const festring& Name)
 {
-  if(Name.IsEmpty())
-    if(ivanconfig::GetDefaultName().IsEmpty())
-    {
-      PlayerName.Empty();
-
-      if(iosystem::StringQuestion(PlayerName, CONST_S("What is your name? (1-20 letters)"), v2(30, 46), WHITE, 1, 20, true, true) == ABORTED || PlayerName.IsEmpty())
-	return false;
-    }
-    else
-      PlayerName = ivanconfig::GetDefaultName();
-  else
-    PlayerName = Name;
+  PlayerName = Name;
 
 #ifdef LINUX
   mkdir(GetSaveDir().CStr(), S_IRWXU|S_IRWXG);

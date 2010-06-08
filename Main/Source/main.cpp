@@ -32,6 +32,12 @@ int Main(int argc, char **argv)
     return 0;
   }
 
+  if(argc < 2)
+  {
+    std::cout << "Usage: ivan <username>" << std::endl;
+    return 0;
+  }
+
   femath::SetSeed(time(0));
   game::InitGlobalValueMap();
   scriptsystem::Initialize();
@@ -42,64 +48,15 @@ int Main(int argc, char **argv)
   globalwindowhandler::SetQuitMessageHandler(game::HandleQuitMessage);
   msgsystem::Init();
   protosystem::Initialize();
-  igraph::LoadMenu();
 
-  for(;;)
+  if(game::Init(festring(argv[1])))
   {
-    int Select = iosystem::Menu(igraph::GetMenuGraphic(),
-				v2(RES.X / 2, RES.Y / 2 - 20),
-				CONST_S("\r"),
-				CONST_S("Start Game\rContinue Game\r"
-					"Configuration\rHighscores\r"
-					"Quit\r"),
-				LIGHT_GRAY,
-				CONST_S("Released under the GNU\r"
-					"General Public License\r"
-					"More info: see COPYING\r"),
-				CONST_S("IVAN v" IVAN_VERSION "\r"));
-
-    switch(Select)
-    {
-     case 0:
-      if(game::Init())
-      {
-	igraph::UnLoadMenu();
-
-	game::Run();
-	game::DeInit();
-	igraph::LoadMenu();
-      }
-
-      break;
-     case 1:
-      {
-	festring LoadName = iosystem::ContinueMenu(WHITE, LIGHT_GRAY, game::GetSaveDir());
-
-	if(LoadName.GetSize())
-	{
-	  LoadName.Resize(LoadName.GetSize() - 4);
-
-	  if(game::Init(LoadName))
-	  {
-	    igraph::UnLoadMenu();
-	    game::Run();
-	    game::DeInit();
-	    igraph::LoadMenu();
-	  }
-	}
-
-	break;
-      }
-     case 2:
-      break;
-     case 3:
-      {
-	highscore HScore;
-	HScore.Draw();
-	break;
-      }
-     case 4:
-      return 0;
-    }
+    game::Run();
+    game::DeInit();
   }
+
+  highscore HScore;
+  HScore.Draw();
+
+  return 0;
 }
