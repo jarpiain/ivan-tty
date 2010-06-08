@@ -208,7 +208,7 @@ truth object::RandomizeSparklePos(v2& SparklePos, v2 BPos, int& SparkleTime, ulo
 
 void object::UpdatePictures(graphicdata& GraphicData, v2 Position, int SpecialFlags, alpha MaxAlpha, int GraphicsContainerIndex, bposretriever BitmapPosRetriever) const
 {
-  v2 SparklePos;
+  /*v2 SparklePos;
   int SparkleTime = 0;
   int Seed = 0;
   int FlyAmount = GetSpoilLevel();
@@ -325,7 +325,7 @@ void object::UpdatePictures(graphicdata& GraphicData, v2 Position, int SpecialFl
     tilemap::iterator Iterator = igraph::AddUser(GI);
     GraphicData.GraphicIterator[c] = Iterator;
     GraphicData.Picture[c] = Iterator->second.Bitmap;
-  }
+  }*/
 }
 
 col16 object::GetMaterialColorA(int) const
