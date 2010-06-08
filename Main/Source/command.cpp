@@ -1192,7 +1192,6 @@ truth commandsystem::WizardMode(character* Char)
       }
 
       game::Save();
-      game::Save(game::GetAutoSaveFileName());
     }
     else
       return false;

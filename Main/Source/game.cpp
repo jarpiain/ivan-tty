@@ -116,7 +116,6 @@ time_t game::TimePlayedBeforeLastLoad;
 time_t game::LastLoad;
 time_t game::GameBegan;
 
-festring game::AutoSaveFileName = game::GetSaveDir() + "AutoSave";
 const char* const game::Alignment[] = { "L++", "L+", "L", "L-", "N+", "N=", "N-", "C+", "C", "C-", "C--" };
 god** game::God;
 
@@ -1014,8 +1013,6 @@ void game::RemoveSaves(truth RealSavesAlso)
     remove(festring(SaveName() + ".wm").CStr());
   }
 
-  remove(festring(AutoSaveFileName + ".sav").CStr());
-  remove(festring(AutoSaveFileName + ".wm").CStr());
   festring File;
 
   for(int i = 1; i < Dungeons; ++i)
@@ -1030,11 +1027,6 @@ void game::RemoveSaves(truth RealSavesAlso)
 
       if(RealSavesAlso)
 	remove(File.CStr());
-
-      File = AutoSaveFileName + '.' + i;
-      File << c;
-
-      remove(File.CStr());
     }
 }
 
@@ -1832,9 +1824,6 @@ void game::EnterArea(charactervector& Group, int Area, int EntryIndex)
 
     for(c = 0; c < Group.size(); ++c)
       Group[c]->SignalStepFrom(0);
-
-    if(ivanconfig::GetAutoSaveInterval())
-      Save(GetAutoSaveFileName().CStr());
   }
   else
   {
@@ -1848,9 +1837,6 @@ void game::EnterArea(charactervector& Group, int Area, int EntryIndex)
     SendLOSUpdateRequest();
     UpdateCamera();
     GetWorldMap()->UpdateLOS();
-
-    if(ivanconfig::GetAutoSaveInterval())
-      Save(GetAutoSaveFileName().CStr());
   }
 }
 

@@ -825,15 +825,6 @@ void character::Be()
 
     if(IsPlayer())
     {
-      static int Timer = 0;
-
-      if(ivanconfig::GetAutoSaveInterval() && !GetAction()
-	 && ++Timer >= ivanconfig::GetAutoSaveInterval())
-      {
-	game::Save(game::GetAutoSaveFileName());
-	Timer = 0;
-      }
-
       game::CalculateNextDanger();
 
       if(!StateIsActivated(POLYMORPHED))
