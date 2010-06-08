@@ -33,8 +33,8 @@ class fluid : public entity
   virtual void Be();
   void Save(outputfile&) const;
   void Load(inputfile&);
-  void SimpleDraw(blitdata&) const;
-  void Draw(blitdata&) const;
+  void SimpleDraw(int) const;
+  void Draw() const;
   liquid* GetLiquid() const { return Liquid; }
   virtual square* GetSquareUnderEntity(int = 0) const { return LSquareUnder; }
   square* GetSquareUnder() const { return LSquareUnder; }
@@ -46,10 +46,7 @@ class fluid : public entity
   virtual void SignalVolumeAndWeightChange();
   void SetMotherItem(item*);
   static void AddFluidInfo(const fluid*, festring&);
-  void CheckGearPicture(v2, int, truth);
-  void DrawGearPicture(blitdata&, int) const;
   truth FadePictures();
-  void DrawBodyArmorPicture(blitdata&, int) const;
   void Redistribute();
   virtual material* RemoveMaterial(material*);
   void Destroy();
@@ -68,6 +65,7 @@ class fluid : public entity
   virtual void PostProcessForBone();
   virtual truth IsStuckTo(const character*) const;
   truth IsDangerous(const character*) const;
+  int GetAttr() const { return Liquid->GetAttr(); }
  protected:
   trapdata TrapData;
   struct imagedata

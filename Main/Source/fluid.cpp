@@ -33,14 +33,6 @@ fluid::fluid(liquid* Liquid, item* MotherItem, const festring& LocationName, tru
 {
   TrapData.TrapID = 0;
 
-  if(UseImage())
-  {
-    Image.Picture->InitRandMap();
-    Image.Picture->InitPriorityMap(AVERAGE_PRIORITY);
-    Image.ShadowPos = MotherItem->GetBitmapPos(0);
-    Image.SpecialFlags = MotherItem->GetSpecialFlags();
-  }
-
   if(IsInside)
     Flags |= FLUID_INSIDE;
 
@@ -161,37 +153,20 @@ void fluid::Load(inputfile& SaveFile)
   {
     int Images = Flags & HAS_BODY_ARMOR_PICTURES ? BODY_ARMOR_PARTS : 1;
     GearImage = new imagedata[Images];
-
-    for(int c = 0; c < Images; ++c)
-    {
-      GearImage[c].Load(SaveFile);
-      GearImage[c].Picture->InitRandMap();
-      GearImage[c].Picture->CalculateRandMap();
-    }
   }
 }
 
-void fluid::SimpleDraw(blitdata& BlitData) const
+void fluid::SimpleDraw(int Glyph) const
 {
-  Image.Picture->AlphaLuminanceBlit(BlitData);
+  int Attr = Liquid->GetAttr();
+  graphics::PutChar(Glyph, Attr);
 }
 
-void fluid::Draw(blitdata& BlitData) const
+void fluid::Draw() const
 {
-  if(!UseImage())
-    return;
-
-  bitmap* Picture = Image.Picture;
-  int SpecialFlags = MotherItem ? MotherItem->GetSpecialFlags() : 0;
-
-  if(SpecialFlags & 0x7)
-  {
-    /* Priority Bug!!! */
-    Picture->BlitAndCopyAlpha(igraph::GetFlagBuffer(), SpecialFlags);
-    igraph::GetFlagBuffer()->AlphaLuminanceBlit(BlitData);
-  }
-  else
-    Picture->AlphaPriorityBlit(BlitData);
+  int Glyph = '~';
+  int Attr = Liquid->GetAttr();
+  graphics::PutChar(Glyph, Attr);
 }
 
 outputfile& operator<<(outputfile& SaveFile, const fluid* Fluid)
@@ -315,111 +290,6 @@ void fluid::SetMotherItem(item* What)
    information of the bodypart in question (ST_RIGHT_ARM etc). BodyArmor should
    be true iff the picture is part of a body armor, for instance armor covering
    one's shoulder. */
-
-void fluid::CheckGearPicture(v2 ShadowPos, int SpecialFlags, truth BodyArmor)
-{
-  if(!UseImage())
-    return;
-
-  if(BodyArmor && !(Flags & HAS_BODY_ARMOR_PICTURES))
-  {
-    Flags |= HAS_BODY_ARMOR_PICTURES;
-    delete [] GearImage;
-    GearImage = 0;
-  }
-  else if(!BodyArmor && Flags & HAS_BODY_ARMOR_PICTURES)
-  {
-    Flags &= ~HAS_BODY_ARMOR_PICTURES;
-    delete [] GearImage;
-    GearImage = 0;
-  }
-
-  imagedata* ImagePtr;
-  long Pixels;
-
-  if(BodyArmor)
-  {
-    int Index = (SpecialFlags & 0x38) >> 3;
-
-    if(Index >= BODY_ARMOR_PARTS)
-      Index = 0;
-
-    if(GearImage)
-      if(GearImage[Index].ShadowPos != ShadowPos)
-	GearImage[Index].Clear(false);
-      else
-	return; // the picture already exists and is correct
-    else
-    {
-      GearImage = new imagedata[BODY_ARMOR_PARTS];
-
-      for(int c = 0; c < BODY_ARMOR_PARTS; ++c)
-	new(&GearImage[c]) imagedata(false);
-    }
-
-    ImagePtr = &GearImage[Index];
-    Pixels = (Image.AlphaSum * BodyArmorPartPixels[Index] / HUMAN_BODY_ARMOR_PIXELS) >> 10;
-  }
-  else
-  {
-    if(GearImage)
-      if(GearImage->ShadowPos != ShadowPos)
-	GearImage->Clear(false);
-      else
-	return; // the picture already exists and is correct
-    else
-    {
-      GearImage = new imagedata[1];
-      new(GearImage) imagedata(false);
-    }
-
-    ImagePtr = GearImage;
-    Pixels = Image.AlphaSum >> 10;
-  }
-
-  ImagePtr->ShadowPos = ShadowPos;
-  ImagePtr->SpecialFlags = SpecialFlags;
-  ImagePtr->Picture->InitRandMap();
-  ImagePtr->Picture->InitPriorityMap(AVERAGE_PRIORITY);
-
-  if(Pixels)
-    ImagePtr->AddLiquidToPicture(igraph::GetHumanoidRawGraphic(),
-				 Pixels,
-				 Image.AlphaAverage,
-				 Liquid->GetColor(),
-				 MotherItem->GetFluidPixelAllowedPredicate());
-}
-
-void fluid::DrawGearPicture(blitdata& BlitData, int SpecialFlags) const
-{
-  if(!UseImage())
-    return;
-
-  bitmap* Picture = GearImage->Picture;
-
-  if(SpecialFlags & 0x7)
-  {
-    Picture->BlitAndCopyAlpha(igraph::GetFlagBuffer(), SpecialFlags);
-    igraph::GetFlagBuffer()->AlphaPriorityBlit(BlitData);
-  }
-  else
-    GearImage->Picture->AlphaPriorityBlit(BlitData);
-}
-
-void fluid::DrawBodyArmorPicture(blitdata& BlitData, int SpecialFlags) const
-{
-  if(!UseImage())
-    return;
-
-  /* We suppose body armor pictures are never rotated */
-
-  int Index = (SpecialFlags & 0x38) >> 3;
-
-  if(Index >= BODY_ARMOR_PARTS)
-    Index = 0;
-
-  GearImage[Index].Picture->AlphaPriorityBlit(BlitData);
-}
 
 truth fluid::imagedata::Fade()
 {
