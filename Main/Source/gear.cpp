@@ -862,10 +862,7 @@ material* meleeweapon::RemoveSecondaryMaterial()
 
 pixelpredicate meleeweapon::GetFluidPixelAllowedPredicate() const
 {
-  if(SecondaryMaterial->GetVolume())
-    return &rawbitmap::IsTransparent;
-  else
-    return &rawbitmap::IsMaterialColor1;
+  return 0;
 }
 
 void meleeweapon::CalculateEmitation()

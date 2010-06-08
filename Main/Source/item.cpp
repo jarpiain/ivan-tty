@@ -12,6 +12,8 @@
 
 /* Compiled through itemset.cpp */
 
+#include "graphics.h"
+
 const char* ToHitValueDescription[] = { "unbelievably inaccurate", "extremely inaccurate", "inaccurate", "decently accurate", "accurate", "highly accurate", "extremely accurate", "unbelievably accurate" };
 const char* StrengthValueDescription[] = { "fragile", "rather sturdy", "sturdy", "strong", "very strong", "extremely strong", "almost unbreakable" };
 
@@ -1085,9 +1087,9 @@ void item::Draw(truth Current) const
   int glyph = GetGlyph();
   int attr = 7;
   if(MainMaterial) attr = MainMaterial->GetAttr();
-  if(Fluid && ShowFluids)
+  if(Fluid && ShowFluids())
   {
-    attr = fluid->GetAttr();
+    attr = (*Fluid)->GetAttr();
   }
   if(!Current)
   {
@@ -1281,9 +1283,7 @@ void item::DrawFluidBodyArmorPictures(blitdata& BlitData, int SpecialFlags) cons
 
 void item::DrawFluids(blitdata& BlitData) const
 {
-  const int SquareIndex = BlitData.CustomData & SQUARE_INDEX_MASK;
-
-  for(const fluid* F = Fluid[SquareIndex]; F; F = F->Next)
+  for(const fluid* F = Fluid[0]; F; F = F->Next)
     F->Draw();
 }
 
