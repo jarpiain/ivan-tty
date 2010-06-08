@@ -127,22 +127,22 @@ inline int GetMinColor24(col24 Color)
 
 #define TRANSPARENT_COLOR 0xF81F
 
-#define BLACK      0
+#define BLACK      7
 #define RED        1
 #define GREEN      2
 #define BROWN      3
 #define BLUE       4
 #define CYAN       5
 #define MAGENTA    6
-#define LIGHT_GRAY 7
-#define DARK_GRAY  8
+#define LIGHT_GRAY 0
+#define DARK_GRAY 15
 #define BRED       9
 #define BGREEN    10
 #define YELLOW    11
 #define BBLUE     12
 #define BCYAN     13
 #define BMAGENTA  14
-#define WHITE     15
+#define WHITE      8
 
 #define BRIGHT     8
 #define BLINK     16

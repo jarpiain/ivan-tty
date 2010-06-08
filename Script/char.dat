@@ -311,7 +311,7 @@ nonhumanoid
 
 playerkind
 {
-  Attr = 15;
+  Attr = 8;
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
   DefaultDexterity = 10;
@@ -334,7 +334,7 @@ playerkind
 
 petrus
 {
-  Attr = 15;
+  Attr = 8;
   DefaultArmStrength = 40;
   DefaultLegStrength = 40;
   DefaultDexterity = 40;
@@ -743,7 +743,7 @@ shopkeeper
 
 priest
 {
-  Attr = 7;
+  Attr = 0;
   CanRead = true;
   NameSingular = "priest";
   CanBeCloned = false;
@@ -879,7 +879,7 @@ oree
 
 darkknight
 {
-  Attr = 8;
+  Attr = 15;
   DefaultArmStrength = 30;
   DefaultLegStrength = 30;
   DefaultDexterity = 20;
@@ -1076,7 +1076,7 @@ frog
 
   Config DARK;
   {
-    Attr = 8;
+    Attr = 15;
     DefaultArmStrength = 5;
     DefaultAgility = 40;
     DefaultEndurance = 10;
@@ -1104,7 +1104,7 @@ frog
 
   Config GREATER_DARK;
   {
-    Attr = 8;
+    Attr = 15;
     DefaultArmStrength = 15;
     DefaultAgility = 35;
     DefaultEndurance = 15;
@@ -1133,7 +1133,7 @@ frog
 
   Config GIANT_DARK;
   {
-    Attr = 8;
+    Attr = 15;
     DefaultArmStrength = 45;
     DefaultAgility = 30;
     DefaultEndurance = 20;
@@ -1287,7 +1287,7 @@ billswill
 
 skeleton
 {
-  Attr = 7;
+  Attr = 0;
   Glyph = 122; /* z */
   DefaultArmStrength = 10;
   DefaultLegStrength = 10;
@@ -1648,7 +1648,7 @@ canine
 
 wolf
 {
-  Attr = 7;
+  Attr = 0;
   DefaultArmStrength = 10;
   DefaultAgility = 25;
   DefaultEndurance = 10;
@@ -2041,7 +2041,7 @@ bear
 
   Config BLACK_BEAR;
   {
-    Attr = 8;
+    Attr = 15;
     Adjective = "black";
     SkinColor = rgb16(80, 80, 80);
     CanBeGenerated = true;
@@ -2074,7 +2074,7 @@ bear
 
   Config POLAR_BEAR;
   {
-    Attr = 15;
+    Attr = 8;
     Adjective = "polar";
     SkinColor = rgb16(240, 240, 240);
     TotalVolume = 300000;
@@ -2447,7 +2447,7 @@ imp
 
 bat
 {
-  Attr = 8;
+  Attr = 15;
   Glyph = 98; /* b */
   DefaultArmStrength = 2;
   DefaultAgility = 40;
@@ -2668,7 +2668,7 @@ mistress
 
 werewolfhuman
 {
-  Attr = 8;
+  Attr = 15;
   DefaultArmStrength = 20;
   DefaultLegStrength = 20;
   DefaultDexterity = 20;
@@ -2700,7 +2700,7 @@ werewolfhuman
 
 werewolfwolf
 {
-  Attr = 8;
+  Attr = 15;
   DefaultArmStrength = 25;
   DefaultLegStrength = 25;
   DefaultDexterity = 35;
@@ -2923,7 +2923,7 @@ largerat
 
 angel
 {
-  Attr = 15;
+  Attr = 8;
   Glyph = 65; /* A */
   DefaultArmStrength = 25;
   DefaultLegStrength = 25;
@@ -4347,7 +4347,7 @@ skunk
 
 invisiblestalker
 {
-  Attr = 15;
+  Attr = 8;
   Glyph = 73; /* I */
   DefaultArmStrength = 5;
   DefaultAgility = 25;
@@ -4506,7 +4506,7 @@ hedgehog
 
 bunny
 {
-  Attr = 7;
+  Attr = 0;
   Glyph = 82; /* R */
   DefaultEndurance = 16;
   DefaultPerception = 18;
@@ -4571,7 +4571,7 @@ bunny
 
 vladimir
 {
-  Attr = 15;
+  Attr = 8;
   Glyph = 82; /* R */
   DefaultArmStrength = 60;
   DefaultAgility = 30;
@@ -4609,7 +4609,7 @@ vladimir
 
 hattifattener
 {
-  Attr = 15;
+  Attr = 8;
   Glyph = 116; /* t */
   DefaultArmStrength = 3;
   DefaultAgility = 10;

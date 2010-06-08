@@ -1085,7 +1085,7 @@ int itemprototype::CreateSpecialConfigurations(itemdatabase** TempConfig, int Co
 void item::Draw(truth Current) const
 {
   int glyph = GetGlyph();
-  int attr = 7;
+  int attr = 0;
   if(MainMaterial) attr = MainMaterial->GetAttr();
   if(Fluid && ShowFluids())
   {
@@ -1093,7 +1093,7 @@ void item::Draw(truth Current) const
   }
   if(!Current)
   {
-    attr = 7;
+    attr = 0;
   }
   graphics::PutChar(glyph, attr);
 }
