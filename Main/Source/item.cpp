@@ -40,7 +40,7 @@ void item::SignalStackAdd(stackslot* StackSlot, void (stack::*)(item*, truth)) {
 truth item::IsRusted() const { return MainMaterial->GetRustLevel() != NOT_RUSTED; }
 truth item::IsEatable(const character* Eater) const { return GetConsumeMaterial(Eater, &material::IsSolid) && IsConsumable(); }
 truth item::IsDrinkable(const character* Eater) const { return GetConsumeMaterial(Eater, &material::IsLiquid) && IsConsumable(); }
-pixelpredicate item::GetFluidPixelAllowedPredicate() const { return &rawbitmap::IsTransparent; }
+pixelpredicate item::GetFluidPixelAllowedPredicate() const { return 0; }
 void item::Cannibalize() { Flags |= CANNIBALIZED; }
 void item::SetMainMaterial(material* NewMaterial, int SpecialFlags) { SetMaterial(MainMaterial, NewMaterial, GetDefaultMainVolume(), SpecialFlags); }
 void item::ChangeMainMaterial(material* NewMaterial, int SpecialFlags) { ChangeMaterial(MainMaterial, NewMaterial, GetDefaultMainVolume(), SpecialFlags); }
@@ -1080,17 +1080,20 @@ int itemprototype::CreateSpecialConfigurations(itemdatabase** TempConfig, int Co
   return Configs;
 }
 
-void item::Draw(blitdata& BlitData) const
+void item::Draw(truth Current) const
 {
-  const bitmap* P = GraphicData.Picture[0];
-
-  if(BlitData.CustomData & ALLOW_ALPHA)
-    P->AlphaLuminanceBlit(BlitData);
-  else
-    P->LuminanceMaskedBlit(BlitData);
-
-  if(Fluid && ShowFluids())
-    DrawFluids(BlitData);
+  int glyph = GetGlyph();
+  int attr = 7;
+  if(MainMaterial) attr = MainMaterial->GetAttr();
+  if(Fluid && ShowFluids)
+  {
+    attr = fluid->GetAttr();
+  }
+  if(!Current)
+  {
+    attr = 7;
+  }
+  graphics::PutChar(glyph, attr);
 }
 
 v2 item::GetLargeBitmapPos(v2 BasePos, int I) const
@@ -1101,12 +1104,6 @@ v2 item::GetLargeBitmapPos(v2 BasePos, int I) const
 
 void item::LargeDraw(blitdata& BlitData) const
 {
-  const bitmap* P = GraphicData.Picture[0];
-
-  if(BlitData.CustomData & ALLOW_ALPHA)
-    P->AlphaLuminanceBlit(BlitData);
-  else
-    P->LuminanceMaskedBlit(BlitData);
 }
 
 void item::DonateIDTo(item* Item)
@@ -1266,9 +1263,6 @@ void item::TryToRust(long LiquidModifier)
 
 void item::CheckFluidGearPictures(v2 ShadowPos, int SpecialFlags, truth BodyArmor)
 {
-  if(Fluid)
-    for(fluid* F = Fluid[0]; F; F = F->Next)
-      F->CheckGearPicture(ShadowPos, SpecialFlags, BodyArmor);
 }
 
 void item::DrawFluidGearPictures(blitdata& BlitData, int SpecialFlags) const
@@ -1290,7 +1284,7 @@ void item::DrawFluids(blitdata& BlitData) const
   const int SquareIndex = BlitData.CustomData & SQUARE_INDEX_MASK;
 
   for(const fluid* F = Fluid[SquareIndex]; F; F = F->Next)
-    F->Draw(BlitData);
+    F->Draw();
 }
 
 void item::ReceiveAcid(material*, const festring&, long Modifier)

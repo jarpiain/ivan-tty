@@ -42,9 +42,7 @@ EXTENDED_SYSTEM_SPECIALIZATIONS(item)(0, 0, 0, "item");
 #include "smoke.h"
 #include "save.h"
 #include "whandler.h"
-#include "bitmap.h"
 #include "fluid.h"
-#include "rawbit.h"
 #include "balance.h"
 
 #include "item.cpp"

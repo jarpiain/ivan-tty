@@ -477,7 +477,7 @@ class item : public object
   idholder* GetCloneMotherID() const { return CloneMotherID; }
   virtual void SignalStackAdd(stackslot*, void (stack::*)(item*, truth));
   virtual int GetSquareIndex(v2) const { return 0; }
-  virtual void Draw(blitdata&) const;
+  virtual void Draw(truth) const;
   v2 GetLargeBitmapPos(v2, int) const;
   void LargeDraw(blitdata&) const;
   virtual truth BunnyWillCatchAndConsume(const character*) const { return false; }
