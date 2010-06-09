@@ -973,7 +973,7 @@ truth itemcontainer::Open(character* Opener)
     return false;
   }
 
-  festring Question = CONST_S("Do you want to (t)ake something from or (p)ut something in this container? [t,p]");
+  festring Question = CONST_S("Do you want to (t)ake or (p)ut items in this container? [t,p]");
   truth Success;
 
   switch(game::KeyQuestion(Question, KEY_ESC, 3, 't', 'p', KEY_ESC))

@@ -102,7 +102,7 @@ void graphics::PutStrf(int Attr, const char* Fmt, ...)
 {
   va_list Argp;
   va_start(Argp, Fmt);
-  char Linebuf[80];
+  char Linebuf[256];
   vsprintf(Linebuf, Fmt, Argp);
   PutStr(Linebuf, Attr);
   va_end(Argp);
