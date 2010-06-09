@@ -1114,7 +1114,6 @@ void lsquare::DrawMemorized(v2 Grid) const
   LastSeen = 0;
   Flags &= ~STRONG_NEW_DRAW_REQUEST;
   graphics::MoveCursor(Grid);
-  graphics::PutChar(Memorized, DARK_GRAY);
 
   const character* C = Character;
 
