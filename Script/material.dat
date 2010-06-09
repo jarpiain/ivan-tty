@@ -29,7 +29,7 @@ material
   /* Obligatory: ConsumeType */
   /* Obligatory: Density */
   /* Obligatory: Color */
-  Attr = 7; /* light gray */
+  Attr = 0; /* light gray */
   PriceModifier = 0;
   Emitation = 0;
   NutritionValue = 0;
@@ -62,7 +62,7 @@ solid
 {
   Config VALPURIUM;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 400;
     ConsumeType = CT_METAL;
     Density = 3000;
@@ -121,7 +121,7 @@ solid
 
   Config PARCHMENT;
   {
-    Attr = 7;
+    Attr = 0;
     StrengthValue = 7;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 800;
@@ -153,7 +153,7 @@ solid
 
   Config MITHRIL;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 200;
     ConsumeType = CT_METAL;
     Density = 5000;
@@ -171,7 +171,7 @@ solid
 
   Config MARBLE;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 50;
     ConsumeType = CT_MINERAL;
     Density = 3000;
@@ -294,7 +294,7 @@ solid
 
   Config UNICORN_HORN;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 200;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 2000;
@@ -307,7 +307,7 @@ solid
 
   Config DIAMOND;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 300;
     ConsumeType = CT_MINERAL;
     Density = 3500;
@@ -325,7 +325,7 @@ solid
 
   Config SILVER;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 60;
     ConsumeType = CT_METAL;
     Density = 10500;
@@ -519,7 +519,7 @@ solid
 
   Config ANGEL_HAIR;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 140;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 300;
@@ -568,7 +568,7 @@ solid
 
   Config ICE;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 30;
     ConsumeType = CT_MINERAL;/* correct someday */
     Density = 750;
@@ -618,7 +618,7 @@ solid
 
   Config ILLITHIUM;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 225;
     ConsumeType = CT_METAL;
     Density = 6000;
@@ -723,7 +723,7 @@ solid
 
   Config EBONY_WOOD;
   {
-    Attr = 8;
+    Attr = 15;
     StrengthValue = 65;
     ConsumeType = CT_MISC_ORGANIC;
     Density = 1000;
@@ -739,7 +739,7 @@ solid
 
   Config OCTIRON;
   {
-    Attr = 8;
+    Attr = 15;
     StrengthValue = 275;
     ConsumeType = CT_METAL;
     Density = 900;
@@ -847,7 +847,7 @@ solid
 
   Config CALCITE;
   {
-    Attr = 7;
+    Attr = 0;
     StrengthValue = 35;
     ConsumeType = CT_MINERAL;
     Density = 2700;
@@ -933,7 +933,7 @@ solid
 
   Config MILKY_QUARTZ;
   {
-    Attr = 7;
+    Attr = 0;
     StrengthValue = 65;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -1043,7 +1043,7 @@ solid
 
   Config ROCK_CRYSTAL;
   {
-    Attr = 7;
+    Attr = 0;
     StrengthValue = 75;
     ConsumeType = CT_MINERAL;
     Density = 2650;
@@ -1191,7 +1191,7 @@ organic /* substances that spoil but are not flesh */
 
   Config BONE;
   {
-    Attr = 7;
+    Attr = 0;
     StrengthValue = 40;
     Density = 2000;
     ConsumeType = CT_BONE;
@@ -1276,7 +1276,7 @@ organic /* substances that spoil but are not flesh */
 
   Config OMMEL_BONE;
   {
-    Attr = 7;
+    Attr = 0;
     StrengthValue = 250;
     Flexibility = 4;
     Density = 750;
@@ -1295,7 +1295,7 @@ organic /* substances that spoil but are not flesh */
 
   Config OMMEL_TOOTH;
   {
-    Attr = 7;
+    Attr = 0;
     StrengthValue = 375;
     Density = 5000;
     ConsumeType = CT_BONE;
@@ -1323,7 +1323,7 @@ gas
 
   Config AIR;
   {
-    Attr = 7;
+    Attr = 0;
     StrengthValue = 1;
     Density = 1;
     Color = rgb16(180, 180, 255);
@@ -1368,7 +1368,7 @@ gas
 
   Config GHOST;
   {
-    Attr = 15;
+    Attr = 8;
     Color = rgb16(255, 255, 255);
     NameStem = "ghost";
     Alpha = 150;
@@ -1659,7 +1659,7 @@ liquid
 
   Config DARK_FROG_BLOOD;
   {
-    Attr = 8;
+    Attr = 15;
     StrengthValue = 1;
     NutritionValue = 40;
     Color = rgb16(50, 0, 0);
@@ -1708,7 +1708,7 @@ liquid
 
   Config ACIDOUS_BLOOD;
   {
-    Attr = 8;
+    Attr = 15;
     StrengthValue = 150;
     NutritionValue = 50;
     Color = rgb16(100, 0, 0);
@@ -1906,7 +1906,7 @@ flesh
 
   Config ELPURI_FLESH;
   {
-    Attr = 8;
+    Attr = 15;
     ConsumeWisdomLimit = 0;
     Effect = EFFECT_DARKNESS;
     ConsumeEndMessage = CEM_FROG_FLESH;
@@ -2256,7 +2256,7 @@ powder
 
   Config SNOW;
   {
-    Attr = 15;
+    Attr = 8;
     StrengthValue = 2;
     ConsumeType = CT_MINERAL;/* add something appropriate for this */
     Density = 500;

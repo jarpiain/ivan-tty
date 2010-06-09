@@ -2241,7 +2241,7 @@ void game::DisplayMassacreList(const massacremap& MassacreMap, const char* Reaso
   std::set<massacresetentry>::const_iterator i2;
 
   for(i2 = MassacreSet.begin(); i2 != MassacreSet.end(); ++i2)
-    List.AddEntry(i2->String, LIGHT_GRAY, 0, i2->ImageKey);
+    List.AddEntry(i2->String, LIGHT_GRAY, 0);
 
   for(;;)
   {
