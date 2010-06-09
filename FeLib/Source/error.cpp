@@ -25,7 +25,7 @@
 /* Shouldn't be initialized here! */
 
 const char* globalerrorhandler::BugMsg
-= "\n\nPlease send bug report to ivan-users@sourceforge.net\n"
+= "\n\nPlease send bug report to jarpiain@iki.fi\n"
 "including a brief description of what you did, what version\n"
 "you are running and which kind of system you are using.";
 
