@@ -254,7 +254,7 @@ class game
   static void InitScript();
   static valuemap& GetGlobalValueMap() { return GlobalValueMap; }
   static void InitGlobalValueMap();
-  static void TextScreen(const festring&, col16 = 0xFFFF, truth = true);
+  static void TextScreen(const festring&, col16 = WHITE, truth = true);
   static void SetCursorPos(v2 What) { CursorPos = What; }
   static int KeyQuestion(const festring&, int, int, ...);
   static v2 LookKeyHandler(v2, int);
