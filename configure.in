@@ -10,7 +10,7 @@ AC_PROG_CXX
 
 CFLAGS="$CFLAGS "
 LIBS="$LIBS -lncurses"
-CPPFLAGS="$SDL_CFLAGS -DLINUX -DLOCAL_STATE_DIR=\\\"@localstatedir@/ivan\\\" -DDATADIR=\\\"$datadir\\\" -DGCC"
+CPPFLAGS="$SDL_CFLAGS -DLINUX -DLOCAL_STATE_DIR=\\\"$localstatedir/ivan\\\" -DDATADIR=\\\"$datadir\\\" -DGCC"
 
 AC_PROG_INSTALL
 

@@ -1494,7 +1494,10 @@ void game::End(festring DeathMessage, truth Permanently, truth AndGoToMenu)
 			   + GetPlayerName() + ", " + DeathMessage + "\nRIP");
     }
     else
+    {
       HScore.Draw();
+      getch();
+    }
   }
 
   if(AndGoToMenu)

@@ -20,9 +20,23 @@
 
 #ifdef LINUX
 #define HIGH_SCORE_FILENAME LOCAL_STATE_DIR "/ivan-highscore.scores"
+#define LOG_FILENAME LOCAL_STATE_DIR "/ivan-logfile"
 #endif
 
 class festring;
+
+struct logentry
+{
+  void WriteLog(const festring& = LOG_FILENAME);
+  time_t Start;
+  time_t End;
+  int Hp;
+  int Mhp;
+  festring Ktyp;
+  festring Killer;
+  festring Kaux;
+  festring Msg;
+};
 
 class highscore
 {
