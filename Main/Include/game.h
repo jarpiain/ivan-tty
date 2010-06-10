@@ -16,6 +16,7 @@
 #include <map>
 #include <vector>
 #include <ctime>
+#include <cstdio>
 
 #include "femath.h"
 #include "festring.h"
@@ -315,7 +316,9 @@ class game
   static festring& GetDefaultDetectMaterial() { return DefaultDetectMaterial; }
   static void SignalDeath(const character*, const character*, festring);
   static void DisplayMassacreLists();
+  static void DumpMassacreLists(FILE*);
   static void DisplayMassacreList(const massacremap&, const char*, long);
+  static void DumpMassacreList(FILE*, const massacremap&, const char*, long);
   static truth MassacreListsEmpty();
 #ifdef WIZARD
   static void ActivateWizardMode() { WizardMode = true; }

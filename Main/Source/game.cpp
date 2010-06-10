@@ -2126,13 +2126,6 @@ void game::SignalDeath(const character* Ghost, const character* Murderer, festri
   }
 }
 
-void game::DisplayMassacreLists()
-{
-  DisplayMassacreList(PlayerMassacreMap, "directly by you.", PlayerMassacreAmount);
-  DisplayMassacreList(PetMassacreMap, "by your allies.", PetMassacreAmount);
-  DisplayMassacreList(MiscMassacreMap, "by some other reason.", MiscMassacreAmount);
-}
-
 struct massacresetentry
 {
   bool operator<(const massacresetentry& MSE) const
@@ -2142,8 +2135,90 @@ struct massacresetentry
   festring Key;
   festring String;
   std::vector<festring> Details;
-  int ImageKey;
 };
+
+void game::DisplayMassacreLists()
+{
+  DisplayMassacreList(PlayerMassacreMap, "directly by you.", PlayerMassacreAmount);
+  DisplayMassacreList(PetMassacreMap, "by your allies.", PetMassacreAmount);
+  DisplayMassacreList(MiscMassacreMap, "by some other reason.", MiscMassacreAmount);
+}
+
+void game::DumpMassacreLists(FILE* Dump)
+{
+  long Total = PlayerMassacreAmount + PetMassacreAmount + MiscMassacreAmount;
+  if(Total == 1)
+    fprintf(Dump, "\nOne creature perished during your adventure.\n\n");
+  else
+    fprintf(Dump, "\n%ld creatures perished during your adventure.\n\n", Total);
+
+  DumpMassacreList(Dump, PlayerMassacreMap, "directly by you.", PlayerMassacreAmount);
+  DumpMassacreList(Dump, PetMassacreMap, "by your allies.", PetMassacreAmount);
+  DumpMassacreList(Dump, MiscMassacreMap, "by some other reason.", MiscMassacreAmount);
+}
+
+void game::DumpMassacreList(FILE* Dump, const massacremap& MassacreMap, const char* Reason, long Amount)
+{
+  long Total = PlayerMassacreAmount + PetMassacreAmount + MiscMassacreAmount;
+  std::set<massacresetentry> MassacreSet;
+  festring FirstPronoun;
+  truth First = true;
+  charactervector GraveYard;
+
+  for(massacremap::const_iterator i1 = MassacreMap.begin(); i1 != MassacreMap.end(); ++i1)
+  {
+    character* Victim = protocontainer<character>::GetProto(i1->first.Type)->Spawn(i1->first.Config);
+    Victim->SetAssignedName(i1->first.Name);
+    massacresetentry Entry;
+    GraveYard.push_back(Victim);
+
+    if(i1->second.Amount == 1)
+    {
+      Victim->AddName(Entry.Key, UNARTICLED);
+      Victim->AddName(Entry.String, INDEFINITE);
+    }
+    else
+    {
+      Victim->AddName(Entry.Key, PLURAL);
+      Entry.String << i1->second.Amount << ' ' << Entry.Key;
+    }
+
+    if(First)
+    {
+      FirstPronoun = Victim->GetSex() == UNDEFINED ? "it" : Victim->GetSex() == MALE ? "he" : "she";
+      First = false;
+    }
+
+    MassacreSet.insert(Entry);
+  }
+
+  if(Amount != Total)
+  {
+    fprintf(Dump, "The following ");
+
+    if(Amount == 1)
+      fprintf(Dump, "one was killed %s\n\n", Reason);
+    else
+      fprintf(Dump, "%ld were killed %s\n\n", Amount, Reason);
+  }
+  else
+  {
+    if(Amount == 1)
+    {
+      FirstPronoun.Capitalize();
+      fprintf(Dump, "%s was killed %s\n\n", FirstPronoun.CStr(), Reason);
+    }
+    else
+      fprintf(Dump, "They were all killed %s\n\n", Reason);
+  }
+
+  std::set<massacresetentry>::const_iterator i2;
+  for(i2 = MassacreSet.begin(); i2 != MassacreSet.end(); ++i2)
+    fprintf(Dump, "%s\n", i2->String.CStr());
+
+  for(uint c = 0; c < GraveYard.size(); ++c)
+    delete GraveYard[c];
+}
 
 void game::DisplayMassacreList(const massacremap& MassacreMap, const char* Reason, long Amount)
 {
@@ -2158,7 +2233,6 @@ void game::DisplayMassacreList(const massacremap& MassacreMap, const char* Reaso
     Victim->SetAssignedName(i1->first.Name);
     massacresetentry Entry;
     GraveYard.push_back(Victim);
-    Entry.ImageKey = AddToCharacterDrawVector(Victim);
 
     if(i1->second.Amount == 1)
     {
@@ -3167,9 +3241,9 @@ col16 game::GetAttributeColor(int I)
   if(OldAttribute[I] == NewAttribute[I] || Delta >= 510)
     return WHITE;
   else if(OldAttribute[I] < NewAttribute[I])
-    return MakeRGB16(255, 255, Delta >> 1);
+    return YELLOW;
   else
-    return MakeRGB16(255, Delta >> 1, Delta >> 1);
+    return RED;
 }
 
 void game::UpdateAttributeMemory()
