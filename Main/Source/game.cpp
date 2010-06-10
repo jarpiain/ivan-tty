@@ -1607,6 +1607,25 @@ void game::DumpEquipment(FILE* Dump)
 void game::DumpInventory(FILE* Dump)
 {
   fprintf(Dump, "\nYour inventory:\n");
+
+  itemvectorvector Inventory;
+  PLAYER->GetStack()->Pile(Inventory, PLAYER, CENTER);
+  long LastCategory = 0;
+
+  for(itemvectorvector::iterator i1 = Inventory.begin(); i1 != Inventory.end(); ++i1)
+  {
+    item* Item = i1->back();
+
+    if(Item->GetCategory() != LastCategory)
+    {
+      LastCategory = Item->GetCategory();
+      fprintf(Dump, "\n%s\n", item::GetItemCategoryName(LastCategory));
+    }
+
+    festring Entry;
+    Item->AddInventoryEntry(PLAYER, Entry, i1->size(), false);
+    fprintf(Dump, "%s\n", Entry.CStr());
+  }
 }
 
 int game::CalculateRoughDirection(v2 Vector)
