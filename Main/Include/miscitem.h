@@ -364,7 +364,7 @@ ITEM(scrolloftaming, ivan_scroll)
 ITEM(mine, materialcontainer)
 {
  public:
-  virtual int GetGlyph() const { return '~'; }
+  virtual int GetGlyph() const { return IsActive() ? '^' : '~'; }
   mine() : Active(false) { }
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
@@ -482,7 +482,7 @@ ITEM(itemcontainer, item)
 ITEM(beartrap, item)
 {
  public:
-  virtual int GetGlyph() const { return '~'; }
+  virtual int GetGlyph() const { return IsActive() ? '^' : '~'; }
   beartrap();
   beartrap(const beartrap&);
   virtual ~beartrap();
