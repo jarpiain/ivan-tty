@@ -199,12 +199,13 @@ void logentry::WriteLog(const festring& FileName)
   festring::SearchAndReplace(Msg, Sep, Subst);
   festring::SearchAndReplace(Place, Sep, Subst);
 
-  fprintf(LogFile, "name=%s:start=%d:end=%dhp=%d:mhp=%d:ktyp=%s:kaux=%s"
+  fprintf(LogFile, "name=%s:start=%d:end=%d:hp=%d:mhp=%d:ktyp=%s:kaux=%s"
 		   ":killer=%s:msg=%s:place=%s\n",
 		   Name.CStr(),
 		   Start, End, Hp, Mhp,
 		   Ktyp.CStr(),
 		   Kaux.CStr(),
+		   Killer.CStr(),
 		   Msg.CStr(),
 		   Place.CStr());
 

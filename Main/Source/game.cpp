@@ -734,6 +734,7 @@ truth game::Save(const festring& SaveName)
   SaveFile << DangerMap << NextDangerIDType << NextDangerIDConfigIndex;
   SaveFile << DefaultPolymorphTo << DefaultSummonMonster;
   SaveFile << DefaultWish << DefaultChangeMaterial << DefaultDetectMaterial;
+  SaveFile << GameBegan;
   SaveFile << GetTimeSpent();
   /* or in more readable format: time() - LastLoad + TimeAtLastLoad */
 
@@ -814,6 +815,7 @@ int game::Load(const festring& SaveName)
   SaveFile >> DangerMap >> NextDangerIDType >> NextDangerIDConfigIndex;
   SaveFile >> DefaultPolymorphTo >> DefaultSummonMonster;
   SaveFile >> DefaultWish >> DefaultChangeMaterial >> DefaultDetectMaterial;
+  SaveFile >> GameBegan;
   SaveFile >> TimePlayedBeforeLastLoad;
   LastLoad = time(0);
 
@@ -1483,9 +1485,13 @@ v2 game::NameKeyHandler(v2 CursorPos, int Key)
 
 void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth AndGoToMenu)
 {
+  time_t EndTime = time(0);
+
   // Fill log entry
   if(Permanently)
   {
+    Xlog.Start = GameBegan;
+    Xlog.End = EndTime;
     Xlog.Msg = DeathMessage;
     Xlog.Name = PlayerName;
     Xlog.Hp = PLAYER->GetHP();
@@ -1493,9 +1499,22 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
     if(InWilderness)
       Xlog.Place = CONST_S("world map");
     else
-      Xlog.Place = GetCurrentDungeon()->GetLevelDescription(CurrentLevelIndex);
+      Xlog.Place = GetCurrentDungeon()->GetShortLevelDescription(CurrentLevelIndex);
 
     Xlog.WriteLog();
+
+    char Filename[256];
+    struct tm* LocalTime = localtime(&EndTime);
+    sprintf(Filename, "/morgue-%s-%04d%02d%02d-%02d%02d%02d.txt",
+		       PlayerName.CStr(),
+		       LocalTime->tm_year,
+		       1 + LocalTime->tm_mon,
+		       LocalTime->tm_mday,
+		       LocalTime->tm_hour,
+		       LocalTime->tm_min,
+		       LocalTime->tm_sec);
+    festring ChardumpFile(CONST_S(LOCAL_STATE_DIR));
+    ChardumpFile << CONST_S("/dump/") << PlayerName << Filename;
   }
 
   SetIsRunning(false);
