@@ -402,8 +402,11 @@ class game
   static truth GetCausePanicFlag() { return CausePanicFlag; }
   static void SetCausePanicFlag(truth What) { CausePanicFlag = What; }
   static long GetTimeSpent();
-  static void WriteChardump(FILE*);
+  static void WriteChardump(FILE*, const char* = 0);
  private:
+  static void DumpAttributes(FILE*);
+  static void DumpEquipment(FILE*);
+  static void DumpInventory(FILE*);
   static void UpdateCameraCoordinate(int&, int, int, int);
   static const char* const Alignment[];
   static god** God;

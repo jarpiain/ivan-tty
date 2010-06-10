@@ -1519,7 +1519,7 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
     FILE* Dump = fopen(ChardumpFile.CStr(), "w");
     if(Dump)
     {
-      WriteChardump(Dump);
+      WriteChardump(Dump, DeathMessage.CStr());
       if(fclose(Dump))
       {
         // error writing to dumpfile
@@ -1557,9 +1557,56 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
   }
 }
 
-void game::WriteChardump(FILE* Dump)
+void game::WriteChardump(FILE* Dump, const char* DeathMsg)
 {
+  fprintf(Dump, "Iter Vehemens ad Necem version %s (ivan-tty) character file.\n",
+                IVAN_VERSION);
+
+  if(DeathMsg)
+  {
+    fprintf(Dump, "\n%ld %s\n", GetScore(), PlayerName.CStr());
+    fprintf(Dump, "%s\n", DeathMsg);
+  }
+  DumpAttributes(Dump);
+  DumpEquipment(Dump);
+  DumpInventory(Dump);
   DumpMassacreLists(Dump);
+}
+
+void game::DumpAttributes(FILE* Dump)
+{
+  fprintf(Dump, "\nYour attributes:\n");
+}
+
+void game::DumpEquipment(FILE* Dump)
+{
+  fprintf(Dump, "\nYour equipment:\n\n");
+  festring Entry;
+
+  for(int c = 0; c < PLAYER->GetEquipments(); ++c)
+  {
+    Entry = PLAYER->GetEquipmentName(c);
+    Entry << ':';
+    Entry.Resize(20);
+    item* Equipment = PLAYER->GetEquipment(c);
+
+    if(Equipment)
+    {
+      Equipment->AddInventoryEntry(PLAYER, Entry, 1, true);
+      PLAYER->AddSpecialEquipmentInfo(Entry, c);
+      fprintf(Dump, "%s\n", Entry.CStr());
+    }
+    else
+    {
+      Entry << (PLAYER->GetBodyPartOfEquipment(c) ? "-" : "can't use");
+      fprintf(Dump, "%s\n", Entry.CStr());
+    }
+  }
+}
+
+void game::DumpInventory(FILE* Dump)
+{
+  fprintf(Dump, "\nYour inventory:\n");
 }
 
 int game::CalculateRoughDirection(v2 Vector)
