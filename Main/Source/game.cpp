@@ -2250,9 +2250,9 @@ void game::DumpMassacreLists(FILE* Dump)
 {
   long Total = PlayerMassacreAmount + PetMassacreAmount + MiscMassacreAmount;
   if(Total == 1)
-    fprintf(Dump, "\nOne creature perished during your adventure.\n\n");
+    fprintf(Dump, "\nOne creature perished during your adventure.\n");
   else
-    fprintf(Dump, "\n%ld creatures perished during your adventure.\n\n", Total);
+    fprintf(Dump, "\n%ld creatures perished during your adventure.\n", Total);
 
   DumpMassacreList(Dump, PlayerMassacreMap, "directly by you.", PlayerMassacreAmount);
   DumpMassacreList(Dump, PetMassacreMap, "by your allies.", PetMassacreAmount);
@@ -2261,6 +2261,8 @@ void game::DumpMassacreLists(FILE* Dump)
 
 void game::DumpMassacreList(FILE* Dump, const massacremap& MassacreMap, const char* Reason, long Amount)
 {
+  if(!Amount) return;
+
   long Total = PlayerMassacreAmount + PetMassacreAmount + MiscMassacreAmount;
   std::set<massacresetentry> MassacreSet;
   festring FirstPronoun;
@@ -2296,7 +2298,7 @@ void game::DumpMassacreList(FILE* Dump, const massacremap& MassacreMap, const ch
 
   if(Amount != Total)
   {
-    fprintf(Dump, "The following ");
+    fprintf(Dump, "\nThe following ");
 
     if(Amount == 1)
       fprintf(Dump, "one was killed %s\n\n", Reason);
@@ -2308,10 +2310,10 @@ void game::DumpMassacreList(FILE* Dump, const massacremap& MassacreMap, const ch
     if(Amount == 1)
     {
       FirstPronoun.Capitalize();
-      fprintf(Dump, "%s was killed %s\n\n", FirstPronoun.CStr(), Reason);
+      fprintf(Dump, "\n%s was killed %s\n\n", FirstPronoun.CStr(), Reason);
     }
     else
-      fprintf(Dump, "They were all killed %s\n\n", Reason);
+      fprintf(Dump, "\nThey were all killed %s\n\n", Reason);
   }
 
   std::set<massacresetentry>::const_iterator i2;

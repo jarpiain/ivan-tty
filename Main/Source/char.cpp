@@ -1397,6 +1397,21 @@ void character::Die(logentry& Xlog, const character* Killer, const festring& Msg
 
   Flags |= C_IN_NO_MSG_MODE;
   character* Ghost = 0;
+  square* SquareUnder[MAX_SQUARES_UNDER];
+  lsquare** LSquareUnder = reinterpret_cast<lsquare**>(SquareUnder);
+  memset(SquareUnder, 0, sizeof(SquareUnder));
+
+  if(IsPlayer() || !game::IsInWilderness())
+  {
+    for(int c = 0; c < SquaresUnder; ++c)
+      SquareUnder[c] = GetSquareUnder(c);
+  }
+  else
+  {
+    charactervector& V = game::GetWorldMap()->GetPlayerGroup();
+    V.erase(std::find(V.begin(), V.end(), this));
+  }
+
 
   if(IsPlayer())
   {
@@ -1407,23 +1422,25 @@ void character::Die(logentry& Xlog, const character* Killer, const festring& Msg
       Ghost = game::CreateGhost();
       Ghost->Disable();
     }
-  }
 
-  square* SquareUnder[MAX_SQUARES_UNDER];
-  lsquare** LSquareUnder = reinterpret_cast<lsquare**>(SquareUnder);
-  memset(SquareUnder, 0, sizeof(SquareUnder));
+    if(!game::IsInWilderness())
+      for(int c = 0; c < GetSquaresUnder(); ++c)
+	LSquareUnder[c]->SetTemporaryEmitation(GetEmitation());
 
-  if(IsPlayer() || !game::IsInWilderness())
-  {
-    for(int c = 0; c < SquaresUnder; ++c)
-      SquareUnder[c] = GetSquareUnder(c);
+    ShowAdventureInfo();
 
-    Remove();
-  }
-  else
-  {
-    charactervector& V = game::GetWorldMap()->GetPlayerGroup();
-    V.erase(std::find(V.begin(), V.end(), this));
+    if(!game::IsInWilderness())
+      for(int c = 0; c < GetSquaresUnder(); ++c)
+	LSquareUnder[c]->SetTemporaryEmitation(0);
+
+    AddScoreEntry(Msg);
+
+    game::TextScreen(CONST_S("Unfortunately you died during your journey. The high priest is not happy."));
+    try
+    {
+      game::End(Xlog, Msg);
+    }
+    catch(quitrequest rq) { } // XXX
   }
 
   if(!game::IsInWilderness())
@@ -1457,17 +1474,9 @@ void character::Die(logentry& Xlog, const character* Killer, const festring& Msg
     SendToHell();
   }
 
-  if(IsPlayer())
+  if(IsPlayer() || !game::IsInWilderness())
   {
-    if(!game::IsInWilderness())
-      for(int c = 0; c < GetSquaresUnder(); ++c)
-	LSquareUnder[c]->SetTemporaryEmitation(GetEmitation());
-
-    ShowAdventureInfo();
-
-    if(!game::IsInWilderness())
-      for(int c = 0; c < GetSquaresUnder(); ++c)
-	LSquareUnder[c]->SetTemporaryEmitation(0);
+    Remove();
   }
 
   if(!game::IsInWilderness())
@@ -1500,17 +1509,13 @@ void character::Die(logentry& Xlog, const character* Killer, const festring& Msg
 
   if(IsPlayer())
   {
-    AddScoreEntry(Msg);
-
     if(!game::IsInWilderness())
     {
       Ghost->PutTo(LSquareUnder[0]->GetPos());
       Ghost->Enable();
       game::CreateBone();
     }
-
-    game::TextScreen(CONST_S("Unfortunately you died during your journey. The high priest is not happy."));
-    game::End(Xlog, Msg);
+    throw quitrequest(); // XXX
   }
 }
 
