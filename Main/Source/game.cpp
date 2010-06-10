@@ -1507,7 +1507,7 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
     struct tm* LocalTime = localtime(&EndTime);
     sprintf(Filename, "/morgue-%s-%04d%02d%02d-%02d%02d%02d.txt",
 		       PlayerName.CStr(),
-		       LocalTime->tm_year,
+		       1900 + LocalTime->tm_year,
 		       1 + LocalTime->tm_mon,
 		       LocalTime->tm_mday,
 		       LocalTime->tm_hour,
@@ -1515,6 +1515,17 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
 		       LocalTime->tm_sec);
     festring ChardumpFile(CONST_S(LOCAL_STATE_DIR));
     ChardumpFile << CONST_S("/dump/") << PlayerName << Filename;
+
+    FILE* Dump = fopen(ChardumpFile.CStr(), "w");
+    if(Dump)
+    {
+      WriteChardump(Dump);
+      if(fclose(Dump))
+      {
+        // error writing to dumpfile
+      }
+    }
+    // else { error: cannot open dumpfile for writing }
   }
 
   SetIsRunning(false);
@@ -1544,6 +1555,11 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
 
     throw quitrequest();
   }
+}
+
+void game::WriteChardump(FILE* Dump)
+{
+  DumpMassacreLists(Dump);
 }
 
 int game::CalculateRoughDirection(v2 Vector)
