@@ -1143,7 +1143,11 @@ truth game::HandleQuitMessage()
        default:
 	festring Msg = CONST_S("cowardly quit the game");
 	Player->AddScoreEntry(Msg, 0.75);
-	End(Msg, true, false);
+	{
+	  logentry Xlog;
+	  Xlog.Ktyp = "quitting";
+	  End(Xlog, Msg, true, false);
+	}
 	break;
       }
     }
@@ -1477,8 +1481,23 @@ v2 game::NameKeyHandler(v2 CursorPos, int Key)
   return CursorPos;
 }
 
-void game::End(festring DeathMessage, truth Permanently, truth AndGoToMenu)
+void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth AndGoToMenu)
 {
+  // Fill log entry
+  if(Permanently)
+  {
+    Xlog.Msg = DeathMessage;
+    Xlog.Name = PlayerName;
+    Xlog.Hp = PLAYER->GetHP();
+    Xlog.Mhp = PLAYER->GetMaxHP();
+    if(InWilderness)
+      Xlog.Place = CONST_S("world map");
+    else
+      Xlog.Place = GetCurrentDungeon()->GetLevelDescription(CurrentLevelIndex);
+
+    Xlog.WriteLog();
+  }
+
   SetIsRunning(false);
 
   if(Permanently || !WizardModeIsReallyActive())
@@ -2039,9 +2058,10 @@ festring game::GetHomeDir()
 festring game::GetSaveDir()
 {
 #ifdef LINUX
-  festring Dir;
+  return LOCAL_STATE_DIR "/save/";
+/*  festring Dir;
   Dir << getenv("HOME") << "/IvanSave/";
-  return Dir;
+  return Dir;*/
 #endif
 }
 
@@ -2055,7 +2075,7 @@ festring game::GetGameDir()
 festring game::GetBoneDir()
 {
 #ifdef LINUX
-  return LOCAL_STATE_DIR "/Bones/";
+  return LOCAL_STATE_DIR "/bones/";
 #endif
 }
 

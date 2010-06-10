@@ -84,7 +84,7 @@ truth ennerbeast::Hit(character* Enemy, v2, int, truth)
 	    ADD_MESSAGE("%s is hit by the horrible waves of high sound.", Char->CHAR_NAME(DEFINITE));
 
 	  Char->ReceiveDamage(this, ScreamStrength, SOUND, ALL, YOURSELF, true);
-	  Char->CheckDeath(CONST_S("killed @bkp scream"), this);
+	  Char->CheckDeath(CONST_S("beam"), CONST_S("waves of sound"), CONST_S("killed @bkp scream"), this);
 	  msgsystem::LeaveBigMessageMode();
 	}
 
@@ -539,7 +539,10 @@ void petrus::BeTalkedTo()
       PLAYER->ShowAdventureInfo();
       festring Msg = CONST_S("retrieved the Shirt of the Golden Eagle and was raised to nobility");
       AddScoreEntry(Msg, 4, false);
-      game::End(Msg);
+      logentry Xlog;
+      Xlog.Ktyp = CONST_S("winning");
+      Xlog.Kaux = CONST_S("knight");
+      game::End(Xlog, Msg, true, true);
       return;
     }
     else
@@ -570,7 +573,10 @@ void petrus::BeTalkedTo()
     PLAYER->ShowAdventureInfo();
     festring Msg = CONST_S("defeated Elpuri and continued to further adventures");
     AddScoreEntry(Msg, 2, false);
-    game::End(Msg);
+    logentry Xlog;
+    Xlog.Ktyp = CONST_S("winning");
+    Xlog.Kaux = CONST_S("freedom");
+    game::End(Xlog, Msg, true, true);
   }
   else
   {
@@ -3406,7 +3412,7 @@ void humanoid::DetachBodyPart()
   else
     ADD_MESSAGE("That bodypart has already been detached.");
 
-  CheckDeath(CONST_S("removed one of his vital bodyparts"), 0);
+  CheckDeath(CONST_S(""), CONST_S(""), CONST_S("removed one of his vital bodyparts"), 0);
 }
 
 #else

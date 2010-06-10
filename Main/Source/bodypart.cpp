@@ -2890,7 +2890,7 @@ void bodypart::ReceiveAcid(material* Material, const festring& LocationName, lon
 
       Master->ReceiveBodyPartDamage(0, Damage, ACID, GetBodyPartIndex(), YOURSELF, false, false, false);
       ulong DeathFlags = Material->IsStuckTo(Master) ? IGNORE_TRAPS : 0;
-      Master->CheckDeath(CONST_S("dissolved by ") + Material->GetName(), 0, DeathFlags);
+      Master->CheckDeath(CONST_S("dissolving"), CONST_S(""), CONST_S("dissolved by ") + Material->GetName(), 0, DeathFlags);
     }
   }
 }

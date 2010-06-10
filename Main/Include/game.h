@@ -18,6 +18,7 @@
 #include <ctime>
 #include <cstdio>
 
+#include "hscore.h"
 #include "femath.h"
 #include "festring.h"
 #include "ivandef.h"
@@ -260,7 +261,7 @@ class game
   static int KeyQuestion(const festring&, int, int, ...);
   static v2 LookKeyHandler(v2, int);
   static v2 NameKeyHandler(v2, int);
-  static void End(festring, truth = true, truth = true);
+  static void End(logentry&, festring, truth = true, truth = true);
   static int CalculateRoughDirection(v2);
   static long ScrollBarQuestion(const festring&, long, long, long, long, long, col16, col16, col16, void (*)(long) = 0);
   static truth IsGenerating() { return Generating; }

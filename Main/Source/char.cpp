@@ -689,7 +689,9 @@ int character::TakeHit(character* Enemy, item* Weapon,
     return DID_NO_DAMAGE;
   }
 
-  if(CheckDeath(GetNormalDeathMessage(), Enemy,
+  if(CheckDeath(CONST_S("mon"),
+		Weapon ? Weapon->GetName(UNARTICLED) : CONST_S(""),
+		GetNormalDeathMessage(), Enemy,
 		Enemy->IsPlayer() ? FORCE_MSG : 0))
     return HAS_DIED;
 
@@ -1273,7 +1275,10 @@ truth character::TryMove(v2 MoveVector, truth Important, truth Run)
 	  ShowAdventureInfo();
 	  festring Msg = CONST_S("killed Petrus and became the Avatar of Chaos");
 	  PLAYER->AddScoreEntry(Msg, 3, false);
-	  game::End(Msg);
+	  logentry Xlog;
+	  Xlog.Ktyp = "winning";
+	  Xlog.Kaux = "chaos";
+	  game::End(Xlog, Msg);
 	  return true;
 	}
 
@@ -1339,7 +1344,7 @@ void character::CreateCorpse(lsquare* Square)
     SendToHell();
 }
 
-void character::Die(const character* Killer, const festring& Msg, ulong DeathFlags)
+void character::Die(logentry& Xlog, const character* Killer, const festring& Msg, ulong DeathFlags)
 {
   /* Note: This function musn't delete any objects, since one of these may be
      the one currently processed by pool::Be()! */
@@ -1505,7 +1510,7 @@ void character::Die(const character* Killer, const festring& Msg, ulong DeathFla
     }
 
     game::TextScreen(CONST_S("Unfortunately you died during your journey. The high priest is not happy."));
-    game::End(Msg);
+    game::End(Xlog, Msg);
   }
 }
 
@@ -1927,7 +1932,7 @@ void character::AddScoreEntry(const festring& Description, double Multiplier, tr
   }
 }
 
-truth character::CheckDeath(const festring& Msg, const character* Murderer, ulong DeathFlags)
+truth character::CheckDeath(const festring& Ktyp, const festring& Kaux, const festring& Msg, const character* Murderer, ulong DeathFlags)
 {
   if(!IsEnabled())
     return true;
@@ -2004,7 +2009,18 @@ truth character::CheckDeath(const festring& Msg, const character* Murderer, ulon
     if(IsPlayer() && game::WizardModeIsActive())
       ADD_MESSAGE("Death message: %s. Score: %ld.", NewMsg.CStr(), game::GetScore());
 
-    Die(Murderer, NewMsg, DeathFlags);
+    logentry Xlog;
+    if(Murderer == this)
+    {
+      Xlog.Killer = "self";
+    }
+    else if(Murderer)
+    {
+      Xlog.Killer = Murderer->GetName(INDEFINITE);
+    }
+    Xlog.Kaux = Kaux;
+    Xlog.Ktyp = Ktyp;
+    Die(Xlog, Murderer, NewMsg, DeathFlags);
     return true;
   }
   else
@@ -2014,7 +2030,7 @@ truth character::CheckDeath(const festring& Msg, const character* Murderer, ulon
 truth character::CheckStarvationDeath(const festring& Msg)
 {
   if(GetNP() < 1 && UsesNutrition())
-    return CheckDeath(Msg, 0, FORCE_DEATH);
+    return CheckDeath(CONST_S("starving"), CONST_S(""), Msg, 0, FORCE_DEATH);
   else
     return false;
 }
@@ -2044,7 +2060,7 @@ void character::HasBeenHitByItem(character* Thrower, item* Thingy, int Damage, d
 
   festring DeathMsg = CONST_S("killed by a flying ") + Thingy->GetName(UNARTICLED);
 
-  if(CheckDeath(DeathMsg, Thrower))
+  if(CheckDeath(CONST_S("beam"), Thingy->GetName(UNARTICLED), DeathMsg, Thrower))
     return;
 
   if(Thrower->CanBeSeenByPlayer())
@@ -2293,7 +2309,7 @@ void character::FallTo(character* GuiltyGuy, v2 Where)
       }
 
       ReceiveDamage(GuiltyGuy, 1 + RAND() % 5, PHYSICAL_DAMAGE, HEAD);
-      CheckDeath(CONST_S("killed by hitting a wall due to being kicked @bk"), GuiltyGuy);
+      CheckDeath(CONST_S("mon"), CONST_S("hit a wall"), CONST_S("killed by hitting a wall due to being kicked @bk"), GuiltyGuy);
     }
     else
     {
@@ -3050,6 +3066,8 @@ void character::TestWalkability()
 
     if(!Alive)
     {
+      logentry Xlog;
+      Xlog.Ktyp = CONST_S("drowning");
       if(IsPlayer())
       {
 	Remove();
@@ -3058,14 +3076,14 @@ void character::TestWalkability()
 	game::AskForKeyPress(DeathMsg + ". [press any key to continue]");
 	festring Msg = SquareUnder->ScoreEntry(this);
 	PLAYER->AddScoreEntry(Msg);
-	game::End(Msg);
+	game::End(Xlog, Msg);
       }
       else
       {
 	if(CanBeSeenByPlayer())
 	  ADD_MESSAGE("%s %s.", CHAR_NAME(DEFINITE), SquareUnder->MonsterDeathVerb(this));
 
-	Die(0, SquareUnder->ScoreEntry(this), DISALLOW_MSG);
+	Die(Xlog, 0, SquareUnder->ScoreEntry(this), DISALLOW_MSG);
       }
     }
   }
@@ -4028,7 +4046,7 @@ void character::ReceivePepsi(long Amount)
   ReceiveDamage(0, Amount / 100, POISON, TORSO);
   EditExperience(PERCEPTION, Amount, 1 << 14);
 
-  if(CheckDeath(CONST_S("was poisoned by pepsi"), 0))
+  if(CheckDeath(CONST_S("pois"), CONST_S(""), CONST_S("was poisoned by pepsi"), 0))
     return;
 
   if(IsPlayer())
@@ -5041,7 +5059,7 @@ void character::PoisonedHandler()
   if(Damage)
   {
     ReceiveDamage(0, Damage, POISON, ALL, 8, false, false, false, false);
-    CheckDeath(CONST_S("died of acute poisoning"), 0);
+    CheckDeath(CONST_S("pois"), CONST_S(""), CONST_S("died of acute poisoning"), 0);
   }
 }
 
@@ -6380,7 +6398,7 @@ void character::ParasitizedHandler()
       ADD_MESSAGE("Ugh. You feel something violently carving its way through your intestines.");
 
     ReceiveDamage(0, 1, POISON, TORSO, 8, false, false, false, false);
-    CheckDeath(CONST_S("killed by a vile parasite"), 0);
+    CheckDeath(CONST_S("parasite"), CONST_S(""), CONST_S("killed by a vile parasite"), 0);
   }
 }
 
@@ -6542,7 +6560,7 @@ void character::GetHitByExplosion(const explosion* Explosion, int Damage)
   if(IsEnabled())
   {
     ReceiveDamage(Explosion->Terrorist, Damage >> 1, PHYSICAL_DAMAGE, ALL, DamageDirection, true, false, false, false);
-    CheckDeath(Explosion->DeathMsg, Explosion->Terrorist, !WasUnconscious ? IGNORE_UNCONSCIOUSNESS : 0);
+    CheckDeath(CONST_S("explosion"), CONST_S(""), Explosion->DeathMsg, Explosion->Terrorist, !WasUnconscious ? IGNORE_UNCONSCIOUSNESS : 0);
   }
 }
 
@@ -6773,7 +6791,8 @@ truth character::PreProcessForBone()
 {
   if(IsPet() && IsEnabled())
   {
-    Die(0, CONST_S(""), FORBID_REINCARNATION);
+    logentry Xlog;
+    Die(Xlog, 0, CONST_S(""), FORBID_REINCARNATION);
     return true;
   }
 
@@ -8196,10 +8215,10 @@ void character::Disappear(corpse* Corpse, const char* Verb, truth (item::*CloseP
       Corpse->SendToHell();
     }
     else
-      CheckDeath(festring(Verb) + "ed", 0, FORCE_DEATH|DISALLOW_CORPSE|DISALLOW_MSG);
+      CheckDeath(CONST_S("disappeared"), CONST_S(""), festring(Verb) + "ed", 0, FORCE_DEATH|DISALLOW_CORPSE|DISALLOW_MSG);
   }
   else
-    CheckDeath(festring(Verb) + "ed", 0, DISALLOW_MSG);
+    CheckDeath(CONST_S("disappeared"), CONST_S(""), festring(Verb) + "ed", 0, DISALLOW_MSG);
 }
 
 void character::SignalDisappearance()

@@ -13,6 +13,7 @@
 #ifndef __CHAR_H__
 #define __CHAR_H__
 
+#include "hscore.h"
 #include "bodypart.h"
 #include "script.h"
 #include "wskill.h"
@@ -252,7 +253,7 @@ class character : public entity, public id
   virtual void Load(inputfile&);
   virtual truth CanWield() const { return false; }
   virtual truth Catches(item*) { return false; }
-  truth CheckDeath(const festring&, const character* = 0, ulong = 0);
+  truth CheckDeath(const festring&, const festring&, const festring&, const character* = 0, ulong = 0);
   truth DodgesFlyingItem(item*, double);
   virtual truth Hit(character*, v2, int, truth = false) = 0;
   truth OpenPos(v2);
@@ -284,7 +285,7 @@ class character : public entity, public id
   void AddWeaponHitMessage(const character*, const item*, int, truth = false) const;
   virtual void BeTalkedTo();
   void ReceiveDarkness(long);
-  void Die(const character* = 0, const festring& = CONST_S(""), ulong = 0);
+  void Die(logentry&, const character* = 0, const festring& = CONST_S(""), ulong = 0);
   void HasBeenHitByItem(character*, item*, int, double, int);
   void Hunger();
   void Move(v2, truth, truth = false);

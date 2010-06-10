@@ -176,7 +176,7 @@ truth god::PlayerVomitedOnAltar(liquid* Liquid)
   }
 
   AdjustRelation(-200);
-  PLAYER->CheckDeath(CONST_S("killed by a flying lump of vomit"), 0);
+  PLAYER->CheckDeath(CONST_S("beam"), CONST_S("lump of vomit"), CONST_S("killed by a flying lump of vomit"), 0);
 
   if(!(RAND() % 5))
   {

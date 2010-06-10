@@ -1257,7 +1257,7 @@ truth lsquare::Strike(const beamdata& Beam)
       Beam.Owner->Hostility(Char);
 
     Char->ReceiveDamage(Beam.Owner, Damage, ENERGY, ALL);
-    Char->CheckDeath(Beam.DeathMsg, Beam.Owner);
+    Char->CheckDeath(CONST_S("beam"), CONST_S("burst of energy"), Beam.DeathMsg, Beam.Owner);
   }
 
   if(GetOLTerrain())
@@ -1376,7 +1376,7 @@ truth lsquare::Lightning(const beamdata& Beam)
       Beam.Owner->Hostility(Char);
 
     Char->ReceiveDamage(Beam.Owner, Damage, ELECTRICITY, ALL);
-    Char->CheckDeath(Beam.DeathMsg, Beam.Owner);
+    Char->CheckDeath(CONST_S("beam"), CONST_S("burst of electricity"), Beam.DeathMsg, Beam.Owner);
   }
 
   if(GetOLTerrain())

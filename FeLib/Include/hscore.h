@@ -28,6 +28,7 @@ class festring;
 struct logentry
 {
   void WriteLog(const festring& = LOG_FILENAME);
+  festring Name;
   time_t Start;
   time_t End;
   int Hp;
@@ -36,6 +37,7 @@ struct logentry
   festring Killer;
   festring Kaux;
   festring Msg;
+  festring Place;
 };
 
 class highscore

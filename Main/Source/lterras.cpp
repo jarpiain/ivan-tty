@@ -258,7 +258,10 @@ truth throne::SitOn(character* Sitter)
     PLAYER->ShowAdventureInfo();
     festring Msg = CONST_S("became the new high priest of the Great Frog");
     PLAYER->AddScoreEntry(Msg, 5, false);
-    game::End(Msg);
+    logentry Xlog;
+    Xlog.Ktyp = CONST_S("winning");
+    Xlog.Kaux = CONST_S("high priest");
+    game::End(Xlog, Msg);
     return true;
   }
 

@@ -10,6 +10,8 @@
  *
  */
 
+#include <cstdio>
+
 #include "hscore.h"
 #include "save.h"
 #include "felist.h"
@@ -181,4 +183,33 @@ void highscore::Clear()
 truth highscore::CheckVersion() const
 {
   return Version == HIGH_SCORE_VERSION;
+}
+
+void logentry::WriteLog(const festring& FileName)
+{
+  FILE* LogFile = fopen(FileName.CStr(), "a");
+  if(!LogFile) return;
+
+  festring Sep = CONST_S(":");
+  festring Subst = CONST_S("_");
+  festring::SearchAndReplace(Name, Sep, Subst);
+  festring::SearchAndReplace(Ktyp, Sep, Subst);
+  festring::SearchAndReplace(Kaux, Sep, Subst);
+  festring::SearchAndReplace(Killer, Sep, Subst);
+  festring::SearchAndReplace(Msg, Sep, Subst);
+  festring::SearchAndReplace(Place, Sep, Subst);
+
+  fprintf(LogFile, "name=%s:start=%d:end=%dhp=%d:mhp=%d:ktyp=%s:kaux=%s"
+		   ":killer=%s:msg=%s:place=%s\n",
+		   Name.CStr(),
+		   Start, End, Hp, Mhp,
+		   Ktyp.CStr(),
+		   Kaux.CStr(),
+		   Msg.CStr(),
+		   Place.CStr());
+
+  if(fclose(LogFile))
+  {
+    // error: cannot write to log
+  }
 }

@@ -432,7 +432,9 @@ truth commandsystem::Quit(character* Char)
     Char->ShowAdventureInfo();
     festring Msg = CONST_S("cowardly quit the game");
     Char->AddScoreEntry(Msg, 0.75);
-    game::End(Msg, !game::WizardModeIsActive() || game::TruthQuestion(CONST_S("Remove saves? [y/N]")));
+    logentry Xlog;
+    Xlog.Ktyp = CONST_S("quitting");
+    game::End(Xlog, Msg, !game::WizardModeIsActive() || game::TruthQuestion(CONST_S("Remove saves? [y/N]")));
     return true;
   }
   else
@@ -508,7 +510,9 @@ truth commandsystem::Save(character*)
   if(game::TruthQuestion(CONST_S("Do you truly wish to save and flee? [y/N]")))
   {
     game::Save();
-    game::End("", false);
+    logentry Xlog;
+    Xlog.Ktyp = CONST_S("saving");
+    game::End(Xlog, "", false);
     return true;
   }
   else

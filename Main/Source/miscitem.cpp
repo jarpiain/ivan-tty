@@ -234,7 +234,7 @@ void brokenbottle::StepOnEffect(character* Stepper)
       ADD_MESSAGE("%s steps on sharp glass splinters.", Stepper->CHAR_NAME(DEFINITE));
 
     Stepper->ReceiveDamage(0, 1 + RAND() % 3, PHYSICAL_DAMAGE, LEGS);
-    Stepper->CheckDeath(CONST_S("stepped on a broken bottle"), 0);
+    Stepper->CheckDeath(CONST_S("trap"), CONST_S(""), CONST_S("stepped on a broken bottle"), 0);
   }
 }
 
@@ -570,7 +570,7 @@ void bananapeels::StepOnEffect(character* Stepper)
     /* Do damage against any random bodypart except legs */
 
     Stepper->ReceiveDamage(0, 1 + (RAND() & 1), PHYSICAL_DAMAGE, ALL&~LEGS);
-    Stepper->CheckDeath(CONST_S("slipped on a banana peel"), 0);
+    Stepper->CheckDeath(CONST_S("trap"), CONST_S(""), CONST_S("slipped on a banana peel"), 0);
     Stepper->EditAP(-500);
   }
 }
@@ -1072,7 +1072,7 @@ truth beartrap::TryToUnStick(character* Victim, v2)
       ADD_MESSAGE("%s hurts %s %s more with %s.", Victim->CHAR_NAME(DEFINITE), Victim->GetPossessivePronoun().CStr(), Victim->GetBodyPartName(BodyPart).CStr(), CHAR_NAME(DEFINITE));
 
     Victim->ReceiveBodyPartDamage(0, GetBaseTrapDamage(), PHYSICAL_DAMAGE, BodyPart, YOURSELF, false, false, false);
-    Victim->CheckDeath(CONST_S("died while trying to escape from ") + GetName(INDEFINITE), 0, IGNORE_TRAPS);
+    Victim->CheckDeath(CONST_S("trap"), CONST_S(""), CONST_S("died while trying to escape from ") + GetName(INDEFINITE), 0, IGNORE_TRAPS);
     Victim->EditAP(-1000);
     return false;
   }
@@ -1092,7 +1092,7 @@ truth beartrap::TryToUnStick(character* Victim, v2)
 	ADD_MESSAGE("%s tries to free %sself from %s but is stuck more tightly in it in the attempt.", Victim->CHAR_NAME(DEFINITE), Victim->CHAR_OBJECT_PRONOUN, CHAR_NAME(DEFINITE));
 
       Victim->ReceiveBodyPartDamage(0, GetBaseTrapDamage() << 1, PHYSICAL_DAMAGE, VictimBodyPart, YOURSELF, false, false, false);
-      Victim->CheckDeath(CONST_S("died while trying to escape from ") + GetName(INDEFINITE), 0, IGNORE_TRAPS);
+      Victim->CheckDeath(CONST_S("trap"), CONST_S(""), CONST_S("died while trying to escape from ") + GetName(INDEFINITE), 0, IGNORE_TRAPS);
       Victim->EditAP(-1000);
       return true;
     }
@@ -1157,7 +1157,7 @@ void beartrap::StepOnEffect(character* Stepper)
       game::AskForKeyPress(CONST_S("Trap activated! [press any key to continue]"));
 
     Stepper->ReceiveBodyPartDamage(0, GetBaseTrapDamage() << 1, PHYSICAL_DAMAGE, StepperBodyPart, YOURSELF, false, false, false);
-    Stepper->CheckDeath(CONST_S("died by stepping to ") + GetName(INDEFINITE), 0, IGNORE_TRAPS);
+    Stepper->CheckDeath(CONST_S("trap"), CONST_S(""), CONST_S("died by stepping to ") + GetName(INDEFINITE), 0, IGNORE_TRAPS);
   }
 }
 
@@ -1308,7 +1308,7 @@ truth beartrap::Apply(character* User)
       game::AskForKeyPress(CONST_S("Trap activated! [press any key to continue]"));
 
     User->ReceiveBodyPartDamage(0, 1 + (RAND() & 1), PHYSICAL_DAMAGE, UserBodyPart, YOURSELF, false, false, false);
-    User->CheckDeath(CONST_S("died failing to set ") + GetName(INDEFINITE), 0, IGNORE_TRAPS);
+    User->CheckDeath(CONST_S("trap"), CONST_S(""), CONST_S("died failing to set ") + GetName(INDEFINITE), 0, IGNORE_TRAPS);
   }
   else
   {
