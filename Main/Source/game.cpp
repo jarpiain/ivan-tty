@@ -1514,7 +1514,13 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
 		       LocalTime->tm_min,
 		       LocalTime->tm_sec);
     festring ChardumpFile(CONST_S(LOCAL_STATE_DIR));
-    ChardumpFile << CONST_S("/dump/") << PlayerName << Filename;
+    ChardumpFile << CONST_S("/dump/") << PlayerName;
+
+#ifdef LINUX
+    mkdir(ChardumpFile.CStr(), S_IRWXU | S_IRWXG | S_IROTH);
+#endif
+
+    ChardumpFile << Filename;
 
     FILE* Dump = fopen(ChardumpFile.CStr(), "w");
     if(Dump)
