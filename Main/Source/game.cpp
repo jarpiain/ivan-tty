@@ -1573,9 +1573,32 @@ void game::WriteChardump(FILE* Dump, const char* DeathMsg)
   DumpMassacreLists(Dump);
 }
 
+void DumpAttribute(FILE* Dump, const char* Txt, int Attr)
+{
+  int Value = PLAYER->GetAttribute(Attr);
+  int NoBonus = PLAYER->GetAttribute(Attr, false);
+  festring String = Txt;
+  String.Resize(5);
+  String << Value;
+  String.Resize(8);
+  if(Value != NoBonus)
+  String << " (" << NoBonus << ")";
+  fprintf(Dump, "%s\n", String);
+}
+
 void game::DumpAttributes(FILE* Dump)
 {
-  fprintf(Dump, "\nYour attributes:\n");
+  fprintf(Dump, "\nYour attributes:\n\n");
+  // FIXME incorrect when polymorphed into non-humanoid form
+  DumpAttribute(Dump, "AStr", ARM_STRENGTH);
+  DumpAttribute(Dump, "LStr", LEG_STRENGTH);
+  DumpAttribute(Dump, "Dex", DEXTERITY);
+  DumpAttribute(Dump, "Agi", AGILITY);
+  DumpAttribute(Dump, "End", ENDURANCE);
+  DumpAttribute(Dump, "Per", PERCEPTION);
+  DumpAttribute(Dump, "Int", INTELLIGENCE);
+  DumpAttribute(Dump, "Wis", WISDOM);
+  DumpAttribute(Dump, "Cha", CHARISMA);
 }
 
 void game::DumpEquipment(FILE* Dump)
