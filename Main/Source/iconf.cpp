@@ -35,13 +35,13 @@ void ivanconfig::CalculateContrastLuminance()
   ContrastLuminance = MakeRGB24(128, 128, 128);
 }
 
-void ivanconfig::Initialize()
+void ivanconfig::Initialize(const festring& UserName)
 {
   configsystem::AddOption(&DefaultPetName);
   configsystem::AddOption(&WarnAboutDanger);
   configsystem::AddOption(&AutoDropLeftOvers);
   configsystem::AddOption(&UseAlternativeKeys);
-  configsystem::SetConfigFileName(festring(getenv("HOME")) + "/.ivan.conf");
+  configsystem::SetConfigFileName(CONST_S(LOCAL_STATE_DIR "/config/") + UserName + ".ivanrc");
   configsystem::Load();
   CalculateContrastLuminance();
 }

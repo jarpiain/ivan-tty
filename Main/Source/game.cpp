@@ -1577,13 +1577,13 @@ void DumpAttribute(FILE* Dump, const char* Txt, int Attr)
 {
   int Value = PLAYER->GetAttribute(Attr);
   int NoBonus = PLAYER->GetAttribute(Attr, false);
-  festring String = Txt;
+  festring String(Txt);
   String.Resize(5);
   String << Value;
   String.Resize(8);
   if(Value != NoBonus)
   String << " (" << NoBonus << ")";
-  fprintf(Dump, "%s\n", String);
+  fprintf(Dump, "%s\n", String.CStr());
 }
 
 void game::DumpAttributes(FILE* Dump)

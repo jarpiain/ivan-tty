@@ -25,7 +25,7 @@ class ivanconfig
   static void Load() { configsystem::Load(); }
   static void CalculateContrastLuminance();
   static col24 GetContrastLuminance() { return ContrastLuminance; }
-  static void Initialize();
+  static void Initialize(const festring&);
  private:
   static stringoption DefaultPetName;
   static truthoption WarnAboutDanger;

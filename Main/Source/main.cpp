@@ -38,17 +38,19 @@ int Main(int argc, char **argv)
     return 0;
   }
 
+  festring UserName(argv[1]);
+
   femath::SetSeed(time(0));
   game::InitGlobalValueMap();
   scriptsystem::Initialize();
   databasesystem::Initialize();
   game::InitLuxTable();
-  ivanconfig::Initialize();
+  ivanconfig::Initialize(UserName);
   igraph::Init();
   msgsystem::Init();
   protosystem::Initialize();
 
-  if(game::Init(festring(argv[1])))
+  if(game::Init(UserName))
   {
     game::Run();
     game::DeInit();
