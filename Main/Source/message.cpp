@@ -134,7 +134,7 @@ void msgsystem::Draw()
     MessagesChanged = false;
   }*/
   
-  MessageHistory.QuickDraw(0, 20, 75, 4);
+  MessageHistory.QuickDraw(0, 20, 78, 4);
 
   if(WasInBigMessageMode)
     EnterBigMessageMode();
