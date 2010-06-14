@@ -4138,6 +4138,7 @@ void character::DrawPanel() const
 {
   game::UpdateAttributeMemory();
   int PanelPosX = game::GetScreenXSize();
+  graphics::ClearRect(PanelPosX, 0, 80, game::GetScreenYSize());
   int PanelPosY = DrawStats(false);
   PrintAttribute("End", ENDURANCE, PanelPosX, PanelPosY++);
   PrintAttribute("Per", PERCEPTION, PanelPosX, PanelPosY++);
