@@ -166,8 +166,8 @@ void stack::Save(outputfile& SaveFile) const
 
 void stack::Load(inputfile& SaveFile)
 {
-  int SavedItems = 0;
-  SaveFile >> (ushort&)SavedItems;
+  ushort SavedItems = 0;
+  SaveFile >> SavedItems;
 
   for(int c = 0; c < SavedItems; ++c)
   {
