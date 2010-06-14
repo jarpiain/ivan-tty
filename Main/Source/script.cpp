@@ -269,8 +269,10 @@ void materialscript::Save(outputfile& SaveFile) const
 void materialscript::Load(inputfile& SaveFile)
 {
   script::Load(SaveFile);
-  Config = 0;
-  SaveFile >> (ushort&)Config;
+  ushort Temp = 0;
+  SaveFile >> Temp;
+  Config = Temp;
+  //SaveFile >> (ushort&)Config;
 }
 
 void basecontentscript::InitDataMap()
