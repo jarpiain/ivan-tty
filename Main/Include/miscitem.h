@@ -36,6 +36,7 @@ ITEM(materialcontainer, item)
   virtual void SignalSpoil(material*);
   virtual truth CanBePiledWith(const item*, const character*) const;
   virtual void Be();
+  virtual void Draw(truth) const;
   virtual int GetSpoilLevel() const;
   virtual material* GetMaterial(int) const;
   virtual int GetAttachedGod() const;

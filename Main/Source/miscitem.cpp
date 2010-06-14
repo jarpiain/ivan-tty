@@ -950,6 +950,23 @@ truth itemcontainer::TryKey(item* Key, character* Applier)
   return true;
 }
 
+void materialcontainer::Draw(truth Current) const
+{
+  int Glyph = GetGlyph();
+  int Attr = LIGHT_GRAY;
+  if(MainMaterial)
+  {
+    Attr = MainMaterial->GetAttr();
+  }
+  
+  if(SecondaryMaterial)
+  {
+    Attr = SecondaryMaterial->GetAttr();
+  }
+
+  graphics::PutChar(Glyph, Attr);
+}
+
 void materialcontainer::GenerateMaterials()
 {
   int Chosen = RandomizeMaterialConfiguration();

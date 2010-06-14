@@ -1085,16 +1085,16 @@ int itemprototype::CreateSpecialConfigurations(itemdatabase** TempConfig, int Co
 void item::Draw(truth Current) const
 {
   int glyph = GetGlyph();
-  int attr = 0;
+  int attr = LIGHT_GRAY;
   if(MainMaterial) attr = MainMaterial->GetAttr();
-  if(Fluid && ShowFluids())
+  /*if(Fluid && ShowFluids())
   {
     attr = (*Fluid)->GetAttr();
   }
   if(!Current)
   {
     attr = 0;
-  }
+  }*/
   graphics::PutChar(glyph, attr);
 }
 
