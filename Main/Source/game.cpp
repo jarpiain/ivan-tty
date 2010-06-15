@@ -1575,6 +1575,7 @@ void game::WriteChardump(FILE* Dump, const char* DeathMsg)
     fprintf(Dump, "\n%ld %s\n", GetScore(), PlayerName.CStr());
     fprintf(Dump, "%s\n", DeathMsg);
   }
+  msgsystem::Dump(Dump);
   DumpAttributes(Dump);
   DumpEquipment(Dump);
   DumpInventory(Dump);

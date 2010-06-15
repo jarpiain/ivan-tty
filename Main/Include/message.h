@@ -13,9 +13,11 @@
 #ifndef __MESSAGE_H__
 #define __MESSAGE_H__
 
+#include <stdio.h>
 #include "v2.h"
 
 #define ADD_MESSAGE msgsystem::AddMessage
+#define CHARDUMP_MESSAGE_COUNT 20
 
 class felist;
 class outputfile;
@@ -27,6 +29,7 @@ class msgsystem
  public:
   static void LIKE_PRINTF(1, 2) AddMessage(const char*, ...);
   static void Draw();
+  static void Dump(FILE*);
   static void DrawMessageHistory();
   static void Format();
   static void Save(outputfile&);

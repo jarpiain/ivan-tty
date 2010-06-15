@@ -165,6 +165,21 @@ void msgsystem::Load(inputfile& SaveFile)
   SaveFile >> LastMessage >> Times >> Begin >> End;
 }
 
+void msgsystem::Dump(FILE* DumpFile)
+{
+  fprintf(DumpFile, "\nLast messages:\n\n");
+
+  int Limit = CHARDUMP_MESSAGE_COUNT;
+  if(MessageHistory.GetLength() < Limit)
+    Limit = MessageHistory.GetLength();
+
+  for(int Idx = MessageHistory.GetLength() - Limit;
+      Idx < MessageHistory.GetLength(); Idx++)
+  {
+    fprintf(DumpFile, "%s\n", MessageHistory.GetEntry(Idx).CStr());
+  }
+}
+
 void msgsystem::ScrollDown()
 {
   if(MessageHistory.GetSelected() < MessageHistory.GetLastEntryIndex())
