@@ -684,11 +684,13 @@ void game::DrawEverythingNoBlit()
 
   msgsystem::Draw();
 
+  v2 ScreenCoordinates = CalculateScreenCoordinates(PLAYER->GetPos());
   if(OnScreen(CursorPos))
   {
-    v2 ScreenCordinates = CalculateScreenCoordinates(CursorPos);
-    igraph::DrawCursor(ScreenCordinates, CursorData);
+    ScreenCoordinates = CalculateScreenCoordinates(CursorPos);
   }
+  graphics::MoveCursor(ScreenCoordinates);
+    
 }
 
 truth game::Save(const festring& SaveName)
@@ -1299,7 +1301,7 @@ v2 game::PositionQuestion(const festring& Topic, v2 CursorPos, void (*Handler)(v
     Key = GET_KEY();
   }
 
-  SetCursorPos(v2(-1, -1));
+  SetCursorPos(v2(-1,-1));
   GetCurrentArea()->SendNewDrawRequest();
   DrawEverythingNoBlit();
   return Return;
