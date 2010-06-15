@@ -1545,7 +1545,7 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
   {
     highscore HScore;
 
-    if(HScore.LastAddFailed())
+    /*if(HScore.LastAddFailed())
     {
       iosystem::TextScreen(CONST_S("You didn't manage to get onto the high score list.\n\n\n\n")
 			   + GetPlayerName() + ", " + DeathMessage + "\nRIP");
@@ -1553,8 +1553,7 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
     else
     {
       HScore.Draw();
-      getch();
-    }
+    }*/
   }
 
   if(AndGoToMenu)
