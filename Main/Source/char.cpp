@@ -4134,6 +4134,15 @@ truth character::RawEditAttribute(double& Experience, int Amount) const
   return true;
 }
 
+#define PUTSTR_ROOM(x,c) do{\
+if(80 < PanelPosX + strlen(x)) {\
+  PanelPosX = game::GetScreenXSize();\
+  graphics::MoveCursor(v2(PanelPosX,PanelPosY++));\
+}\
+graphics::PutStrf(c,"%s ", x);\
+PanelPosX += (1 + strlen(x));}while(0)
+
+
 void character::DrawPanel() const
 {
   game::UpdateAttributeMemory();
@@ -4190,58 +4199,59 @@ void character::DrawPanel() const
       int Color = ((1 << c) & EquipmentState || TemporaryStateCounter[c] == PERMANENT)
                   ? BLUE
 		  : WHITE;
-      graphics::PutStrf(Color, "%s ", StateData[c].Description);
+      PUTSTR_ROOM(StateData[c].Description, Color);
     }
 
   /* Make this more elegant!!! */
 
   if(GetHungerState() == STARVING)
-    graphics::PutStrf(RED, "Starving ");
+    PUTSTR_ROOM("Starving", RED);
   else if(GetHungerState() == VERY_HUNGRY)
-    graphics::PutStrf(BLUE, "Very hungry ");
+    PUTSTR_ROOM("Very hungry", BLUE);
   else if(GetHungerState() == HUNGRY)
-    graphics::PutStrf(BLUE, "Hungry ");
+    PUTSTR_ROOM("Hungry", BLUE);
   else if(GetHungerState() == SATIATED)
-    graphics::PutStrf(WHITE, "Satiated ");
+    PUTSTR_ROOM("Satiated", WHITE);
   else if(GetHungerState() == BLOATED)
-    graphics::PutStrf(WHITE, "Bloated ");
+    PUTSTR_ROOM("Bloated", WHITE);
   else if(GetHungerState() == OVER_FED)
-    graphics::PutStrf(WHITE, "Overfed! ");
+    PUTSTR_ROOM("Overfed!", WHITE);
 
   switch(GetBurdenState())
   {
    case OVER_LOADED:
-    graphics::PutStrf(RED, "Overload! ");
+    PUTSTR_ROOM("Overload!", RED);
     break;
    case STRESSED:
-    graphics::PutStrf(BLUE, "Stressed ");
+    PUTSTR_ROOM("Stressed", BLUE);
     break;
    case BURDENED:
-    graphics::PutStrf(BLUE, "Burdened ");
+    PUTSTR_ROOM("Burdened", BLUE);
   }
 
   switch(GetTirednessState())
   {
    case FAINTING:
-    graphics::PutStrf(RED, "Fainting ");
+    PUTSTR_ROOM("Fainting", RED);
     break;
    case EXHAUSTED:
-    graphics::PutStrf(WHITE, "Exhausted ");
+    PUTSTR_ROOM("Exhausted", WHITE);
     break;
   }
 
   if(game::PlayerIsRunning())
   {
-    graphics::MoveCursor(v2(PanelPosX, PanelPosY++));
-    graphics::PutStrf(WHITE, "%s ", GetRunDescriptionLine(0));
+    PUTSTR_ROOM(GetRunDescriptionLine(0), WHITE);
     const char* SecondLine = GetRunDescriptionLine(1);
 
     if(strlen(SecondLine))
     {
-      graphics::PutStrf(WHITE, "%s", SecondLine);
+      PUTSTR_ROOM(SecondLine, WHITE);
     }
   }
 }
+
+#undef PUTSTR_ROOM
 
 void character::CalculateDodgeValue()
 {
