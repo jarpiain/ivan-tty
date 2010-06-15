@@ -152,7 +152,7 @@ uint felist::Draw()
       break;
     }
 
-    if(Flags & SELECTABLE && Pressed == UpKey)
+    if(Flags & SELECTABLE && (Pressed == UpKey || Pressed == KEY_UP))
     {
       if(Selected)
       {
@@ -175,7 +175,7 @@ uint felist::Draw()
       continue;
     }
 
-    if(Flags & SELECTABLE && Pressed == DownKey)
+    if(Flags & SELECTABLE && (Pressed == DownKey || Pressed == KEY_DOWN))
     {
       if(!AtTheEnd || Selected != Selectables - 1)
       {
