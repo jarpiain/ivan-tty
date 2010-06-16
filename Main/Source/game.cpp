@@ -1569,12 +1569,14 @@ void game::WriteChardump(FILE* Dump, const char* DeathMsg)
   fprintf(Dump, "Iter Vehemens ad Necem version %s (ivan-tty) character file.\n",
                 IVAN_VERSION);
 
-  if(DeathMsg)
+  truth Alive = (DeathMsg == 0);
+  if(!Alive)
   {
     fprintf(Dump, "\n%ld %s\n", GetScore(), PlayerName.CStr());
     fprintf(Dump, "%s\n", DeathMsg);
   }
   msgsystem::Dump(Dump);
+  DumpGods(Dump, Alive);
   DumpAttributes(Dump);
   DumpEquipment(Dump);
   DumpInventory(Dump);
@@ -1607,6 +1609,73 @@ void game::DumpAttributes(FILE* Dump)
   DumpAttribute(Dump, "Int", INTELLIGENCE);
   DumpAttribute(Dump, "Wis", WISDOM);
   DumpAttribute(Dump, "Cha", CHARISMA);
+}
+
+void game::DumpGods(FILE* Dump, truth Alive)
+{
+  int Known = 0;
+  for(int c = 1; c <= GODS; ++c)
+    if(GetGod(c)->IsKnown()) Known++;
+
+  if(Alive)
+  {
+    if(Known)
+    {
+      fprintf(Dump, "\nYou know the rituals of ");
+      int Idx = 0;
+      for(int c = 1; c <= GODS; ++c)
+	if(GetGod(c)->IsKnown())
+	{
+          Idx++;
+          fprintf(Dump, "%s%s%s",
+                        (Idx == Known && Known > 1) ? "and " : "",
+                        GetGod(c)->GetName(),
+                        (Idx < Known) ? ((Known < 3) ? " " :" , ")
+                                      : ".\n");
+	}
+    }
+    else
+    {
+      fprintf(Dump, "\nYou don't know the rituals of any god.\n");
+    }
+  }
+  else /* !Alive */
+  {
+    if(Known)
+    {
+      fprintf(Dump, "\nRelations with the gods:\n\n");
+      for(int c = 1; c <= GODS; ++c)
+        if(GetGod(c)->IsKnown())
+        {
+          int Relation = GetGod(c)->GetRelation();
+          // See god::PrintRelation()
+
+          if(Relation == 1000)
+            fprintf(Dump, "You were the Champion of %s.\n", GetGod(c)->GetName());
+          else if(Relation > 750)
+            fprintf(Dump, "%s was extremely pleased.\n", GetGod(c)->GetName());
+          else if(Relation > 250)
+            fprintf(Dump, "%s was very pleased.\n", GetGod(c)->GetName());
+          else if(Relation > 50)
+            fprintf(Dump, "%s was pleased.\n", GetGod(c)->GetName());
+          else if(Relation > -50)
+            fprintf(Dump, "%s was content.\n", GetGod(c)->GetName());
+          else if(Relation > -250)
+            fprintf(Dump, "%s was angry.\n", GetGod(c)->GetName());
+          else if(Relation > -750)
+            fprintf(Dump, "%s was very angry.\n", GetGod(c)->GetName());
+          else if(Relation > -1000)
+            fprintf(Dump, "%s was extremely angry.\n", GetGod(c)->GetName());
+          else
+            fprintf(Dump, "%s hated you more than any other mortal.\n",
+                          GetGod(c)->GetName());
+        }
+    }
+    else
+    {
+      fprintf(Dump, "\nYou did not know the rituals of any god.\n");
+    }
+  }
 }
 
 void game::DumpEquipment(FILE* Dump)
