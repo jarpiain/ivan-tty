@@ -76,7 +76,7 @@ OLTERRAIN(door, olterrain)
 OLTERRAIN(stairs, olterrain)
 {
  public:
-  virtual int GetGlyph() const { return '>'; }
+  virtual int GetGlyph() const { return IsUpLink() ? '<' : '>'; }
   virtual void Save(outputfile&) const;
   virtual void Load(inputfile&);
   virtual truth Enter(truth) const;
