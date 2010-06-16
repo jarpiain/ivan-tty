@@ -9267,7 +9267,7 @@ void character::PrintAttribute(const char* Desc, int I, int PanelPosX, int Panel
   String << Attribute;
   String.Resize(8);
   graphics::MoveCursor(v2(PanelPosX, PanelPosY));
-  graphics::PutStrf(WHITE, "%s", String.CStr());
+  graphics::PutStrf(C, "%s", String.CStr());
 
   if(Attribute != NoBonusAttribute)
   {
