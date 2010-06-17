@@ -1983,6 +1983,8 @@ void game::EnterArea(charactervector& Group, int Area, int EntryIndex)
     UpdateCamera();
     GetWorldMap()->UpdateLOS();
   }
+  
+  Save();
 }
 
 int game::CompareLightToInt(col24 L, col24 Int)
