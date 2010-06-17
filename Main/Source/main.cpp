@@ -12,6 +12,10 @@
 
 #include <iostream>
 
+#ifdef LINUX
+#include <signal.h>
+#endif
+
 #include "game.h"
 #include "database.h"
 #include "feio.h"
@@ -23,6 +27,14 @@
 #include "script.h"
 #include "message.h"
 #include "proto.h"
+
+#ifdef LINUX
+void catch_sighup(int Signum)
+{
+  game::Save();
+  ABORT("SIGHUP");
+}
+#endif
 
 int Main(int argc, char **argv)
 {
@@ -49,6 +61,10 @@ int Main(int argc, char **argv)
   igraph::Init();
   msgsystem::Init();
   protosystem::Initialize();
+
+#ifdef LINUX
+  signal(SIGHUP, catch_sighup);
+#endif
 
   if(game::Init(UserName))
   {
