@@ -1578,6 +1578,7 @@ void game::WriteChardump(FILE* Dump, const char* DeathMsg)
   msgsystem::Dump(Dump);
   DumpGods(Dump, Alive);
   DumpAttributes(Dump);
+  DumpSkills(Dump);
   DumpEquipment(Dump);
   DumpInventory(Dump);
   DumpMassacreLists(Dump);
@@ -1609,6 +1610,39 @@ void game::DumpAttributes(FILE* Dump)
   DumpAttribute(Dump, "Int", INTELLIGENCE);
   DumpAttribute(Dump, "Wis", WISDOM);
   DumpAttribute(Dump, "Cha", CHARISMA);
+}
+
+// see commandsystem::ShowWeaponSkills()
+void game::DumpSkills(FILE* Dump)
+{
+  fprintf(Dump, "\nWeapon skills:\n\n");
+  fprintf(Dump, "Category name                 Level     Battle bonus\n");
+  festring Buffer;
+
+  for(int c = 0; c < PLAYER->GetAllowedWeaponSkillCategories(); ++c)
+  {
+    cweaponskill* Skill = PLAYER->GetCWeaponSkill(c);
+
+    if(Skill->GetHits() / 100 || (PLAYER->IsUsingWeaponOfCategory(c)))
+    {
+      Buffer = Skill->GetName(c);
+      Buffer.Resize(30);
+      Buffer << Skill->GetLevel();
+      Buffer.Resize(40);
+
+      Buffer << '+' << (Skill->GetBonus() - 1000) / 10;
+
+      if(Skill->GetBonus() % 10)
+        Buffer << '.' << Skill->GetBonus() % 10;
+
+      Buffer << '%';
+
+      fprintf(Dump, "%s\n", Buffer.CStr());
+    }
+  }
+
+  // TODO: right and left accustomization
+
 }
 
 void game::DumpGods(FILE* Dump, truth Alive)

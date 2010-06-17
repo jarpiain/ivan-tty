@@ -408,6 +408,7 @@ class game
   static void DumpEquipment(FILE*);
   static void DumpInventory(FILE*);
   static void DumpGods(FILE*, truth);
+  static void DumpSkills(FILE*);
   static void UpdateCameraCoordinate(int&, int, int, int);
   static const char* const Alignment[];
   static god** God;
