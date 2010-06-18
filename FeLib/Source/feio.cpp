@@ -19,9 +19,8 @@
 #include <cstdio>
 #include <sys/types.h>
 #include <algorithm>
-#endif
-
 #include <curses.h>
+#endif
 
 #include "graphics.h"
 #include "feio.h"
@@ -118,7 +117,8 @@ int iosystem::StringQuestion(festring& Input,
       }
     }
 
-    else if(Key == 127 || Key == '\b') // delete or backspace
+    // delete or backspace
+    else if(Key == 127 || Key == '\b' || Key == KEY_BACKSPACE)
     {
       if(Input.GetSize() > 0)
       {
