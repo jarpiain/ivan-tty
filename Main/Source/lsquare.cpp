@@ -1958,8 +1958,11 @@ void lsquare::DrawStacks() const
     for(int c = 0; c < 4; ++c)
     {
       stack* Stack = GetStackOfAdjacentSquare(c);
-      if(Stack)
+      if(Stack && Stack->GetItems())
+      {
         Stack->Draw(PLAYER, 3 - c);
+        break;
+      }
     }
 }
 
