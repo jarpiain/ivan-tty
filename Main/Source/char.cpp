@@ -7820,7 +7820,7 @@ void character::ReceivePeaSoup(long)
 {
   lsquare* Square = GetLSquareUnder();
 
-  if(Square->IsFlyable())
+  if(!game::IsInWilderness() && Square->IsFlyable())
     Square->AddSmoke(gas::Spawn(FART, 250));
 }
 
