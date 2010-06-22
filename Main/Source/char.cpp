@@ -1269,7 +1269,11 @@ truth character::TryMove(v2 MoveVector, truth Important, truth Run)
       {
 	if(HasPetrussNut() && !HasGoldenEagleShirt())
 	{
-	  game::TextScreen(CONST_S("An undead and sinister voice greets you as you leave the city behind:\n\n\"MoRtAl! ThOu HaSt SlAuGtHeReD pEtRuS aNd PlEaSeD mE!\nfRoM tHiS dAy On, ThOu ArT tHe DeArEsT sErVaNt Of AlL eViL!\"\n\nYou are victorious!"));
+	  game::TextScreen(CONST_S(
+"An undead and sinister voice greets you as you leave the city behind:\n\n"
+"\"MoRtAl! ThOu HaSt SlAuGtHeReD pEtRuS aNd PlEaSeD mE!\n"
+"fRoM tHiS dAy On, ThOu ArT tHe DeArEsT sErVaNt Of AlL eViL!\"\n\n"
+"You are victorious!"));
 	  game::GetCurrentArea()->SendNewDrawRequest();
 	  game::DrawEverything();
 	  ShowAdventureInfo();

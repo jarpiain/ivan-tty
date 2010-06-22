@@ -529,10 +529,12 @@ void petrus::BeTalkedTo()
 
     if(game::TruthQuestion(CONST_S("Will you give the Shirt of the Golden Eagle to Petrus? [y/n]"), REQUIRES_ANSWER))
     {
-      game::TextScreen(CONST_S( "The Holy Shirt is returned to its old owner and you kneel down to receive your reward.\n"
-				"Petrus taps your shoulder with the Justifier and raises you to nobility. Later you\n"
-				"receive a small dukedom in the middle of tundra where you rule with justice till\n"
-				"the end of your content life.\n\nYou are victorious!"));
+      game::TextScreen(CONST_S(
+"The Holy Shirt is returned to its old owner and you kneel down to receive\n"
+"your reward. Petrus taps your shoulder with the Justifier and raises you\n"
+"to nobility. Later you receive a small dukedom in the middle of tundra\n"
+"where you rule with justice till the end of your content life.\n\n"
+"You are victorious!"));
 
       game::GetCurrentArea()->SendNewDrawRequest();
       game::DrawEverything();
@@ -563,10 +565,11 @@ void petrus::BeTalkedTo()
 
   if(PLAYER->HasHeadOfElpuri())
   {
-    game::TextScreen(CONST_S(	"You have slain Elpuri, and Petrus grants you the freedom you desire.\n"
-				"You spend the next months in Attnam as an honored hero and when the\n"
-				"sea finally melts, you board the first ship, leaving your past forever\n"
-				"behind.\n\nYou are victorious!"));
+    game::TextScreen(CONST_S(
+"You have slain Elpuri, and Petrus grants you the freedom you desire.\n"
+"You spend the next months in Attnam as an honored hero and when the\n"
+"sea finally melts, you board the first ship, leaving your past forever\n"
+"behind.\n\nYou are victorious!"));
 
     game::GetCurrentArea()->SendNewDrawRequest();
     game::DrawEverything();
@@ -584,47 +587,53 @@ void petrus::BeTalkedTo()
     {
       if(PLAYER->RemoveEncryptedScroll())
       {
-	game::TextScreen(CONST_S(	"You kneel down and bow before the high priest and hand him the encrypted scroll.\n"
-					"Petrus raises his arm, the scroll glows yellow, and lo! The letters are clear and\n"
-					"readable. Petrus asks you to voice them aloud. The first two thousand words praise\n"
-					"Valpurus the Creator and all His manifestations and are followed by a canticle of\n"
-					"Saint Petrus the Lion-Hearted lasting roughly three thousand words. Finally there\n"
-					"are some sentences actually concerning your mission:\n\n"
-					"\"Alas, I fear dirty tongues have spread lies to my Lord's ears. I assure all tales\n"
-					"of treasures here in New Attnam are but mythic legends. There is nothing of value here.\n"
-					"The taxes are already an unbearable burden and I can't possibly pay more. However I do\n"
-					"not question the wisdom of the government's decisions. I will contribute what I can:\n"
-					"the ostriches will deliver an extra 10000 bananas to the capital and additionally the\n"
-					"slave that brought the message will henceforth be at Your disposal. I am certain this\n"
-					"satisfies the crown's needs.\"\n\n"
-					"\"Yours sincerely,\n"
-					"Richel Decos, the viceroy of New Attnam\""));
+	game::TextScreen(CONST_S(
+"You kneel down and bow before the high priest and hand him the encrypted\n"
+"scroll. Petrus raises his arm, the scroll glows yellow, and lo! The letters\n"
+"are clear and readable. Petrus asks you to voice them aloud. The first\n"
+"two thousand words praise Valpurus the Creator and all His manifestations\n"
+"and are followed by a canticle of Saint Petrus the Lion-Hearted lasting\n"
+"roughly three thousand words. Finally there are some sentences actually\n"
+"concerning your mission:\n\n"
+"\"Alas, I fear dirty tongues have spread lies to my Lord's ears. I assure\n"
+"all tales of treasures here in New Attnam are but mythic legends. There is\n"
+"nothing of value here. The taxes are already an unbearable burden and I can't\n"
+"possibly pay more. However I do not question the wisdom of the government's\n"
+"decisions. I will contribute what I can: the ostriches will deliver an extra\n"
+"10000 bananas to the capital and additionally the slave that brought\n"
+"the message will henceforth be at Your disposal. I am certain this satisfies\n"
+"the crown's needs.\"\n\n"
+"\"Yours sincerely,\n"
+"Richel Decos, the viceroy of New Attnam\""));
 
-	game::TextScreen(CONST_S(	"You almost expected the last bit. Petrus seems to be deep in his thoughts and you\n"
-					"wonder what shape your destiny is taking in his mind. Suddenly he seems to return\n"
-					"to this reality and talks to you.\n\n"
-					"\"Oh, thou art still here. We were just discussing telepathically with Sir Galladon.\n"
-					"We started doubting Decos's alleged poverty a while back when he bought a couple of\n"
-					"medium-sized castles nearby. Thy brethren from New Attnam have also told Us about\n"
-					"vast riches seized from them. Our law says all such stolen valuables belong to \n"
-					"the Cathedral's treasury, so this is a severe claim. However, proof is needed,\n"
-					"and even if such was provided, We couldn't send soldiers over the snow fields\n"
-					"ere spring.\""));
+	game::TextScreen(CONST_S(
+"You almost expected the last bit. Petrus seems to be deep in his thoughts\n"
+"and you wonder what shape your destiny is taking in his mind. Suddenly\n"
+"he seems to return to this reality and talks to you.\n\n"
+"\"Oh, thou art still here. We were just discussing telepathically with\n"
+"Sir Galladon. We started doubting Decos's alleged poverty a while back\n"
+"when he bought a couple of medium-sized castles nearby. Thy brethren from\n"
+"New Attnam have also told Us about vast riches seized from them. Our law\n"
+"says all such stolen valuables belong to the Cathedral's treasury,\n"
+"so this is a severe claim. However, proof is needed, and even if such\n"
+"was provided, We couldn't send soldiers over the snow fields ere spring.\""));
 
-	game::TextScreen(CONST_S(	"\"However, since thou now servest Us, We ought to find thee something to do. Sir\n"
-					"Galladon hath told Us his agents witnessed thou leaving the dreaded underwater tunnel.\n"
-					"This means thou most likely hast defeated genetrix vesana and art a talented warrior.\n"
-					"We happen to have a task perfect for such a person. An evil dark frog named Elpuri who\n"
-					"hates Valpurus and Attnam more than anything hath taken control over an abandoned mine\n"
-					"nearby. It is pestering our fine city in many ways and reconnaissance has reported an\n"
-					"army of monsters gathering in the cave. Our guards are not trained to fight underground\n"
-					"and We dare not send them. To make things worse, someone hath recently stolen Us the\n"
-					"greatest armor in existence - the Shirt of the Golden Eagle. Elpuri cannot wear\n"
-					"it but he who can is now nearly immortal.\"\n\n"
-					"\"We have marked the location of the gloomy cave on thy world map. We want you to dive\n"
-					"into it and slay the vile frog. Bring Us its head and We reward thee with freedom.\n"
-					"Shouldst thou also find the Shirt, We'll knight thee. Good luck, and return when\n"
-					"thou hast succeeded.\""));
+	game::TextScreen(CONST_S(
+"\"However, since thou now servest Us, We ought to find thee something to do.\n"
+"Sir Galladon hath told Us his agents witnessed thou leaving the dreaded\n"
+"underwater tunnel. This means thou most likely hast defeated genetrix vesana\n"
+"and art a talented warrior. We happen to have a task perfect for such\n"
+"a person. An evil dark frog named Elpuri who hates Valpurus and Attnam\n"
+"more than anything hath taken control over an abandoned mine nearby. It is\n"
+"pestering our fine city in many ways and reconnaissance has reported an army\n"
+"of monsters gathering in the cave. Our guards are not trained to fight\n"
+"underground and We dare not send them. To make things worse, someone hath\n"
+"recently stolen Us the greatest armor in existence - the Shirt of the\n"
+"Golden Eagle. Elpuri cannot wear it but he who can is now nearly immortal.\"\n\n"
+"\"We have marked the location of the gloomy cave on thy world map. We want\n"
+"you to dive into it and slay the vile frog. Bring Us its head and We reward\n"
+"thee with freedom. Shouldst thou also find the Shirt, We'll knight thee.\n"
+"Good luck, and return when thou hast succeeded.\""));
 
 	game::LoadWorldMap();
 	v2 ElpuriCavePos = game::GetWorldMap()->GetEntryPos(0, ELPURI_CAVE);
