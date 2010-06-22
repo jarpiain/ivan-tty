@@ -433,7 +433,7 @@ int stack::DrawContents(itemvector& ReturnVector, stack* MergeStack,
 					  Flags, 3 - c, SorterFunction);
 
   game::SetStandardListAttributes(Contents);
-  Contents.SetPageLength(12);
+  Contents.SetPageLength(10);
   Contents.RemoveFlags(BLIT_AFTERWARDS);
 
   if(!(Flags & NO_SELECT))
