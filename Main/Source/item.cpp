@@ -1399,7 +1399,8 @@ truth item::Read(character* Reader)
 
 truth item::CanBeHardened(const character*) const
 {
-  return MainMaterial->GetHardenedMaterial(this) != NONE;
+  if(!GetMainMaterial()) return false; // paranoia
+  return GetMainMaterial()->GetHardenedMaterial(this) != NONE;
 }
 
 void item::SetLifeExpectancy(int Base, int RandPlus)
