@@ -803,6 +803,16 @@ long corpse::GetTruePrice() const
   return Price;
 }
 
+material* corpse::GetMainMaterial() const
+{
+  return GetDeceased()->GetTorso()->GetMainMaterial();
+}
+
+material* corpse::GetSecondaryMaterial() const
+{
+  return GetDeceased()->GetTorso()->GetSecondaryMaterial();
+}
+
 material* corpse::GetMaterial(int I) const
 {
   return GetDeceased()->GetTorso()->GetMaterial(I);

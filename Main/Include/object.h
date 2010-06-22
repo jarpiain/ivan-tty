@@ -33,7 +33,7 @@ class object : public entity, public id
   virtual void Load(inputfile&);
   virtual void UpdatePictures();
   virtual int GetGlyph() const = 0;
-  material* GetMainMaterial() const { return MainMaterial; }
+  virtual material* GetMainMaterial() const { return MainMaterial; }
   virtual material* GetSecondaryMaterial() const { return 0; }
   virtual void SetSecondaryMaterial(material*, int = 0) { }
   virtual void ChangeSecondaryMaterial(material*, int = 0) { }

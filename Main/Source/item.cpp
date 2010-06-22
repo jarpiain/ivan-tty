@@ -1086,7 +1086,7 @@ void item::Draw(truth Current) const
 {
   int glyph = GetGlyph();
   int attr = LIGHT_GRAY;
-  if(MainMaterial) attr = MainMaterial->GetAttr();
+  if(GetMainMaterial()) attr = GetMainMaterial()->GetAttr();
   /*if(Fluid && ShowFluids())
   {
     attr = (*Fluid)->GetAttr();

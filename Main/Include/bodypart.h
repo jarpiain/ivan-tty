@@ -484,6 +484,8 @@ ITEM(corpse, item)
   virtual truth SuckSoul(character*, character* = 0);
   virtual character* TryNecromancy(character*);
   virtual void Cannibalize();
+  virtual material* GetMainMaterial() const;
+  virtual material* GetSecondaryMaterial() const;
   virtual material* GetConsumeMaterial(const character*, materialpredicate) const;
   virtual truth DetectMaterial(const material*) const;
   virtual void SetLifeExpectancy(int, int);
