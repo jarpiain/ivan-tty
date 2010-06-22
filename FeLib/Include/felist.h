@@ -27,7 +27,7 @@ class felist
 {
  public:
   felist(const festring&, col16 = WHITE, uint = 0,
-	 uint Row = 0, uint Col = 0, uint Width = 75, uint Height = 20);
+	 uint Row = 0, uint Col = 0, uint Width = 75, uint Height = 18);
   ~felist();
   void AddEntry(const festring&, col16, uint = 0,
 		truth = true);
