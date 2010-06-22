@@ -1303,7 +1303,7 @@ truth commandsystem::SecretKnowledge(character* Char)
 	Entry.Empty();
 	Character[c]->AddName(Entry, UNARTICLED);
 	Character[c]->AddAttributeInfo(Entry);
-	List.AddEntry(Entry, LIGHT_GRAY, 0, c);
+	List.AddEntry(Entry, LIGHT_GRAY, c);
       }
 
       List.SetPageLength(15);
@@ -1315,7 +1315,7 @@ truth commandsystem::SecretKnowledge(character* Char)
       {
 	Entry.Empty();
 	Character[c]->AddName(Entry, UNARTICLED);
-	List.AddEntry(Entry, LIGHT_GRAY, 0, c);
+	List.AddEntry(Entry, LIGHT_GRAY, c);
 	Character[c]->AddAttackInfo(List);
       }
 
@@ -1332,7 +1332,7 @@ truth commandsystem::SecretKnowledge(character* Char)
 	Entry << int(Character[c]->GetDodgeValue());
 	Entry.Resize(57);
 	Entry << Character[c]->GetMaxHP();
-	List.AddEntry(Entry, LIGHT_GRAY, 0, c);
+	List.AddEntry(Entry, LIGHT_GRAY, c);
 	Character[c]->AddDefenceInfo(List);
       }
 
@@ -1352,7 +1352,7 @@ truth commandsystem::SecretKnowledge(character* Char)
 	Entry << int(DI.NakedDanger * 1000);
 	Entry.Resize(67);
 	Entry << int(DI.EquippedDanger * 1000);
-	List.AddEntry(Entry, LIGHT_GRAY, 0, c);
+	List.AddEntry(Entry, LIGHT_GRAY, c);
       }
 
       List.SetPageLength(15);
@@ -1381,7 +1381,7 @@ truth commandsystem::SecretKnowledge(character* Char)
       {
 	Entry.Empty();
 	Item[c][0]->AddName(Entry, UNARTICLED);
-	List.AddEntry(Entry, LIGHT_GRAY, 0, c, true);
+	List.AddEntry(Entry, LIGHT_GRAY, c, true);
 	Item[c][0]->AddAttackInfo(List);
       }
 
@@ -1393,7 +1393,7 @@ truth commandsystem::SecretKnowledge(character* Char)
       {
 	Entry.Empty();
 	Item[c][0]->AddName(Entry, UNARTICLED);
-	List.AddEntry(Entry, LIGHT_GRAY, 0, c, true);
+	List.AddEntry(Entry, LIGHT_GRAY, c, true);
 	Item[c][0]->AddMiscellaneousInfo(List);
       }
 
