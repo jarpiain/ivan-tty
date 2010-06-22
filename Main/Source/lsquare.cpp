@@ -1952,13 +1952,13 @@ void lsquare::SpillFluid(character* Spiller, liquid* Liquid, truth ForceHit, tru
 
 void lsquare::DrawStacks() const
 {
-  if(Stack->GetItems())
+  if(Stack->GetNativeVisibleItems(PLAYER))
     Stack->Draw(PLAYER, CENTER);
   else
     for(int c = 0; c < 4; ++c)
     {
       stack* Stack = GetStackOfAdjacentSquare(c);
-      if(Stack && Stack->GetItems())
+      if(Stack && Stack->GetVisibleSideItems(PLAYER, 3 - c))
       {
         Stack->Draw(PLAYER, 3 - c);
         break;
