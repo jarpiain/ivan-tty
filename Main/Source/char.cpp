@@ -3079,8 +3079,8 @@ void character::TestWalkability()
       Xlog.Ktyp = CONST_S("drowning");
       if(IsPlayer())
       {
-	Remove();
-	SendToHell();
+//	Remove();
+//	SendToHell();
 	festring DeathMsg = festring(SquareUnder->DeathMessage(this));
 	game::AskForKeyPress(DeathMsg + ". [press any key to continue]");
 	festring Msg = SquareUnder->ScoreEntry(this);
