@@ -207,7 +207,7 @@ void logentry::WriteLog(const festring& FileName)
 
   fprintf(LogFile, "name=%s:start=%ld:end=%ld:hp=%d:mhp=%d:ktyp=%s:kaux=%s"
 		   ":killer=%s:msg=%s:place=%s:sc=%d"
-		   ":turn=%d:dur=%ld:time=Day %d, %d:%02d\n",
+		   ":turn=%d:dur=%ld:time=Day %d, %d_%02d\n",
 		   Name.CStr(),
 		   (long)Start, (long)End, Hp, Mhp,
 		   Ktyp.CStr(),
