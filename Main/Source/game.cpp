@@ -1498,6 +1498,10 @@ void game::End(logentry& Xlog, festring DeathMessage, truth Permanently, truth A
     Xlog.Name = PlayerName;
     Xlog.Hp = PLAYER->GetHP();
     Xlog.Mhp = PLAYER->GetMaxHP();
+    Xlog.Tick = Tick;
+    Xlog.Score = GetScore();
+    Xlog.Turn = GetTurn();
+    Xlog.Dur = TimePlayedBeforeLastLoad + (EndTime - LastLoad);
     if(InWilderness)
       Xlog.Place = CONST_S("world map");
     else

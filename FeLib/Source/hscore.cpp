@@ -199,15 +199,27 @@ void logentry::WriteLog(const festring& FileName)
   festring::SearchAndReplace(Msg, Sep, Subst);
   festring::SearchAndReplace(Place, Sep, Subst);
 
-  fprintf(LogFile, "name=%s:start=%d:end=%d:hp=%d:mhp=%d:ktyp=%s:kaux=%s"
-		   ":killer=%s:msg=%s:place=%s\n",
+  // XXX duplicating game::GetTime()
+  int Hour = 12 + Tick / 2000;
+  int Day = Hour/24 + 1;
+  Hour %= 24;
+  int Min = Tick % 2000 * 60 / 2000;
+
+  fprintf(LogFile, "name=%s:start=%ld:end=%ld:hp=%d:mhp=%d:ktyp=%s:kaux=%s"
+		   ":killer=%s:msg=%s:place=%s:sc=%d"
+		   ":turn=%d:dur=%ld:time=Day %d, %d:%02d\n",
 		   Name.CStr(),
-		   Start, End, Hp, Mhp,
+		   (long)Start, (long)End, Hp, Mhp,
 		   Ktyp.CStr(),
 		   Kaux.CStr(),
 		   Killer.CStr(),
 		   Msg.CStr(),
-		   Place.CStr());
+		   Place.CStr(),
+		   Score,
+		   Turn,
+		   (long)Dur,
+		   Day, Hour, Min
+		   );
 
   if(fclose(LogFile))
   {

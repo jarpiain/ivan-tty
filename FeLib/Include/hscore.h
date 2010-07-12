@@ -38,6 +38,10 @@ struct logentry
   festring Kaux;
   festring Msg;
   festring Place;
+  int Score;
+  int Turn;
+  int Tick; // ivan time
+  time_t Dur; // real time
 };
 
 class highscore
