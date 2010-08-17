@@ -37,6 +37,16 @@ void stack::Draw(const character* Viewer,
 
   for(stackiterator i = GetBottom(); i.HasItem(); ++i)
     if(i->GetSquarePosition() == RequiredSquarePosition
+       && (i->CanBeSeenBy(Viewer) || game::GetSeeWholeMapCheatMode())
+       && i->NeedDangerSymbol())
+    {
+      i->Draw(true);
+      return;
+    }
+
+
+  for(stackiterator i = GetBottom(); i.HasItem(); ++i)
+    if(i->GetSquarePosition() == RequiredSquarePosition
        && (i->CanBeSeenBy(Viewer) || game::GetSeeWholeMapCheatMode()))
     {
       if(!VisibleItems) i->Draw(true);
