@@ -201,6 +201,22 @@ int ironalloy::GetStrengthValue() const
   return 0; /* not possible */
 }
 
+// XXX terribly abusing for rottedness description
+truth organic::AddRustLevelDescription(festring& Name, truth Articled) const
+{
+  if(GetSpoilLevel() == 0)
+    return false;
+
+  if(Articled)
+    Name << "a ";
+  if(GetSpoilLevel() > 0 && GetSpoilLevel() <= 4)
+    Name << "slightly spoiled ";
+  else if(GetSpoilLevel() > 4)
+    Name << "terribly spoiled ";
+  
+  return true;
+}
+
 truth ironalloy::AddRustLevelDescription(festring& Name, truth Articled) const
 {
   if(GetRustLevel() == NOT_RUSTED)

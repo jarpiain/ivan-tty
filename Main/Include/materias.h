@@ -37,6 +37,7 @@ MATERIAL(organic, solid)
   virtual truth CanSpoil() const { return true; }
   virtual int GetSpoilPercentage() const;
   virtual truth Spoils() const { return true; }
+  virtual truth AddRustLevelDescription(festring&, truth) const;
  protected:
   virtual void PostConstruct();
   ushort SpoilCounter;
