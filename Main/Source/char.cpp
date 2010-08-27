@@ -1409,6 +1409,13 @@ void character::Die(logentry& Xlog, const character* Killer, const festring& Msg
   {
     for(int c = 0; c < SquaresUnder; ++c)
       SquareUnder[c] = GetSquareUnder(c);
+
+    // XXX must Remove() before calling CreateCorpse()
+    // to prevent hattifatteners from going to infinite loop
+    // by self-electrocution.
+    // Must not Remove() the player before chardump is written
+    if(!IsPlayer())
+      Remove();
   }
   else
   {
@@ -1478,7 +1485,7 @@ void character::Die(logentry& Xlog, const character* Killer, const festring& Msg
     SendToHell();
   }
 
-  if(IsPlayer() || !game::IsInWilderness())
+  if(IsPlayer())
   {
     Remove();
   }
